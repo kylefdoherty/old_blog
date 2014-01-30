@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
+  <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://kylefdoherty.github.io/"/>
+  <updated>2014-01-30T11:18:50+01:00</updated>
+  <id>http://kylefdoherty.github.io/</id>
+  <author>
+    <name><![CDATA[Kyle Doherty]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Codeacademy Redactor Problem - Think About The Following...]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot/"/>
+    <updated>2014-01-30T10:45:04+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>At the end of the Redacted! project in Codeacademy’s Ruby track they ask you to think about a few things:</p>
+
+<p>What could you do to make sure your redactor redacts a word regardless of whether it&rsquo;s uppercase or lowercase?
+How could you make your program take multiple, separate words to REDACT?
+How might you make a new redacted string and save it as a variable, rather than just printing it to the console?
+Below I’ve shown how I solved each of these so other people doing this problem can see how I solved it, critique my code, and share their solutions.</p>
+
+<p>As a starting point here is my code for the initial Redacted project before I began solving for the above questions.</p>
+
+<p>``` ruby  Original code:
+puts &ldquo;block of text:&rdquo;
+text = gets.chomp</p>
+
+<p>puts &ldquo;word to be redacted:&rdquo;
+redact = gets.chomp</p>
+
+<p>words = text.split(&ldquo; &rdquo;)</p>
+
+<p>words.each do |word|</p>
+
+<pre><code>if word == redact 
+    print "REDACTED "
+else
+    print word + " " 
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<h2>Question #1 - What could you do to make sure your redactor redacts a word regardless of whether it's uppercase or lowercase?</h2>
+
+
+<p>To achieve this I figured I had two options.  Either downcase (or upcase) the block of text and the word(s) to be redacted given by the user as soon as they’re given by the user or do this when they are being compared.  Below are both ways.</p>
+
+<p>``` ruby When given by user:
+puts &ldquo;block of text:&rdquo;
+text = gets.downcase.chomp</p>
+
+<p>puts &ldquo;word to be redacted:&rdquo;
+redact = gets.downcase.chomp</p>
+
+<p>words = text.split(&ldquo; &rdquo;)</p>
+
+<p>words.each do |word|</p>
+
+<pre><code>if word == redact 
+    print "REDACTED "
+else
+    print word + " " 
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<p>``` ruby When comparing:
+puts &ldquo;block of text:&rdquo;
+text = gets.chomp</p>
+
+<p>puts &ldquo;word to be redacted:&rdquo;
+redact = gets.chomp</p>
+
+<p>words = text.split(&ldquo; &rdquo;)</p>
+
+<p>words.each do |word|</p>
+
+<pre><code>if word.downcase == redact.downcase 
+    print "REDACTED "
+else
+    print word + " " 
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<h2>Question #2 - How could you make your program take multiple, separate words to REDACT?</h2>
+
+
+<p>First I need to make it so the user can input as many words to be redacted as they want.  To achieve this I used a while loop and an if statement.  If the user inputs a keyword signifying they are done inputting words to be redacted the while loop breaks.</p>
+
+<p>``` ruby
+while input = gets.chomp
+  if input.downcase == &ldquo;done&rdquo;</p>
+
+<pre><code>  break 
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>  redact &lt;&lt; input.downcase
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Here I make “done” the keyword that breaks the while loop.</p>
+
+<p>Next, I needed to figure out how to compare the two arrays, redact and words.  Funny enough after a quick search on comparing two arrays I found out that using &amp; is one way to compare two arrays and see what objects they have in common (<a href="http://blog.hulihanapplications.com/browse/view/28-ruby-array-comparison-tricks">http://blog.hulihanapplications.com/browse/view/28-ruby-array-comparison-tricks</a>).  So if you write redact &amp; words the output will be the objects they have in common.  I thought this was interesting but didn’t really help me because it basically just recreated my redact array.
+Next I broke down what I need to do in plain english, hoping that would help me break down the problem and figure out how to solve it with the little ruby I know and myabe a little help from Google.
+Breaking it Down
+The first thing I know I needed to do was loop through the words array with .each and then see if that word matches any words in the redact array.  So effectively what I’m doing is comparing a string to an array.  With a google search of “compare a string to an array ruby” I found that there is an .include? method for arrays that does exactly this (<a href="http://stackoverflow.com/questions/3770316/how-to-compare-a-string-against-multiple-other-strings">http://stackoverflow.com/questions/3770316/how-to-compare-a-string-against-multiple-other-strings</a>).  It works by calling the .include? method on the array and passing it a string. It then checks to see if that string is included in the array.  PERFECT!</p>
+
+<p>Here is what it looks like in code:</p>
+
+<p>``` ruby
+words.each do |word|
+  if redact.include? word</p>
+
+<pre><code>print "REDACTED "
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>print word + " "
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>And here is the entire script:</p>
+
+<p>``` ruby
+redact = []
+puts &ldquo;block of text:&rdquo;
+text = gets.downcase.chomp</p>
+
+<p>words = text.split(&ldquo; &rdquo;)</p>
+
+<p>puts &ldquo;Give as many words to be redacted as you want.&rdquo;
+puts &ldquo;Once you are done type \&lsquo;done\&rsquo;.&rdquo;
+puts &ldquo;Please give the words you want redacted:&rdquo;</p>
+
+<p>while input = gets.chomp
+  if input.downcase == &ldquo;done&rdquo;</p>
+
+<pre><code>  break 
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>  redact &lt;&lt; input.downcase
+</code></pre>
+
+<p>  end
+end</p>
+
+<h1>common_words = redact &amp; words</h1>
+
+<p>words.each do |word|
+  if redact.include? word</p>
+
+<pre><code>print "REDACTED "
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>print word + " "
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h2>Question #3 - How might you make a new redacted string and save it as a variable, rather than just printing it to the console?</h2>
+
+
+<p>I skipped this question because it didn’t seem to make sense for my script.  Since I allow the user to input multiple strings to redact that are then saved in the array redact there seems to be no reason to save a new redacted string.  What would you do with it?
+If you have a better sense of what they are asking here please let me know.</p>
+]]></content>
+  </entry>
+  
+</feed>

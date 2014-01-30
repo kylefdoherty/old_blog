@@ -1,12 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>
+            http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot/
+        </loc>
+        <lastmod>2014-01-30T11:18:49+01:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://kylefdoherty.github.io/blog/2014/01/30/quite-your-job-move-to-switzerland-learn-to-program/
+        </loc>
+        <lastmod>2014-01-30T11:18:48+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://kylefdoherty.github.io/blog/archives/</loc>
-        <lastmod>2014-01-30T10:23:25+01:00</lastmod>
+        <lastmod>2014-01-30T11:18:49+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/</loc>
-        <lastmod>2014-01-30T10:23:25+01:00</lastmod>
+        <lastmod>2014-01-30T11:18:49+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/robots.txt</loc>
