@@ -4,7 +4,7 @@
   <title><![CDATA[Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-01-30T11:19:28+01:00</updated>
+  <updated>2014-01-30T15:36:05+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Procs are Amazing!]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/"/>
+    <updated>2014-01-30T15:12:44+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing</id>
+    <content type="html"><![CDATA[<p>I just got through the <a href="http://www.codecademy.com/courses/ruby-beginner-en-L3ZCI/1/1?curriculum_id=5059f8619189a5000201fbcb" target="_blank">Codeacademy Procs section</a> and got so excited I tweeted about them and emailed my girlfriend explaining what Procs are and why they’re so cool&hellip;bad I know.  Luckily she works in finance and is a total excel geek so she can empathize and won’t think I’m a complete weirdo.</p>
+
+<p><img class="center" src="http://kylefdoherty.github.io/images/proc_tweet.png" title="Proc Tweet" alt="Tweet about how cool Ruby Procs are"></p>
+
+<p><img class="center" src="http://kylefdoherty.github.io/images/proc_email.png" title="Proc Email" alt="Email about how cool Ruby Procs are"></p>
+
+<p>Since I already tweeted and sent an email about Procs I figured I’d post about them to round things out.</p>
+
+<h2>Why Procs are Cool</h2>
+
+
+<p>Procs allow you to save a block of code, something like <code>{ |x| x *3 }</code> which is saying take whatever I give you (x) and multiply it by 3.  What you can then do with this is pass it to methods.</p>
+
+<p>So for example, I have an array of people&rsquo;s heights, like so:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[</span><span class="mi">4</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="o">.</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And I want to get all the heights that are above 4 feet tall because that&rsquo;s how tall you have to be to ride the ride&hellip;le duh.</p>
+
+<p>I could write some long method called <code>rubyover_4_feet</code> where I pass it the array and then it returns the heights that are above 4 feet tall.  But that would require 9 lines of code&hellip;maybe less but that&rsquo;s how many lines it took me.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">over_4_feet</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">new_arr</span> <span class="o">=</span> <span class="o">[]</span>
+</span><span class='line'>    <span class="n">array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">unless</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">4</span>
+</span><span class='line'>            <span class="n">new_arr</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">new_arr</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Instead I can call the method <code>.select</code> on the array and pass it a Proc that tells it to only select heights that are taller than 4 feet.</p>
+
+<p>Below is a proc that checks for being over 4 feet tall. Then I just pass that proc to the <code>.select</code> method telling it to only &ldquo;select&rdquo; heights over 4 feet.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">over_4_feet</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="o">|</span> <span class="n">x</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">array</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">&amp;</span><span class="n">over_4_feet</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So what took me 9 lines of code I did in 1, since passing the Proc to select is the same as calling the over_4_feet method.</p>
+
+<h3>AMAZING!!!</h3>
+
+
+<p><a href="http://gifsoup.com/view/2169429/nets-fan.html" target="_blank"><img src="http://stream1.gifsoup.com/view3/2169429/nets-fan-o.gif" border="0"/></a><br /><a href="http://gifsoup.com" title="GIFSoup" target="_blank"></a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Quite Your Job, Move to Switzerland, Learn to Program]]></title>

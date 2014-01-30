@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codeacademy | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/codeacademy/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-01-30T11:19:28+01:00</updated>
+  <updated>2014-01-30T15:36:05+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Procs are Amazing!]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/"/>
+    <updated>2014-01-30T15:12:44+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing</id>
+    <content type="html"><![CDATA[<p>I just got through the <a href="http://www.codecademy.com/courses/ruby-beginner-en-L3ZCI/1/1?curriculum_id=5059f8619189a5000201fbcb" target="_blank">Codeacademy Procs section</a> and got so excited I tweeted about them and emailed my girlfriend explaining what Procs are and why they’re so cool&hellip;bad I know.  Luckily she works in finance and is a total excel geek so she can empathize and won’t think I’m a complete weirdo.</p>
+
+<p><img class="center" src="/images/proc_tweet.png" title="&lsquo;Proc Tweet&rsquo; &lsquo;Tweet about how cool Ruby Procs are&rsquo;" ></p>
+
+<p><img class="center" src="/images/proc_email.png" title="&lsquo;Proc Email&rsquo; &lsquo;Email about how cool Ruby Procs are&rsquo;" ></p>
+
+<p>Since I already tweeted and sent an email about Procs I figured I’d post about them to round things out.</p>
+
+<h2>Why Procs are Cool</h2>
+
+
+<p>Procs allow you to save a block of code, something like <code>{ |x| x *3 }</code> which is saying take whatever I give you (x) and multiply it by 3.  What you can then do with this is pass it to methods.</p>
+
+<p>So for example, I have an array of people&rsquo;s heights, like so:</p>
+
+<p><code>ruby
+array = [4.5, 5, 6, 3.5, 3]
+</code></p>
+
+<p>And I want to get all the heights that are above 4 feet tall because that&rsquo;s how tall you have to be to ride the ride&hellip;le duh.</p>
+
+<p>I could write some long method called <code>rubyover_4_feet</code> where I pass it the array and then it returns the heights that are above 4 feet tall.  But that would require 9 lines of code&hellip;maybe less but that&rsquo;s how many lines it took me.</p>
+
+<p>``` ruby
+def over_4_feet(array)</p>
+
+<pre><code>new_arr = []
+array.each do |i|
+    unless i &lt; 4
+        new_arr &lt;&lt; i
+    end 
+end 
+return new_arr
+</code></pre>
+
+<p>end
+```</p>
+
+<p>Instead I can call the method <code>.select</code> on the array and pass it a Proc that tells it to only select heights that are taller than 4 feet.</p>
+
+<p>Below is a proc that checks for being over 4 feet tall. Then I just pass that proc to the <code>.select</code> method telling it to only &ldquo;select&rdquo; heights over 4 feet.</p>
+
+<p>``` ruby
+over_4_feet = Proc.new { |x| x >= 4 }</p>
+
+<p>array.select(&amp;over_4_feet)
+```</p>
+
+<p>So what took me 9 lines of code I did in 1, since passing the Proc to select is the same as calling the over_4_feet method.</p>
+
+<h3>AMAZING!!!</h3>
+
+
+<p><a href="http://gifsoup.com/view/2169429/nets-fan.html" target="_blank"><img src="http://stream1.gifsoup.com/view3/2169429/nets-fan-o.gif" border="0"/></a><br /><a href="http://gifsoup.com" title="GIFSoup" target="_blank"></a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Codeacademy Redactor Problem - Think About The Following...]]></title>
