@@ -1,0 +1,486 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby Notes - Control Flow - Learning Programming <br> & <br> Stuff</title>
+  <meta name="author" content="Kyle Doherty">
+
+  
+  <meta name="description" content="I’m 4 weeks into my 25 hours a week of Ruby self-study (I work part time right now otherwise it’d be 40+ hours) and just completed
+Codecademy’s Ruby &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Learning Programming <br> & <br> Stuff" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+  
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47629978-1', 'kylefdoherty.github.io');
+    ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+
+<!-- 
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_setDomainName','github.io']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script> -->
+</head>
+
+
+<body>
+	<div class="container">
+		<aside class="left">
+			<div class="inner-left">
+				<header>
+					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
+<hgroup>
+  <h1><a href="/">Learning Programming <br> & <br> Stuff</a></h1>
+  
+</hgroup>
+
+
+				</header>
+				<footer>
+					<p>
+	
+		<a href="http://github.com/kylefdoherty" class="btn btn-dark">GitHub</a>
+	
+	
+		<a href="http://twitter.com/kylefdoherty" class="btn btn-dark">Twitter</a>
+	
+</p>
+				</footer>
+			</div>
+		</aside>
+    	<section class="right">
+    		<div class="inner-right">
+    			<div id="posts">
+    			  	<article class="post">
+    
+  <header>
+    
+      <h1 class="entry-title">Ruby Notes - Control Flow</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-07T10:52:33+01:00" pubdate data-updated="true">Feb 7<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I’m 4 weeks into my 25 hours a week of Ruby self-study (I work part time right now otherwise it’d be 40+ hours) and just completed
+<a href="http://www.codecademy.com/tracks/ruby" target="_blank">Codecademy’s Ruby track.</a>  Finishing was great but I felt I&rsquo;d  only scratched the surface of Ruby and programming in general.  To supplement my minimal Ruby knowledge I decided to begin additional research and create study notes and do practice problems for each topic covered by Codecadmny, such as control flow, arrays, blocks, etc.  This has already proven a success as I’ve seen a marked difference in my confidence and coding ability after completing notes for Control Flow and Arrays.</p>
+
+<p>Now I’ve decided to turn my notes and practice problems into blog posts because:</p>
+
+<ol> 
+  <li>Hopefully it will be helpful to other people learning Ruby</li>
+  <li>It forces me to read through my notes and practice problems again</li>
+  <li>It requires rewriting my notes in way that others can understand thus further driving the concepts home for me</li>
+  <li>Hopefully I’ll get feedback on my notes and practice problems (hint hint)</li>
+</ol>
+
+
+
+
+<h2>Control Flow</h2>
+
+
+<p>Control flow allows you to control how your ruby script executes based on conditions.  For example, <code>if</code> condition A is met then do B OR <code>unless</code> B happens do A.</p>
+
+<h2>If Statement</h2>
+
+
+<p>An if statement tells the program what to do if a condition is met. That is, if the conditional that comes after <code>if</code> is true then execute the following code. If it evaluates to false, it doesn’t execute.</p>
+
+<figure class='code'><figcaption><span>Example 1 - If Statements</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">money</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">money</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">You</span> <span class="n">have</span> <span class="n">money</span><span class="o">.</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This if statement is saying if the variable money is true, puts the message “You have money.”  In this case if money were set to false, nothing will puts to the screen.</p>
+
+<figure class='code'><figcaption><span>Example 2 - If Statements </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="mi">2</span> <span class="n">is</span> <span class="n">less</span> <span class="n">than</span> <span class="mi">3</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since 2 is less than 3 this if statement evaluates to true and thus puts’ “2 is less than 3”.  If we had typed <code>if 2 > 3</code>, puts would not have been executed and ‘nil’ would have been returned because the if statement would have evaluated to false.</p>
+
+<h2>If/Else Statement</h2>
+
+
+<p>Adding an else into the if statement essentially creates a default i.e. in the event whatever comes after <code>if</code> is false then do this.</p>
+
+<figure class='code'><figcaption><span>Example - If/Else Statement</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">password</span> <span class="o">=</span> <span class="mi">12345678</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span>  <span class="n">password</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;=</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="n">your</span> <span class="n">password</span> <span class="n">is</span> <span class="n">long</span> <span class="n">enough</span><span class="err">”</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="n">your</span> <span class="n">password</span> <span class="n">is</span> <span class="n">too</span> <span class="n">short</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>If/Elsif/Else</h2>
+
+
+<p>Using an elsif allows for multiple conditions to be added to the if statement.  In this way we can essentially add multiple if statements to check for many different possible conditions.</p>
+
+<figure class='code'><figcaption><span>Example - If/Elsif/Else Statement </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">city</span> <span class="o">=</span> <span class="err">“</span><span class="no">San</span> <span class="no">Francisco</span><span class="err">”</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">city</span> <span class="o">==</span> <span class="err">“</span><span class="no">New</span> <span class="no">York</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Jets</span> <span class="o">&amp;</span> <span class="no">Giants</span><span class="err">”</span>
+</span><span class='line'><span class="k">elsif</span> <span class="n">city</span> <span class="o">==</span> <span class="err">“</span><span class="no">Denver</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Broncos</span><span class="err">”</span>
+</span><span class='line'><span class="k">elsif</span> <span class="n">city</span> <span class="o">==</span> <span class="err">“</span><span class="no">San</span> <span class="no">Francisco</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="mi">49</span><span class="n">ers</span><span class="err">”</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Hmm</span> <span class="n">we</span> <span class="n">don</span><span class="err">’</span><span class="n">t</span> <span class="n">know</span> <span class="n">what</span> <span class="no">NFL</span> <span class="n">team</span> <span class="n">that</span> <span class="n">city</span> <span class="n">has</span><span class="o">.</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If the variable <code>city</code> is set to any of the cities in our If/Else statement, the program will puts what NFL team that city has.  If <code>city</code> is not set to one of those cities then the program puts the default message, &ldquo;Hmm we don’t know what NFL team that city has.”</p>
+
+<h2>Unless</h2>
+
+
+<p>Unless is the opposite of an if statement.  An if statement only executes if the conditional is true, conversely unless only executes if the conditional is false.  It’s good practice to use unless instead of using <code>if !=</code> (if not equal to) since <code>if !=</code> can be a bit confusing.</p>
+
+<p>The following if statement can be replaced with an unless statement.</p>
+
+<figure class='code'><figcaption><span>Example of Bad If Statement</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Give us a message.&quot;</span>
+</span><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">chomp</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="n">message</span> <span class="o">!=</span> <span class="err">“”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="c1">#{message}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>By using unless this piece of code becomes much more readable.</p>
+
+<figure class='code'><figcaption><span>Example of When to Use Unless</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Give us a message.&quot;</span>
+</span><span class='line'><span class="n">message</span> <span class="o">=</span> <span class="nb">gets</span><span class="o">.</span><span class="n">chomp</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">unless</span> <span class="n">message</span><span class="o">.</span><span class="n">empty?</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another good use case for Unless is to use them in a single line like so:</p>
+
+<figure class='code'><figcaption><span>Example 2 - When to Use Unless </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">milk</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="err">“</span><span class="no">We</span><span class="err">’</span><span class="n">re</span> <span class="n">out</span> <span class="n">of</span> <span class="n">milk</span><span class="o">.</span><span class="err">”</span> <span class="k">unless</span> <span class="n">milk</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; We’re out of milk</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we’re saying only puts we’re out of milk if the milk variable is set to false.  Since in this case milk is set to false then the message would be shown to the screen.</p>
+
+<p>One more example:</p>
+
+<figure class='code'><figcaption><span>Example 3 - When to Use Unless</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">unless</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">10</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here <code>i</code> is being increased by 1 unless it is more than 10.</p>
+
+<h3>Unless Best Practices</h3>
+
+
+<p>There are some best practices you should follow when using unless to ensure you don’t confuse people or yourself.  These aren’t universal, especially considering the Codecademy section on control flow doesn’t follow all of them, but after doing some research I’ve found these best practices given several places such as <a href="https://www.codeschool.com/courses/ruby-bits" target="_blank">Code School’s Ruby Code Bits course</a> and a blog post on the 37Signals blog called <a href="http://signalvnoise.com/posts/2699-making-sense-with-rubys-unless" target="_blank">&ldquo;Making Sense with Ruby’s ‘Unless’”</a>.</p>
+
+<ol>
+    <li>Don’t use else with unless.  Codeacademy does this in some of their examples with unless and they aren’t all that confusing but they aren’t that straightforward either. It’s probably better to use an if statement if you want to use else.</li>
+    <li>Avoid using more than a single logical condition.  For example, doing things like <code>unless a && b</code> can become confusing fast.</li>
+    <li>No double negatives.  Unless is already a negative so don’t add in a != to make it a double negative&#8230;that’s just bad english.</li>
+</ol>
+
+
+
+
+<h2>Inline Conditionals</h2>
+
+
+<p>As mentioned when discussing unless, sometimes it’s best to write an if or unless statement on 1 line.  Here are some examples:</p>
+
+<figure class='code'><figcaption><span>Multy Line If Statement</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="n">zipcode</span> <span class="o">&lt;</span> <span class="mi">5</span>
+</span><span class='line'>  <span class="nb">fail</span> <span class="err">“</span><span class="n">zipcode</span> <span class="n">too</span> <span class="n">short</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Can become:</p>
+
+<figure class='code'><figcaption><span>Single Line If Statement </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">fail</span> <span class="err">“</span><span class="n">zipcode</span> <span class="n">too</span> <span class="n">short</span><span class="err">”</span> <span class="k">if</span> <span class="n">zipcode</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">5</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some more examples:</p>
+
+<figure class='code'><figcaption><span>Single Line If Statement </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="err">“</span><span class="no">Input</span> <span class="n">your</span> <span class="nb">name</span><span class="p">:</span><span class="err">”</span> <span class="k">if</span> <span class="nb">name</span><span class="o">.</span><span class="n">empty?</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span>Single Line Unless Statement </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="nb">fail</span> <span class="err">“</span><span class="n">no</span> <span class="n">username</span> <span class="n">set</span><span class="err">”</span> <span class="k">unless</span> <span class="n">username</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>The Ruby Ternary Operator</h2>
+
+
+<p>The ternary operator is another way to write an if else statement.  The word ternary means consisting of or involving three. The ruby ternary operator consists of the following 3 parts:</p>
+
+<p>condition ? value if true : value if false</p>
+
+<p>In this case the ? is analogous to the word THEN and the : is analogous to OR.  What a ternary operator is saying is if the condition evaluates to true THEN return the value if true OR if the condition evaluates to false, output the value if false.</p>
+
+<p>This may not make sense 100% but an example should shore that up.</p>
+
+<figure class='code'><figcaption><span>Ternary Operator Example </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">milk</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">milk</span> <span class="p">?</span> <span class="err">“</span><span class="no">We</span> <span class="n">have</span> <span class="n">milk</span><span class="err">”</span> <span class="p">:</span> <span class="err">“</span><span class="no">We</span> <span class="n">don</span><span class="err">’</span><span class="n">t</span> <span class="n">have</span> <span class="n">milk</span><span class="err">”</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here the ternary operator is saying if milk = true THEN puts “We have milk” OR if milk = false, puts “We don’t have milk.”</p>
+
+<p>For simple if/else statements Ruby’s ternary operator can be a nice thing to use.</p>
+
+<h2>Case Statements</h2>
+
+
+<p>Sometimes using an if/else statement can be too wordy and that is when you need a case statement.  Instead of saying if, elsif, else, you simply use when, which is saying, when the conditional is true, run this code.</p>
+
+<p>Here’s an example:</p>
+
+<figure class='code'><figcaption><span>Case statement example </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">animal</span> <span class="o">=</span> <span class="err">“</span><span class="n">dog</span><span class="err">”</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">case</span> <span class="n">animal</span>
+</span><span class='line'><span class="k">when</span> <span class="n">animal</span> <span class="o">==</span> <span class="err">“</span><span class="n">cat</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Meow</span><span class="o">!</span><span class="err">”</span>
+</span><span class='line'><span class="k">when</span> <span class="n">animal</span> <span class="o">==</span> <span class="err">“</span><span class="n">parrot</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Polly</span> <span class="n">want</span> <span class="n">a</span> <span class="n">cracker!</span><span class="err">”</span>
+</span><span class='line'><span class="k">when</span> <span class="n">animal</span> <span class="o">==</span> <span class="err">“</span><span class="n">dog</span><span class="err">”</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">Woof</span><span class="o">!</span><span class="err">”</span>
+</span><span class='line'><span class="k">else</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="err">“</span><span class="no">What</span> <span class="n">animal</span> <span class="n">is</span> <span class="n">that?</span><span class="err">”</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Further reading on sase statements try &ndash; <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
+</div>
+
+
+</article>
+
+
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control/" data-via="kylefdoherty" data-counturl="http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control/" >Tweet</a>
+  
+  
+  
+</div>
+
+
+
+
+
+    			</div>
+    			<footer id="footer">
+    				<p class="credit">
+  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+</p>
+
+
+    			</footer>
+    			
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47629978-1', 'kylefdoherty.github.io');
+    ga('send', 'pageview');
+
+</script>
+
+
+
+
+
+
+
+<!-- 
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_setDomainName','github.io']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script> -->
+
+
+    		</div>
+    	</section>
+  	</div>
+</body>
+</html>
