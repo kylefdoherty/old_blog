@@ -4,7 +4,7 @@
   <title><![CDATA[Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-02-07T12:40:25+01:00</updated>
+  <updated>2014-02-17T13:37:08+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,6 +12,282 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Building an RSS Twitter Bot]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot/"/>
+    <updated>2014-02-17T13:07:55+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot</id>
+    <content type="html"><![CDATA[<p>Last night after finishing my Ruby Notes on the File class I decided I wanted to try building an RSS Twitter bot.  I’d gotten the idea a week or so ago while reading some articles about my Alma Mater’s Top 10 Basketball team, the SDSU Aztecs in case you’re wondering, and thinking it would be cool to create an app that I could plug RSS feeds into and it’d tweet out the updates to the RSS feeds.  This way I’d always be up to date with sports news about my Aztecs and it’d be a good simple project for me to tackle.</p>
+
+<p><img class="center" src="http://kylefdoherty.github.io/images/Twitter_Application_Management.png" title="SDSUSports Twitter App" alt="An image my Twitter bot app."></p>
+
+<h2>Reading RSS Feeds</h2>
+
+
+<p>So I looked into how to read RSS feeds and found the RSS module and the Simple RSS gem.  I played around with both and decided to use SimpleRSS.  To keep things simple my goal was to plug in two feeds, the <a href="http://www.utsandiego.com/news/sports/sdsu-aztecs/" target="_blank">UT San Diego’s SDSU Sports section</a> and the <a href="www.youtube.com/user/goaztecscom‎" target="_blank">SDSU Athletics Youtube Channel</a> and tweet out the feeds.</p>
+
+<p>Here is what the Twitter Account looked like after I got this to work.</p>
+
+<p><img class="center" src="http://kylefdoherty.github.io/images/Cut_Down_Nets___SDSUsports__on_Twitter.png" title="SDSUSports Twitter Account" alt="An image of the twitter account I created for my twitter bot to post to."></p>
+
+<h2>Getting Off Track</h2>
+
+
+<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE &ndash; 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
+
+<h2>Sort Them Feeds</h2>
+
+
+<p>Once I finished removing the dates from the video titles I went about sorting whether the feeds were RSS or Atom.  I knew that having “feed” and “rss” in the URL was probably not the standard for telling if a feed was RSS or Atom but I just wanted to get this working for these two feeds and improve my code later.</p>
+
+<figure class='code'><figcaption><span>Sorting Feeds</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">feed_sorter</span>
+</span><span class='line'><span class="n">feed_num</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">feed</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">feed_num</span> <span class="o">+=</span><span class="mi">1</span>
+</span><span class='line'>      <span class="k">case</span>
+</span><span class='line'>      <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="vi">@sorted_feeds</span><span class="o">[</span><span class="n">feed_num</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">feed</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="s1">&#39;rss&#39;</span><span class="p">)</span>
+</span><span class='line'>          <span class="vi">@sorted_feeds</span><span class="o">[</span><span class="n">feed_num</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">feed</span><span class="p">,</span> <span class="s1">&#39;rss&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="k">else</span> <span class="n">invalid</span> <span class="n">feed</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see that I’m checking if “RSS” or “Atom” is in the URL and then sticking then storing them in an array inside a hash.  Again I knew I’d have to change this down the road, especially if I start using a database for persistence but this gets the job done for my two feeds.</p>
+
+<h2>Putting it All Together</h2>
+
+
+<p>From here all I wanted to clean up my code and put it in a class.  So I created a RssParser class, which probably should be renamed to FeedParser, and created the methods initialize, run, feed_sorter, feed_parser, and send_tweet. Then I added the Twitter Gem and my keys and tokens and boom it worked.</p>
+
+<figure class='code'><figcaption><span>RssParser </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;simple-rss&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;twitter&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">RssParser</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="o">*</span><span class="n">feeds</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@feeds</span> <span class="o">=</span> <span class="n">feeds</span>
+</span><span class='line'>      <span class="vi">@sorted_feeds</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span class='line'>      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_key</span>        <span class="o">=</span> <span class="s2">&quot;Consumer_Key&quot;</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_secret</span>     <span class="o">=</span> <span class="s2">&quot;Consumer_Secret&quot;</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">access_token</span>        <span class="o">=</span> <span class="s2">&quot;Access_Token&quot;</span>
+</span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">access_token_secret</span> <span class="o">=</span> <span class="s2">&quot;Secret_Token&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>      
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">run</span>
+</span><span class='line'>      <span class="n">feed_sorter</span>
+</span><span class='line'>      <span class="n">feed_parser</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#method to sort if feeds are atom or rss feed</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">feed_sorter</span>
+</span><span class='line'>      <span class="n">feed_num</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">feed</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">feed_num</span> <span class="o">+=</span><span class="mi">1</span>
+</span><span class='line'>          <span class="k">case</span>
+</span><span class='line'>          <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="s1">&#39;feed&#39;</span><span class="p">)</span>
+</span><span class='line'>              <span class="vi">@sorted_feeds</span><span class="o">[</span><span class="n">feed_num</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">feed</span><span class="p">,</span> <span class="s1">&#39;atom&#39;</span><span class="o">]</span>
+</span><span class='line'>          <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="s1">&#39;rss&#39;</span><span class="p">)</span>
+</span><span class='line'>              <span class="vi">@sorted_feeds</span><span class="o">[</span><span class="n">feed_num</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="n">feed</span><span class="p">,</span> <span class="s1">&#39;rss&#39;</span><span class="o">]</span>
+</span><span class='line'>          <span class="k">else</span> <span class="n">invalid</span> <span class="n">feed</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#method to parse feed to retrieve the title and link, and to clean up youtube titles for the goaztecscom yoututbe titles </span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">feed_parser</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="vi">@sorted_feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">case</span>
+</span><span class='line'>          <span class="k">when</span> <span class="n">v</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">==</span> <span class="s2">&quot;rss&quot;</span>
+</span><span class='line'>              <span class="n">rss</span> <span class="o">=</span> <span class="no">SimpleRSS</span><span class="o">.</span><span class="n">parse</span> <span class="nb">open</span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">rss</span><span class="o">.</span><span class="n">channel</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">story</span><span class="o">|</span>
+</span><span class='line'>                  <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">story</span><span class="o">.</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">story</span><span class="o">.</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>                  <span class="n">send_tweet</span>
+</span><span class='line'>              <span class="nb">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">end</span>
+</span><span class='line'>          <span class="k">when</span> <span class="n">v</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">==</span> <span class="s2">&quot;atom&quot;</span>
+</span><span class='line'>              <span class="n">rss</span> <span class="o">=</span> <span class="no">SimpleRSS</span><span class="o">.</span><span class="n">parse</span> <span class="nb">open</span><span class="p">(</span><span class="n">v</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">rss</span><span class="o">.</span><span class="n">entries</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">vid</span><span class="o">|</span>
+</span><span class='line'>                  <span class="n">title</span> <span class="o">=</span> <span class="n">vid</span><span class="o">.</span><span class="n">media_title</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+</span><span class='line'>                  <span class="n">link</span> <span class="o">=</span> <span class="n">vid</span><span class="o">.</span><span class="n">link</span>
+</span><span class='line'>
+</span><span class='line'>                  <span class="n">title</span><span class="o">.</span><span class="n">delete_at</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>                  <span class="k">if</span> <span class="n">title</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">2</span>
+</span><span class='line'>                      <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">strip</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">title</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">strip</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>                      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>                      <span class="n">send_tweet</span>
+</span><span class='line'>                      
+</span><span class='line'>                  <span class="k">else</span>
+</span><span class='line'>                      <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">strip</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>                      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>                      <span class="n">send_tweet</span>
+</span><span class='line'>                  <span class="k">end</span>
+</span><span class='line'>                  <span class="nb">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">end</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">send_tweet</span>
+</span><span class='line'>      <span class="vi">@client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="vi">@tweet</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Sent tweet: </span><span class="si">#{</span><span class="vi">@tweet</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">parser</span> <span class="o">=</span> <span class="no">RssParser</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">parser</span><span class="o">.</span><span class="n">run</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Next Steps</h2>
+
+
+<p>As mentioned there are some flaws with my code so I need to begin refactoring what I’ve got so far.  Below are my to-dos in order to improve this code so it will work with multiple feeds.</p>
+
+<ol>
+    <li>This morning when I tried to rerun the code for some reason it threw an error that the youtube feed is a poorly formatted feed, so that will be the first thing to figure out.</li>
+    <li>Store twitter keys in a yaml file and gitignore</li>
+    <li>Figure out a better, more standard way of sorting the feeds</li>
+    <li>Remove the case statement that changes the GoAztecs youtube titles</li> 
+    <li>Add a check for whether or not the tweets are 140 chars.  If not reduce the title by n - 143 and append &#8216;&#8230;&#8217; to the truncated title and then tweet the title + the link</li>
+    <li>Add a database with CRUD operations so I can store more feeds</li>
+</ol>
+
+
+
+
+<h2>Down the Road</h2>
+
+
+<p>Here are some things I&rsquo;d like to do eventually with this little project.</p>
+
+<ol>
+    <li>Turn it into a sinatra app (good way to learn Sinatra)</li>
+    <li>Add a URL shortener or roll my own</li> 
+    <li>Make it so a user can sign in and create their own RSS Twitter bot by providing their API keys</li>
+</ol>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Notes - Control Flow]]></title>
