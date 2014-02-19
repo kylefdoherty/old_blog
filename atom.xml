@@ -4,7 +4,7 @@
   <title><![CDATA[Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-02-18T00:42:12+01:00</updated>
+  <updated>2014-02-19T12:13:16+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,6 +12,254 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Recoding My RSS Twitter Bot]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/"/>
+    <updated>2014-02-19T12:03:44+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot</id>
+    <content type="html"><![CDATA[<p>My last blog post about my RSS Twitter Bot made realize a lot of flaws with my bot, not only in the code I wrote but the choices I made about what to code.  This led me to re-code the entire bot, but I think the code is much cleaner now.</p>
+
+<figure class='code'><figcaption><span>Recoded RSS Twitter Bot </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;rss&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;open-uri&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;twitter&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;yaml&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">FeedParser</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="o">*</span><span class="n">feeds</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@feeds</span> <span class="o">=</span> <span class="n">feeds</span>
+</span><span class='line'>      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>      <span class="vi">@pub_date</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>      <span class="vi">@tweet_length</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="vi">@tweet</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">140</span>
+</span><span class='line'>              <span class="k">next</span>
+</span><span class='line'>          <span class="k">else</span>
+</span><span class='line'>              <span class="n">tweeter</span><span class="p">(</span><span class="vi">@tweet</span><span class="p">)</span>
+</span><span class='line'>              <span class="nb">puts</span> <span class="s2">&quot;tweeted&quot;</span>
+</span><span class='line'>
+</span><span class='line'>              <span class="nb">sleep</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="no">YAML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s1">&#39;config.yml&#39;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">({</span>
+</span><span class='line'>              <span class="n">consumer_key</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_key&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_secret&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="n">access_token</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="n">access_token_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token_secret&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">run</span>
+</span><span class='line'>      <span class="n">feed_sorter</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># method that sorts feeds</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">feed_sorter</span>
+</span><span class='line'>      <span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">url</span><span class="o">|</span>
+</span><span class='line'>          <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">rss</span><span class="o">|</span>
+</span><span class='line'>              <span class="n">feed</span> <span class="o">=</span> <span class="ss">RSS</span><span class="p">:</span><span class="ss">:Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+</span><span class='line'>          
+</span><span class='line'>              <span class="k">case</span>
+</span><span class='line'>              <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;rss&quot;</span>
+</span><span class='line'>                  <span class="n">rss_parser</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;atom&quot;</span>
+</span><span class='line'>                  <span class="n">atom_parser</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">end</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">rss_parser</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">rss</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">title</span>
+</span><span class='line'>          <span class="n">link</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">link</span>
+</span><span class='line'>          <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>          <span class="vi">@tweet_length</span><span class="o">.</span><span class="n">call</span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">atom_parser</span><span class="p">(</span><span class="n">atom</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">atom</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>          <span class="n">title</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">content</span>
+</span><span class='line'>          <span class="n">link</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">link</span><span class="o">.</span><span class="n">href</span>
+</span><span class='line'>          <span class="vi">@tweet</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">title</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">link</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>          <span class="vi">@tweet_length</span><span class="o">.</span><span class="n">call</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">tweeter</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@client</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tweet</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">parser</span> <span class="o">=</span> <span class="no">FeedParser</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;https://gdata.youtube.com/feeds/api/users/goaztecscom/uploads&#39;</span><span class="p">,</span> <span class="s1">&#39;http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">parser</span><span class="o">.</span><span class="n">run</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>I Switched to the RSS Module</h2>
+
+
+<p>During and after writing the first post about my Twitter Bot I did more research into the Ruby RSS Module and found that it has <code>.feed_type</code> method that allows you to easily sort the types of feeds so you can use the correct methods to parse them.  Sorting the feeds this way is infinitely better than the weird/incorrect way I was doing it before albeit it was good practice with hashes.</p>
+
+<figure class='code'><figcaption><span>Sorting Feeds with the RSS Module</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">url</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">rss</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">feed</span> <span class="o">=</span> <span class="ss">RSS</span><span class="p">:</span><span class="ss">:Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+</span><span class='line'>          
+</span><span class='line'>      <span class="k">case</span>
+</span><span class='line'>      <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;rss&quot;</span>
+</span><span class='line'>          <span class="n">rss_parser</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;atom&quot;</span>
+</span><span class='line'>          <span class="n">atom_parser</span><span class="p">(</span><span class="n">feed</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>I Finally Used a Proc in my Code</h2>
+
+
+<p>I remember learning about Procs and Lamdas on Codecademy and thinking they were pretty cool&hellip;ok really cool.  Since that time I haven’t used them in my code, accept when trying to code FizzBuzz in as many different ways as possible, which sort of makes sense since everything I’m doing is super simple, but still&hellip;I want to use a some damn Procs.</p>
+
+<p>Finally, I found a reason.  When re-coding my bot I decided there was no reason to try and adjust the length of the feed titles because eventually my bot will hopefully use a URL shortener, meaning 99.99% of the time the titles will never make the tweet go over 140 characters.  Still I needed an easy way to keep <code>@tweets</code> that are over 140 characters from being sent to the <code>.tweeter</code> method and causing an error.  Obviously, I could stick an if/else statement in a method and call it from the &lt;.rss> and &lt;.atom> methods, but using a Proc sounded way more fun :).</p>
+
+<figure class='code'><figcaption><span>Using a Proc</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@tweet_length</span> <span class="o">=</span> <span class="no">Proc</span><span class="o">.</span><span class="n">new</span><span class="p">{</span>
+</span><span class='line'><span class="k">if</span> <span class="vi">@tweet</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">140</span>
+</span><span class='line'>      <span class="k">next</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>      <span class="n">tweeter</span><span class="p">(</span><span class="vi">@tweet</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;tweeted&quot;</span>
+</span><span class='line'>      <span class="nb">sleep</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Next Steps</h2>
+
+
+<ol>
+  <li>Check for new articles, videos, etc. in the feeds and only tweet the new ones</li>
+  <li>Learn Sinatra and turn this into a Sinatra App</li>
+  <li>Add a url shortner like bit.ly or roll my own</li>
+</ol>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ruby Notes - Working with Files]]></title>
