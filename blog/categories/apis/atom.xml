@@ -4,7 +4,7 @@
   <title><![CDATA[Category: APIs | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/apis/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-02-19T12:13:16+01:00</updated>
+  <updated>2014-02-26T12:55:45+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -19,6 +19,11 @@
     <updated>2014-02-17T13:07:55+01:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot</id>
     <content type="html"><![CDATA[<p>Last night after finishing my Ruby Notes on the File class I decided I wanted to try building an RSS Twitter bot.  I’d gotten the idea a week or so ago while reading some articles about my Alma Mater’s Top 10 Basketball team, the SDSU Aztecs in case you’re wondering, and thinking it would be cool to create an app that I could plug RSS feeds into and it’d tweet out the updates to the RSS feeds.  This way I’d always be up to date with sports news about my Aztecs and it’d be a good simple project for me to tackle.</p>
+
+<!-- more -->
+
+
+<p></p>
 
 <p><img class="center" src="/images/Twitter_Application_Management.png" title="&lsquo;SDSUSports Twitter App&rsquo; &lsquo;An image my Twitter bot app.&rsquo;" ></p>
 

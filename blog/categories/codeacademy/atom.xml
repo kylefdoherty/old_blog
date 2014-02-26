@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codeacademy | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/codeacademy/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-02-19T12:13:16+01:00</updated>
+  <updated>2014-02-26T12:55:45+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -19,6 +19,9 @@
     <updated>2014-01-30T15:12:44+01:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing</id>
     <content type="html"><![CDATA[<p>I just got through the <a href="http://www.codecademy.com/courses/ruby-beginner-en-L3ZCI/1/1?curriculum_id=5059f8619189a5000201fbcb" target="_blank">Codeacademy Procs section</a> and got so excited I tweeted about them and emailed my girlfriend explaining what Procs are and why they’re so cool&hellip;bad I know.  Luckily she works in finance and is a total excel geek so she can empathize and won’t think I’m a complete weirdo.</p>
+
+<!-- more -->
+
 
 <p><img class="center" src="/images/proc_tweet.png" title="&lsquo;Proc Tweet&rsquo; &lsquo;Tweet about how cool Ruby Procs are&rsquo;" ></p>
 
@@ -86,6 +89,9 @@ over_4_feet = Proc.new { |x| x >= 4 }</p>
 How could you make your program take multiple, separate words to REDACT?
 How might you make a new redacted string and save it as a variable, rather than just printing it to the console?
 Below I’ve shown how I solved each of these so other people doing this problem can see how I solved it, critique my code, and share their solutions.</p>
+
+<!-- more -->
+
 
 <p>As a starting point here is my code for the initial Redacted project before I began solving for the above questions.</p>
 

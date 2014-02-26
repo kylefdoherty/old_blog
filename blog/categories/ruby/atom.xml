@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-02-19T12:13:16+01:00</updated>
+  <updated>2014-02-26T12:55:45+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -14,11 +14,173 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Adding a Feed Class to my Twitter Bot &amp; CLI Interface]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/"/>
+    <updated>2014-02-26T12:47:41+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface</id>
+    <content type="html"><![CDATA[<p>After reading the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and reading the code for his ToDo app I realized I should create a Feed class that has <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank">CRUD</a> operations so I can list, add, edit, and delete my feeds.  It’s probably not the cleanest or most “ruby way" of doing it (if you have any suggestions please let me know) but it got the job done and I’ll refactor it to make it more rubish and/or turn it into a Sinatra app next.</p>
+
+<p>```ruby</p>
+
+<h1>class that stores feeds</h1>
+
+<p>class Feed</p>
+
+<pre><code>attr_accessor :file
+
+def initialize(file = 'feeds.txt') # sets file to save feeds to, sets @feed array, and calls the list method 
+    @file = file 
+    @feeds = []
+
+end 
+
+def create # takes a feed from the user and adds it to the file 
+    puts "Add feed"
+    puts '&gt;&gt;'
+    new_feed = gets.chomp
+    File.open @file, 'a' do |f|
+        f.puts new_feed
+    end 
+    puts "added the feed #{new_feed}"
+end
+
+def get_feeds #gets the feeds from the file and puts them in the @feeds array so they can be used by the .edit and .delete methods
+    File.open(@file).readlines.each do |f|
+        @feeds &lt;&lt; f.strip 
+    end 
+end 
+
+def write_feeds #writes the @feeds array to the file so .edit and .delete can write the @feeds array they've changed to the file 
+    File.open @file, 'w' do |f|
+        @feeds.each {|feed| f.puts(feed)}
+    end
+end 
+
+def edit(name) #takes a file name from the user and then checks if that exists in the @feeds array. 
+    get_feeds  #If it does it gets the id and asks the user what they want to change the name to and then changes that index to the new name.
+               #From here it calls the write_feeds method and writes the new array to the file 
+    if @feeds.include?(name)
+        index = @feeds.index(name)
+        puts "What do you want to change #{name} to?"
+        new_feed = gets.chomp
+        @feeds[index] = new_feed
+        write_feeds
+    else 
+        puts "no such feed"
+    end 
+    list
+end 
+
+
+def delete(name) #works almost the same as the .edit method but instead of changing the feed name it deletes it
+    get_feeds
+
+    if @feeds.include?(name) 
+        index = @feeds.index(name)
+        puts "Are you sure you want to delete #{name}?"
+        puts "Enter 'yes' or 'no':"
+        answer = gets.chomp.downcase
+        if answer == "yes"
+            @feeds.delete_if {|feed| feed == name}
+            write_feeds
+            puts "Feed #{name} has been deleted."
+        else 
+            puts "Ok I won't delete it then."
+        end 
+    else 
+        puts "Sorry don't have that file."
+    end 
+end 
+
+def list #if the feeds.txt file is empty it asks for feeds, if not it puts the feeds from the file 
+    read_file = File.read @file
+    if read_file.empty?
+        puts "the file is empty please add some feeds"
+        create
+    else
+        puts "here is the list of feeds from file #{@file}" 
+        puts read_file
+    end 
+end 
+</code></pre>
+
+<p>end
+```</p>
+
+<p>After finishing this I decided I wanted to add some sort of command line interface so I could list out, add, edit, and delete the feeds from my terminal. I also added the -tweet command which runs the FeedParser class and begins tweeting out the feeds.  I realize there is an options parser library I could use for this but I wanted to design and build my own.</p>
+
+<p>```ruby
+require_relative &lsquo;feed&rsquo;
+require_relative &lsquo;feed_parser&rsquo;</p>
+
+<p>class CommandLineInterface #allows user to interact with feed.rb to list, add, edit, and delete</p>
+
+<pre><code>def initialize 
+    @feeds = Feed.new
+    take_commands
+end 
+
+def take_commands
+    puts "What do you want to do?  To see list of commands enter -commands"
+    until false 
+    response = gets.chomp.downcase
+    parse_response(response)
+    end 
+end 
+
+def parse_response(response)
+    if response == "-commands"
+        puts "-list   - list your feeds"
+        puts "-add    - add a new feed"
+        puts "-edit   - edit an existing feed"
+        puts "-delete - delete an existing feed"
+        puts "-tweet  - tweets out the feeds" 
+        puts "-quit  - quit this program"
+
+    else 
+        case response 
+        when "-list"
+            @feeds.list
+        when "-add"
+            @feeds.add
+        when "-edit"
+            puts "feed name:"
+            name = gets.chomp
+            @feeds.edit(name)
+        when "-delete"
+            puts "feed name:"
+            name = gets.chomp
+            @feeds.delete(name)
+        when "-tweet"
+            parser = FeedParser.new(@feeds.get_feeds)
+            parser.run
+
+        when "-quit"
+            exit 
+        else 
+            p 'not a valid command'
+        end 
+    end 
+    take_commands
+end 
+</code></pre>
+
+<p>end</p>
+
+<p>cli = CommandLineInterface.new<br/>
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Recoding My RSS Twitter Bot]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/"/>
     <updated>2014-02-19T12:03:44+01:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot</id>
     <content type="html"><![CDATA[<p>My last blog post about my RSS Twitter Bot made realize a lot of flaws with my bot, not only in the code I wrote but the choices I made about what to code.  This led me to re-code the entire bot, but I think the code is much cleaner now.</p>
+
+<!-- more -->
+
 
 <p>```ruby  Recoded RSS Twitter Bot
 require &lsquo;rss&rsquo;
@@ -171,6 +333,9 @@ end
     <updated>2014-02-17T22:56:05+01:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files</id>
     <content type="html"><![CDATA[<p>My next “Ruby Notes” post was going to be on arrays but in my last couple of mini projects, <a href="https://github.com/kylefdoherty/ruby-quiz-solutions/tree/master/text_munger_76" target="_blank">Text Munger problem on RubyQuiz</a>, and building an <a href="https://github.com/kylefdoherty/image-editor" target="_blank">image editor command line app</a>, I had to work a lot with files and directories and realized I didn’t have a great handle on them.  To remedy this I did what I always do, a bunch of reading, practice problems, and put it all down in my notebook.  There still is a lot for me to learn but I think this lays a good foundation for understanding and working with files in Ruby.</p>
+
+<!-- more -->
+
 
 <h2>IO Class</h2>
 
@@ -522,6 +687,11 @@ end</p>
     <id>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot</id>
     <content type="html"><![CDATA[<p>Last night after finishing my Ruby Notes on the File class I decided I wanted to try building an RSS Twitter bot.  I’d gotten the idea a week or so ago while reading some articles about my Alma Mater’s Top 10 Basketball team, the SDSU Aztecs in case you’re wondering, and thinking it would be cool to create an app that I could plug RSS feeds into and it’d tweet out the updates to the RSS feeds.  This way I’d always be up to date with sports news about my Aztecs and it’d be a good simple project for me to tackle.</p>
 
+<!-- more -->
+
+
+<p></p>
+
 <p><img class="center" src="/images/Twitter_Application_Management.png" title="&lsquo;SDSUSports Twitter App&rsquo; &lsquo;An image my Twitter bot app.&rsquo;" ></p>
 
 <h2>Reading RSS Feeds</h2>
@@ -703,6 +873,9 @@ parser.run
     <id>http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control</id>
     <content type="html"><![CDATA[<p>I’m 4 weeks into my 25 hours a week of Ruby self-study (I work part time right now otherwise it’d be 40+ hours) and just completed
 <a href="http://www.codecademy.com/tracks/ruby" target="_blank">Codecademy’s Ruby track.</a>  Finishing was great but I felt I&rsquo;d  only scratched the surface of Ruby and programming in general.  To supplement my minimal Ruby knowledge I decided to begin additional research and create study notes and do practice problems for each topic covered by Codecadmny, such as control flow, arrays, blocks, etc.  This has already proven a success as I’ve seen a marked difference in my confidence and coding ability after completing notes for Control Flow and Arrays.</p>
+
+<!-- more -->
+
 
 <p>Now I’ve decided to turn my notes and practice problems into blog posts because:</p>
 
@@ -918,68 +1091,6 @@ end
 ```</p>
 
 <p>Further reading on sase statements try &ndash; <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ruby Procs are Amazing!]]></title>
-    <link href="http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/"/>
-    <updated>2014-01-30T15:12:44+01:00</updated>
-    <id>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing</id>
-    <content type="html"><![CDATA[<p>I just got through the <a href="http://www.codecademy.com/courses/ruby-beginner-en-L3ZCI/1/1?curriculum_id=5059f8619189a5000201fbcb" target="_blank">Codeacademy Procs section</a> and got so excited I tweeted about them and emailed my girlfriend explaining what Procs are and why they’re so cool&hellip;bad I know.  Luckily she works in finance and is a total excel geek so she can empathize and won’t think I’m a complete weirdo.</p>
-
-<p><img class="center" src="/images/proc_tweet.png" title="&lsquo;Proc Tweet&rsquo; &lsquo;Tweet about how cool Ruby Procs are&rsquo;" ></p>
-
-<p><img class="center" src="/images/proc_email.png" title="&lsquo;Proc Email&rsquo; &lsquo;Email about how cool Ruby Procs are&rsquo;" ></p>
-
-<p>Since I already tweeted and sent an email about Procs I figured I’d post about them to round things out.</p>
-
-<h2>Why Procs are Cool</h2>
-
-
-<p>Procs allow you to save a block of code, something like <code>{ |x| x *3 }</code> which is saying take whatever I give you (x) and multiply it by 3.  What you can then do with this is pass it to methods.</p>
-
-<p>So for example, I have an array of people&rsquo;s heights, like so:</p>
-
-<p><code>ruby
-array = [4.5, 5, 6, 3.5, 3]
-</code></p>
-
-<p>And I want to get all the heights that are above 4 feet tall because that&rsquo;s how tall you have to be to ride the ride&hellip;le duh.</p>
-
-<p>I could write some long method called <code>rubyover_4_feet</code> where I pass it the array and then it returns the heights that are above 4 feet tall.  But that would require 9 lines of code&hellip;maybe less but that&rsquo;s how many lines it took me.</p>
-
-<p>``` ruby
-def over_4_feet(array)</p>
-
-<pre><code>new_arr = []
-array.each do |i|
-    unless i &lt; 4
-        new_arr &lt;&lt; i
-    end 
-end 
-return new_arr
-</code></pre>
-
-<p>end
-```</p>
-
-<p>Instead I can call the method <code>.select</code> on the array and pass it a Proc that tells it to only select heights that are taller than 4 feet.</p>
-
-<p>Below is a proc that checks for being over 4 feet tall. Then I just pass that proc to the <code>.select</code> method telling it to only &ldquo;select&rdquo; heights over 4 feet.</p>
-
-<p>``` ruby
-over_4_feet = Proc.new { |x| x >= 4 }</p>
-
-<p>array.select(&amp;over_4_feet)
-```</p>
-
-<p>So what took me 9 lines of code I did in 1, since passing the Proc to select is the same as calling the over_4_feet method.</p>
-
-<h3>AMAZING!!!</h3>
-
-
-<p><a href="http://gifsoup.com/view/2169429/nets-fan.html" target="_blank"><img src="http://stream1.gifsoup.com/view3/2169429/nets-fan-o.gif" border="0"/></a><br /><a href="http://gifsoup.com" title="GIFSoup" target="_blank"></a></p>
 ]]></content>
   </entry>
   

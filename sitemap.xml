@@ -4,41 +4,47 @@
         <loc>
             http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot/
         </loc>
-        <lastmod>2014-01-30T11:18:49+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:17+01:00</lastmod>
     </url>
     <url>
         <loc>
             http://kylefdoherty.github.io/blog/2014/01/30/quite-your-job-move-to-switzerland-learn-to-program/
         </loc>
-        <lastmod>2014-01-30T11:18:48+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:15+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/</loc>
-        <lastmod>2014-01-30T15:35:46+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:13+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control/</loc>
-        <lastmod>2014-02-07T12:38:59+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:31+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot/</loc>
-        <lastmod>2014-02-17T13:36:30+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:30+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/</loc>
-        <lastmod>2014-02-18T00:41:20+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:37+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/</loc>
-        <lastmod>2014-02-19T12:12:35+01:00</lastmod>
+        <lastmod>2014-02-19T13:04:48+01:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/
+        </loc>
+        <lastmod>2014-02-26T12:55:09+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/archives/</loc>
-        <lastmod>2014-02-19T12:12:35+01:00</lastmod>
+        <lastmod>2014-02-26T12:55:09+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/</loc>
-        <lastmod>2014-02-19T12:12:35+01:00</lastmod>
+        <lastmod>2014-02-26T12:55:09+01:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/robots.txt</loc>
