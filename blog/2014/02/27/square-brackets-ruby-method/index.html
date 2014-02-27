@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Procs - Learning Programming <br> & <br> Stuff</title>
+  <title>.[ ] Method...Huh? - Learning Programming <br> & <br> Stuff</title>
   <meta name="author" content="Kyle Doherty">
 
   
-  <meta name="description" content="Category: Procs">
+  <meta name="description" content="I came across the blog post “What I Wish a Ruby Programmer Had Told Me One Year Ago” and started reading through the author Simon’s code for the &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://kylefdoherty.github.ioblog/categories/procs">
+  <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" >
@@ -90,104 +90,79 @@
     	<section class="right">
     		<div class="inner-right">
     			<div id="posts">
-    			  	<div>
-<article role="article">
-  
+    			  	<article class="post">
+    
   <header>
-    <h1 class="entry-title">Category: Procs</h1>
+    
+      <h1 class="entry-title">.[ ] Method...Huh?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-27T18:25:28+01:00" pubdate data-updated="true">Feb 27<span>th</span>, 2014</time>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>I came across the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and started reading through the author Simon’s code for the first iteration of his todo app to figure out what was going on.  One method he used was:</p>
 
-  
-  <h2>2014</h2>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">[]</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+</span><span class='line'>  <span class="vi">@list</span><span class="o">[</span><span class="nb">id</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<article>
-  
-<h1><a href="/blog/2014/01/30/ruby-procs-are-amazing/">Ruby Procs are Amazing!</a></h1>
-<time datetime="2014-01-30T15:12:44+01:00" pubdate><span class='month'>Jan</span> <span class='day'>30</span> <span class='year'>2014</span></time>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/codeacademy/'>Codeacademy</a>, <a class='category' href='/blog/categories/procs/'>Procs</a>, <a class='category' href='/blog/categories/ruby/'>Ruby</a></span>
-</footer>
+<p>This had me pretty confused at first. Then when I looked at how he was running the code I saw he was calling this method like you would access an element in an array.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">list</span> <span class="o">=</span> <span class="no">TodoList</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;todo.td&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">list</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">done</span> <span class="o">=</span> <span class="kp">true</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It turns out in Ruby you can use special characters to name methods including the array lookup syntax, square brackets.  In this way he names the method <code>[ ]</code> and passes it an <code>(id)</code>, which is then passed to the array <code>@list</code> to lookup that element in the <code>@list</code> array.  Essentially he’s creating a lookup on the instance of his class <code>TodoList</code>, so he can use <code>[ ]</code> to lookup specific todo items just like he would if here were accessing them in array, which technically he is&hellip;the @list array.  Pretty Cool!</p>
+
+<p>Check out this Stackoverflow answer for some good examples of how to use the [ ] method, <a href="http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work" target="_blank"><a href="http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work">http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work</a></a></p>
+
+<p>Here is another great Stackoverflow answer about Ruby Method names, <a href="http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby" target="_blank"><a href="http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby">http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby</a></a></p>
+</div>
 
 
 </article>
 
+
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/" data-via="kylefdoherty" data-counturl="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/" >Tweet</a>
+  
+  
+  
 </div>
 
-  
-</article>
 
+
+
+<section id="comments">
+    <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/02/27/square-brackets-ruby-method/">.[ ] Method...Huh?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/">Adding a Feed Class to My Twitter Bot &amp; CLI Interface</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/19/recoding-my-rss-twitter-bot/">Recoding My RSS Twitter Bot</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/17/ruby-notes-working-with-files/">Ruby Notes - Working With Files</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/02/17/building-an-rss-twitter-bot/">Building an RSS Twitter Bot</a>
-      </li>
-    
-  </ul>
 </section>
-
-<section>
-  <h1>GitHub Repos</h1>
-  <ul id="gh_repos">
-    <li class="loading">Status updating...</li>
-  </ul>
-  
-  <a href="https://github.com/kylefdoherty">@kylefdoherty</a> on GitHub
-  
-  <script type="text/javascript">
-    $(document).ready(function(){
-        if (!window.jXHR){
-            var jxhr = document.createElement('script');
-            jxhr.type = 'text/javascript';
-            jxhr.src = '/javascripts/libs/jXHR.js';
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(jxhr, s);
-        }
-
-        github.showRepos({
-            user: 'kylefdoherty',
-            count: 0,
-            skip_forks: true,
-            target: '#gh_repos'
-        });
-    });
-  </script>
-  <script src="/javascripts/github.js" type="text/javascript"> </script>
-</section>
-
-
-
-
-
-  
-</aside>
 
 
     			</div>
@@ -204,7 +179,10 @@
       var disqus_shortname = 'learningprogrammingandstuff';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/';
+        var disqus_url = 'http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
