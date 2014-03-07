@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Structs | Learning Programming <br> & <br> Stuff]]></title>
+  <link href="http://kylefdoherty.github.io/blog/categories/structs/atom.xml" rel="self"/>
+  <link href="http://kylefdoherty.github.io/"/>
+  <updated>2014-03-07T16:37:45+01:00</updated>
+  <id>http://kylefdoherty.github.io/</id>
+  <author>
+    <name><![CDATA[Kyle Doherty]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ruby Notes: Structs]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs/"/>
+    <updated>2014-03-07T16:11:19+01:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs</id>
+    <content type="html"><![CDATA[<p>I recently learned about Structs while working my way through <a href="http://pragmaticstudio.com/courses" target="_blank">Pragmatic Studio’s Ruby Programming course</a>, which I highly recommend btw.  If you’re a beginner like me it will apply your basic Ruby knowledge to a project and teach you some new things along the way&hellip;like Structs.</p>
+
+<p>Structs are simply a collection of attributes, meaning they only have state, whereas Classes have state and behavior.  To illustrate imagine we have a library class containing a bunch of book objects (its state) that you can check out and do other things to (behavior).</p>
+
+<p>``` ruby Library Class
+class Library</p>
+
+<pre><code>def initialize 
+    @books = [ ]
+end 
+
+def checkout 
+    # code to checkout a book
+end 
+</code></pre>
+
+<p>end<br/>
+```</p>
+
+<p>Our book objects however don’t do anything i.e. they don’t have any behavior, they just have the attributes <code>@title</code>, <code>@author</code>, and <code>@page_number</code>.  We could create a class for our book object</p>
+
+<p>```ruby Book Class
+class Book</p>
+
+<pre><code>attr_reader :title, :author, :page_number
+
+def initialize(title, author, page_number)
+    @title = title
+    @author = author
+    @page_number = page_number
+end
+</code></pre>
+
+<p>end
+```</p>
+
+<p>OR we could create a Book Struct instead. This is sort of a shortcut to creating our Book Class because creating a struct creates a class object that you can then use to create object instances with readable and writable attributes.</p>
+
+<p>```ruby Book Struct
+Book = Struct.new(:title, :author, :page_number)</p>
+
+<h1>=> Book</h1>
+
+<p>```
+This code has gone and created a class called Book just like we with the Book class above, meaning now we can create as many books as we want by calling <code>Book.new</code> and passing it a title, author, and number of pages.  The main difference between using a Struct vs a Class (besides the amount of code you need to write) is when we use <code>Book.new</code> to create a new book object it is a Struct object instead of a Class and thus has some additional methods for accessing its attributes, which you can check out in the <a href="http://ruby-doc.org/core-1.9.3/Struct.html" target="_blank">Struct Class doc</a>.</p>
+
+<p>```ruby
+book1 = Book.new(“Learn to Program”, “Chris Pine”, 171)</p>
+
+<h1>=> <struct Book title="Learn to Program", author="Chris Pine", page_number=171></h1>
+
+<p>```
+With the code above we now have an instance of the Book object, which is a Struct, and we can read and write the <code>:title</code>, <code>:author</code>, and <code>:page_number</code> attributes just like we would with a class instance. In addition to the normal way of accessing these attributes you can also use the <code>[]</code> method like you would use for accessing an index of an array or value of a hash.</p>
+
+<p>```ruby
+book1[0]</p>
+
+<h1>=> “Learn to Program”</h1>
+
+<p>book1[“title”]</p>
+
+<h1>=> “Learn to Program”</h1>
+
+<p>book1[:title]</p>
+
+<h1>=> “Learn to Program”</h1>
+
+<p>```</p>
+
+<p>If you want to create a Read-only struct check out the <a href="https://github.com/janlelis/value_struct" target="_blank">Value Struct Gem</a> and this <a href="http://ruby.janlelis.de/65-value_struct-read-only-structs-in-ruby" target="_blank">blog post</a> about it.</p>
+
+<p>Finally, if you want a more comprehensive explination of Structs read the blog post <a href="http://blog.rubybestpractices.com/posts/rklemme/017-Struct.html" target="_blank">Structs Inside and Out</a></p>
+]]></content>
+  </entry>
+  
+</feed>
