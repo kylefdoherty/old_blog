@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-03-07T16:37:45+01:00</updated>
+  <updated>2014-03-14T16:08:37+01:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -118,7 +118,7 @@ It turns out in Ruby you can use special characters to name methods including th
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Adding a Feed Class to my Twitter Bot &amp; CLI Interface]]></title>
+    <title type="html"><![CDATA[Adding a Feed Class &amp; CLI Interface to my Twitter Bot ]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/"/>
     <updated>2014-02-26T12:47:41+01:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface</id>
