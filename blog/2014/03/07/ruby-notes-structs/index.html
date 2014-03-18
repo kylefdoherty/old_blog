@@ -183,14 +183,14 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Using a Struct required far less code than writing out the book class ourselves and by calling <code>.class</code> on Book we can see that <code>Struct.new</code> actually went and generated the book class for us just like we did above.</p>
+<p>Using a Struct required far less code than writing out the book class ourselves and by calling <code>.class</code> on Book we can see that <code>Struct.new</code> actually went and generated the book class we made above for us&hellip;pretty cool huh!</p>
 
-<h2>Create Some Book Objects</h2>
+<h2>Create Object Instances</h2>
 
 
-<p>With our new Book class we can create as many new book objects as we want by calling <code>Book.new</code> and passing it a title, author, and number of pages.</p>
+<p>With this Book class we can create as many new book objects as we want by calling <code>Book.new</code> and passing it a title, author, and number of pages, like below:</p>
 
-<figure class='code'><figcaption><span>Making Books with the Book Struct</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -209,7 +209,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are Struct objects (create some in IRB and call <code>.class</code> on them to see this) and therefore have some handy struct methods for accessing their attributes.</p>
+<p>This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are actually Struct objects (create some in IRB and call <code>.class</code> on them to see this) and therefore have some handy struct methods for accessing their attributes.</p>
 
 <h2>Accessing Attributes</h2>
 
