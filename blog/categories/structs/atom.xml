@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Structs | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/structs/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-03-18T11:08:19+01:00</updated>
+  <updated>2014-05-28T19:55:19-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -14,9 +14,9 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ruby Notes: Structs]]></title>
+    <title type="html"><![CDATA[Ruby Notes - Structs]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs/"/>
-    <updated>2014-03-07T16:11:19+01:00</updated>
+    <updated>2014-03-07T10:11:19-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs</id>
     <content type="html"><![CDATA[<p>I recently learned about Structs while working my way through <a href="http://pragmaticstudio.com/courses" target="_blank">Pragmatic Studio’s Ruby Programming course</a>, which I highly recommend btw.  If you’re a beginner like me it will apply your basic Ruby knowledge to a project and teach you some new things along the way&hellip;like Structs.</p>
 

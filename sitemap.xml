@@ -4,58 +4,62 @@
         <loc>
             http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot/
         </loc>
-        <lastmod>2014-02-19T13:04:17+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:17-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/</loc>
-        <lastmod>2014-02-19T13:04:13+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:13-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/07/ruby-notes-flow-control/</loc>
-        <lastmod>2014-02-19T13:04:31+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:31-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot/</loc>
-        <lastmod>2014-02-19T13:04:30+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:30-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/</loc>
-        <lastmod>2014-02-19T13:04:37+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:37-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/</loc>
-        <lastmod>2014-02-19T13:04:48+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:48-05:00</lastmod>
     </url>
     <url>
         <loc>
             http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/
         </loc>
-        <lastmod>2014-03-14T16:06:46+01:00</lastmod>
+        <lastmod>2014-03-14T11:06:46-04:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/</loc>
-        <lastmod>2014-02-27T18:42:40+01:00</lastmod>
+        <lastmod>2014-02-27T12:42:40-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs/</loc>
-        <lastmod>2014-03-18T11:08:12+01:00</lastmod>
+        <lastmod>2014-05-28T19:35:16-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://kylefdoherty.github.io/blog/2014/05/28/learn-to-program-by-blogging/</loc>
+        <lastmod>2014-05-28T19:55:06-04:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/blog/archives/</loc>
-        <lastmod>2014-03-18T11:08:12+01:00</lastmod>
+        <lastmod>2014-05-28T19:55:06-04:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/</loc>
-        <lastmod>2014-03-18T11:08:12+01:00</lastmod>
+        <lastmod>2014-05-28T19:55:06-04:00</lastmod>
     </url>
     <url>
         <loc>
             http://kylefdoherty.github.io/pending_posts/2014-01-30-quite-your-job-move-to-switzerland-learn-to-program.html
         </loc>
-        <lastmod>2014-02-19T13:04:15+01:00</lastmod>
+        <lastmod>2014-02-19T07:04:15-05:00</lastmod>
     </url>
     <url>
         <loc>http://kylefdoherty.github.io/robots.txt</loc>
-        <lastmod>2014-01-30T10:09:13+01:00</lastmod>
+        <lastmod>2014-01-30T04:09:13-05:00</lastmod>
     </url>
 </urlset>

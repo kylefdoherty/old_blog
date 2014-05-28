@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby Methods | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby-methods/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-03-18T11:08:19+01:00</updated>
+  <updated>2014-05-28T19:55:19-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[.[ ] Method...Huh?]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/"/>
-    <updated>2014-02-27T18:25:28+01:00</updated>
+    <updated>2014-02-27T12:25:28-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method</id>
     <content type="html"><![CDATA[<p>I came across the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and started reading through the author Simon’s code for the first iteration of his todo app to figure out what was going on.  One method he used was:
 <code>ruby
