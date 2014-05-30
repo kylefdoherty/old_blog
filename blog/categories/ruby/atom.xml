@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-05-28T19:56:49-04:00</updated>
+  <updated>2014-05-30T16:09:36-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -88,7 +88,7 @@ book1 = Book.new(“Learn to Program”, “Chris Pine”, 171)</p>
 <h1>=> <struct Book title="Programming Ruby 1.9 & 2.0: The Pragmatic Programmers' Guide (The Facets of Ruby)", author="Dave Thomas, Andy Hunt, Chris Fowler", page_number=888></h1>
 
 <p>```
-This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are actually Struct objects (create some in IRB and call <code>.class</code> on them to see this) and therefore have some handy struct methods for accessing their attributes.</p>
+This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are actually Struct objects and therefore have some handy struct methods for accessing their attributes.</p>
 
 <h2>Accessing Attributes</h2>
 
