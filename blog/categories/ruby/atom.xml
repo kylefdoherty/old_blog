@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-05-30T16:09:36-04:00</updated>
+  <updated>2014-06-07T09:33:23-07:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Ruby Notes - Structs]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs/"/>
-    <updated>2014-03-07T10:11:19-05:00</updated>
+    <updated>2014-03-07T07:11:19-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs</id>
     <content type="html"><![CDATA[<p>I recently learned about Structs while working my way through <a href="http://pragmaticstudio.com/courses" target="_blank">Pragmatic Studio’s Ruby Programming course</a>, which I highly recommend btw.  If you’re a beginner like me it will apply your basic Ruby knowledge to a project and teach you some new things along the way&hellip;like Structs.</p>
 
@@ -133,7 +133,7 @@ book1[0]</p>
   <entry>
     <title type="html"><![CDATA[.[ ] Method...Huh?]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/"/>
-    <updated>2014-02-27T12:25:28-05:00</updated>
+    <updated>2014-02-27T09:25:28-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method</id>
     <content type="html"><![CDATA[<p>I came across the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and started reading through the author Simon’s code for the first iteration of his todo app to figure out what was going on.  One method he used was:
 <code>ruby
@@ -157,7 +157,7 @@ It turns out in Ruby you can use special characters to name methods including th
   <entry>
     <title type="html"><![CDATA[Adding a Feed Class &amp; CLI Interface to my Twitter Bot ]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/"/>
-    <updated>2014-02-26T06:47:41-05:00</updated>
+    <updated>2014-02-26T03:47:41-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface</id>
     <content type="html"><![CDATA[<p>After reading the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and reading the code for his ToDo app I realized I should create a Feed class that has <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank">CRUD</a> operations so I can list, add, edit, and delete my feeds.  It’s probably not the cleanest or most “ruby way" of doing it (if you have any suggestions please let me know) but it got the job done and I’ll refactor it to make it more rubish and/or turn it into a Sinatra app next.</p>
 
@@ -316,7 +316,7 @@ end
   <entry>
     <title type="html"><![CDATA[Recoding My RSS Twitter Bot]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/"/>
-    <updated>2014-02-19T06:03:44-05:00</updated>
+    <updated>2014-02-19T03:03:44-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot</id>
     <content type="html"><![CDATA[<p>My last blog post about my RSS Twitter Bot made realize a lot of flaws with my bot, not only in the code I wrote but the choices I made about what to code.  This led me to re-code the entire bot, but I think the code is much cleaner now.</p>
 
@@ -471,7 +471,7 @@ end
   <entry>
     <title type="html"><![CDATA[Ruby Notes - Working with Files]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/"/>
-    <updated>2014-02-17T16:56:05-05:00</updated>
+    <updated>2014-02-17T13:56:05-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files</id>
     <content type="html"><![CDATA[<p>My next “Ruby Notes” post was going to be on arrays but in my last couple of mini projects, <a href="https://github.com/kylefdoherty/ruby-quiz-solutions/tree/master/text_munger_76" target="_blank">Text Munger problem on RubyQuiz</a>, and building an <a href="https://github.com/kylefdoherty/image-editor" target="_blank">image editor command line app</a>, I had to work a lot with files and directories and realized I didn’t have a great handle on them.  To remedy this I did what I always do, a bunch of reading, practice problems, and put it all down in my notebook.  There still is a lot for me to learn but I think this lays a good foundation for understanding and working with files in Ruby.</p>
 

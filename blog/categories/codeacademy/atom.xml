@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codeacademy | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/codeacademy/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-05-30T16:09:36-04:00</updated>
+  <updated>2014-06-07T09:33:23-07:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Ruby Procs are Amazing!]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing/"/>
-    <updated>2014-01-30T09:12:44-05:00</updated>
+    <updated>2014-01-30T06:12:44-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/01/30/ruby-procs-are-amazing</id>
     <content type="html"><![CDATA[<p>I just got through the <a href="http://www.codecademy.com/courses/ruby-beginner-en-L3ZCI/1/1?curriculum_id=5059f8619189a5000201fbcb" target="_blank">Codeacademy Procs section</a> and got so excited I tweeted about them and emailed my girlfriend explaining what Procs are and why they’re so cool&hellip;bad I know.  Luckily she works in finance and is a total excel geek so she can empathize and won’t think I’m a complete weirdo.</p>
 
@@ -81,7 +81,7 @@ over_4_feet = Proc.new { |x| x >= 4 }</p>
   <entry>
     <title type="html"><![CDATA[Codeacademy Redactor Problem - Think About The Following...]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot/"/>
-    <updated>2014-01-30T04:45:04-05:00</updated>
+    <updated>2014-01-30T01:45:04-08:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/01/30/codeacademy-redactor-problem-think-about-the-following-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>At the end of the Redacted! project in Codeacademy’s Ruby track they ask you to think about a few things:</p>
 
