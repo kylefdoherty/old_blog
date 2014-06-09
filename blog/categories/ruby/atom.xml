@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-06-07T09:33:23-07:00</updated>
+  <updated>2014-06-09T13:31:46-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -14,126 +14,9 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Ruby Notes - Structs]]></title>
-    <link href="http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs/"/>
-    <updated>2014-03-07T07:11:19-08:00</updated>
-    <id>http://kylefdoherty.github.io/blog/2014/03/07/ruby-notes-structs</id>
-    <content type="html"><![CDATA[<p>I recently learned about Structs while working my way through <a href="http://pragmaticstudio.com/courses" target="_blank">Pragmatic Studio’s Ruby Programming course</a>, which I highly recommend btw.  If you’re a beginner like me it will apply your basic Ruby knowledge to a project and teach you some new things along the way&hellip;like Structs.</p>
-
-<h2>What Are Structs</h2>
-
-
-<p>Structs are simply a collection of attributes, meaning they only have state, whereas Classes have both attributes and methods (state and behavior).  To illustrate imagine we have a library class containing a bunch of book objects (its state) that you can check out and do other things to (its behavior). This type of object, since it has state and behavior warrants using a class.</p>
-
-<p>``` ruby Library Class
-class Library</p>
-
-<pre><code>def initialize 
-    @books = []
-end 
-
-def checkout 
-    # code to checkout a book
-end 
-</code></pre>
-
-<p>end<br/>
-```
-Now, let’s assume the book objects the library class will contain won’t have any behavior i.e. they won’t have methods, they’ll simply have attributes such as: <code>@title</code>, <code>@author</code>, and <code>@page_number</code>.  We could create a book class like this:</p>
-
-<p>```ruby Book Class
-class Book</p>
-
-<pre><code>attr_reader :title, :author, :page_number
-
-def initialize(title, author, page_number)
-    @title = title
-    @author = author
-    @page_number = page_number
-end
-</code></pre>
-
-<p>end
-```
-OR since the book object has no methods we can use a Struct like so:</p>
-
-<p>```ruby Book Struct
-Book = Struct.new(:title, :author, :page_number)</p>
-
-<h1>=> Book</h1>
-
-<p>Book.class</p>
-
-<h1>=> Class</h1>
-
-<p>```
-Using a Struct required far less code than writing out the book class ourselves and by calling <code>.class</code> on Book we can see that <code>Struct.new</code> actually went and generated the book class we made above for us&hellip;pretty cool huh!</p>
-
-<h2>Create Object Instances</h2>
-
-
-<p>With this Book class we can create as many new book objects as we want by calling <code>Book.new</code> and passing it a title, author, and number of pages, like below:</p>
-
-<p>```ruby
-book1 = Book.new(“Learn to Program”, “Chris Pine”, 171)</p>
-
-<h1>=> <struct Book title="Learn to Program", author="Chris Pine", page_number=171></h1>
-
-<p>book2 = Book.new(“The Well Grounded Rubyist”, “David A. Black”, 500)</p>
-
-<h1>=> <struct Book title="The Well Grounded Rubyist", author="David A. Black", page_number=500></h1>
-
-<p>book3 = Book.new(“Programming Ruby 1.9 &amp; 2.0: The Pragmatic Programmers Guide (The Facets of Ruby)”, “Dave Thomas, Andy Hunt, Chris Fowler”, 888)</p>
-
-<h1>=> <struct Book title="Programming Ruby 1.9 & 2.0: The Pragmatic Programmers' Guide (The Facets of Ruby)", author="Dave Thomas, Andy Hunt, Chris Fowler", page_number=888></h1>
-
-<p>```
-This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are actually Struct objects and therefore have some handy struct methods for accessing their attributes.</p>
-
-<h2>Accessing Attributes</h2>
-
-
-<p>In addition to the normal way of accessing class attributes you can also use the <code>[]</code> method to access attributes like you would from an array by inserting the index in the brackets or like you from a hash by inserting the key in the brackets.  Here are some examples:</p>
-
-<p>```ruby Accessing Struct Attributes
-book1[0]</p>
-
-<h1>=> “Learn to Program”</h1>
-
-<p>book1[“title”]</p>
-
-<h1>=> “Learn to Program”</h1>
-
-<p>book1[:title]</p>
-
-<h1>=> “Learn to Program”</h1>
-
-<p>```</p>
-
-<p>As you can see you can access the <code>title</code> attribute by index or by name using a String or Symbol.</p>
-
-<h2>Learn More About Structs</h2>
-
-
-
-
-<ul>
-    <li>You can see more Struct methods by checking out the <a href="http://ruby-doc.org/core-1.9.3/Struct.html" target="_blank">Struct Class doc</a>.</li>
-
-    <li>For a more comprehensive explination of Structs read the blog post <a href="http://blog.rubybestpractices.com/posts/rklemme/017-Struct.html" target="_blank">Structs Inside and Out</a></li>
-
-    <li>If you want to make Read-only Structs check out the <a href="https://github.com/janlelis/value_struct" target="_blank">Value Struct Gem</a> and this <a href="http://ruby.janlelis.de/65-value_struct-read-only-structs-in-ruby" target="_blank">blog post</a> about it.</li>
-</ul>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
     <title type="html"><![CDATA[.[ ] Method...Huh?]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/"/>
-    <updated>2014-02-27T09:25:28-08:00</updated>
+    <updated>2014-02-27T12:25:28-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method</id>
     <content type="html"><![CDATA[<p>I came across the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and started reading through the author Simon’s code for the first iteration of his todo app to figure out what was going on.  One method he used was:
 <code>ruby
@@ -157,7 +40,7 @@ It turns out in Ruby you can use special characters to name methods including th
   <entry>
     <title type="html"><![CDATA[Adding a Feed Class &amp; CLI Interface to my Twitter Bot ]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface/"/>
-    <updated>2014-02-26T03:47:41-08:00</updated>
+    <updated>2014-02-26T06:47:41-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/26/adding-a-feed-class-to-my-twitter-bot-and-cli-interface</id>
     <content type="html"><![CDATA[<p>After reading the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and reading the code for his ToDo app I realized I should create a Feed class that has <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank">CRUD</a> operations so I can list, add, edit, and delete my feeds.  It’s probably not the cleanest or most “ruby way" of doing it (if you have any suggestions please let me know) but it got the job done and I’ll refactor it to make it more rubish and/or turn it into a Sinatra app next.</p>
 
@@ -316,7 +199,7 @@ end
   <entry>
     <title type="html"><![CDATA[Recoding My RSS Twitter Bot]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot/"/>
-    <updated>2014-02-19T03:03:44-08:00</updated>
+    <updated>2014-02-19T06:03:44-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/19/recoding-my-rss-twitter-bot</id>
     <content type="html"><![CDATA[<p>My last blog post about my RSS Twitter Bot made realize a lot of flaws with my bot, not only in the code I wrote but the choices I made about what to code.  This led me to re-code the entire bot, but I think the code is much cleaner now.</p>
 
@@ -471,7 +354,7 @@ end
   <entry>
     <title type="html"><![CDATA[Ruby Notes - Working with Files]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/"/>
-    <updated>2014-02-17T13:56:05-08:00</updated>
+    <updated>2014-02-17T16:56:05-05:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files</id>
     <content type="html"><![CDATA[<p>My next “Ruby Notes” post was going to be on arrays but in my last couple of mini projects, <a href="https://github.com/kylefdoherty/ruby-quiz-solutions/tree/master/text_munger_76" target="_blank">Text Munger problem on RubyQuiz</a>, and building an <a href="https://github.com/kylefdoherty/image-editor" target="_blank">image editor command line app</a>, I had to work a lot with files and directories and realized I didn’t have a great handle on them.  To remedy this I did what I always do, a bunch of reading, practice problems, and put it all down in my notebook.  There still is a lot for me to learn but I think this lays a good foundation for understanding and working with files in Ruby.</p>
 
@@ -818,6 +701,192 @@ end</p>
 <p>```</p>
 
 <p>Note: you need to require FileUtils in your files with <code>require ‘fileutils’</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Building an RSS Twitter Bot]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot/"/>
+    <updated>2014-02-17T07:07:55-05:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot</id>
+    <content type="html"><![CDATA[<p>Last night after finishing my Ruby Notes on the File class I decided I wanted to try building an RSS Twitter bot.  I’d gotten the idea a week or so ago while reading some articles about my Alma Mater’s Top 10 Basketball team, the SDSU Aztecs in case you’re wondering, and thinking it would be cool to create an app that I could plug RSS feeds into and it’d tweet out the updates to the RSS feeds.  This way I’d always be up to date with sports news about my Aztecs and it’d be a good simple project for me to tackle.</p>
+
+<!-- more -->
+
+
+<p></p>
+
+<p><img class="center" src="/images/Twitter_Application_Management.png" title="&lsquo;SDSUSports Twitter App&rsquo; &lsquo;An image my Twitter bot app.&rsquo;" ></p>
+
+<h2>Reading RSS Feeds</h2>
+
+
+<p>So I looked into how to read RSS feeds and found the RSS module and the Simple RSS gem.  I played around with both and decided to use SimpleRSS.  To keep things simple my goal was to plug in two feeds, the <a href="http://www.utsandiego.com/news/sports/sdsu-aztecs/" target="_blank">UT San Diego’s SDSU Sports section</a> and the <a href="www.youtube.com/user/goaztecscom‎" target="_blank">SDSU Athletics Youtube Channel</a> and tweet out the feeds.</p>
+
+<p>Here is what the Twitter Account looked like after I got this to work.</p>
+
+<p><img class="center" src="/images/Cut_Down_Nets<strong>_SDSUsports</strong>on_Twitter.png" title="&lsquo;SDSUSports Twitter Account&rsquo; &lsquo;An image of the twitter account I created for my twitter bot to post to.&rsquo;" ></p>
+
+<h2>Getting Off Track</h2>
+
+
+<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE &ndash; 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
+
+<h2>Sort Them Feeds</h2>
+
+
+<p>Once I finished removing the dates from the video titles I went about sorting whether the feeds were RSS or Atom.  I knew that having “feed” and “rss” in the URL was probably not the standard for telling if a feed was RSS or Atom but I just wanted to get this working for these two feeds and improve my code later.</p>
+
+<p>```ruby Sorting Feeds
+def feed_sorter
+feed_num = 0</p>
+
+<pre><code>@feeds.each do |feed|
+    feed_num +=1
+    case 
+    when feed.include?('feed')
+        @sorted_feeds[feed_num] = [feed, 'atom']
+    when feed.include?('rss')
+        @sorted_feeds[feed_num] = [feed, 'rss']
+    else invalid feed
+    end 
+end 
+</code></pre>
+
+<p>end
+```
+You can see that I’m checking if “RSS” or “Atom” is in the URL and then sticking then storing them in an array inside a hash.  Again I knew I’d have to change this down the road, especially if I start using a database for persistence but this gets the job done for my two feeds.</p>
+
+<h2>Putting it All Together</h2>
+
+
+<p>From here all I wanted to clean up my code and put it in a class.  So I created a RssParser class, which probably should be renamed to FeedParser, and created the methods initialize, run, feed_sorter, feed_parser, and send_tweet. Then I added the Twitter Gem and my keys and tokens and boom it worked.</p>
+
+<p>```ruby RssParser
+require &lsquo;simple-rss&rsquo;
+require &lsquo;open-uri&rsquo;
+require &lsquo;twitter&rsquo;</p>
+
+<p>class RssParser</p>
+
+<pre><code>def initialize(*feeds)
+    @feeds = feeds 
+    @sorted_feeds = {}
+    @tweet = ''
+
+    @client = Twitter::REST::Client.new do |config|
+      config.consumer_key        = "Consumer_Key"
+      config.consumer_secret     = "Consumer_Secret"
+      config.access_token        = "Access_Token"
+      config.access_token_secret = "Secret_Token"
+    end
+end 
+
+
+def run
+    feed_sorter
+    feed_parser
+end 
+</code></pre>
+
+<h1>method to sort if feeds are atom or rss feed</h1>
+
+<pre><code>def feed_sorter
+    feed_num = 0 
+
+    @feeds.each do |feed|
+        feed_num +=1
+        case 
+        when feed.include?('feed')
+            @sorted_feeds[feed_num] = [feed, 'atom']
+        when feed.include?('rss')
+            @sorted_feeds[feed_num] = [feed, 'rss']
+        else invalid feed
+        end 
+    end 
+end 
+</code></pre>
+
+<h1>method to parse feed to retrieve the title and link, and to clean up youtube titles for the goaztecscom yoututbe titles</h1>
+
+<pre><code>def feed_parser 
+
+    @sorted_feeds.each do |k,v|
+
+        case 
+        when v[1] == "rss"
+            rss = SimpleRSS.parse open(v[0])
+            rss.channel.items.each do |story|
+                @tweet = "#{story.title} #{story.link}"
+                send_tweet
+            sleep(30)
+            end 
+        when v[1] == "atom"
+            rss = SimpleRSS.parse open(v[0])
+            rss.entries.each do |vid|
+                title = vid.media_title.split('-')
+                link = vid.link
+
+                title.delete_at(-1)
+                if title.length == 2
+                    message = "#{title[0].strip} #{title[1].strip}"
+                    @tweet = "#{message} #{link}" 
+                    send_tweet
+
+                else 
+                    message = "#{title[0].strip}"
+                    @tweet = "#{message} #{link}"
+                    send_tweet
+                end 
+                sleep(20)
+            end 
+        end
+    end 
+
+end 
+
+def send_tweet
+    @client.update(@tweet)
+    puts "Sent tweet: #{@tweet}"
+end 
+</code></pre>
+
+<p>end</p>
+
+<p>parser = RssParser.new(&lsquo;<a href="http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads">http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads</a>&rsquo;, &lsquo;<a href="http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/">http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/</a>&rsquo;)
+parser.run
+```</p>
+
+<h2>Next Steps</h2>
+
+
+<p>As mentioned there are some flaws with my code so I need to begin refactoring what I’ve got so far.  Below are my to-dos in order to improve this code so it will work with multiple feeds.</p>
+
+<ol>
+    <li>This morning when I tried to rerun the code for some reason it threw an error that the youtube feed is a poorly formatted feed, so that will be the first thing to figure out.</li>
+    <li>Store twitter keys in a yaml file and gitignore</li>
+    <li>Figure out a better, more standard way of sorting the feeds</li>
+    <li>Remove the case statement that changes the GoAztecs youtube titles</li> 
+    <li>Add a check for whether or not the tweets are 140 chars.  If not reduce the title by n - 143 and append '...' to the truncated title and then tweet the title + the link</li>
+    <li>Add a database with CRUD operations so I can store more feeds</li>
+</ol>
+
+
+
+
+<h2>Down the Road</h2>
+
+
+<p>Here are some things I&rsquo;d like to do eventually with this little project.</p>
+
+<ol>
+    <li>Turn it into a sinatra app (good way to learn Sinatra)</li>
+    <li>Add a URL shortener or roll my own</li> 
+    <li>Make it so a user can sign in and create their own RSS Twitter bot by providing their API keys</li>
+</ol>
+
+
+
 ]]></content>
   </entry>
   
