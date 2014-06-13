@@ -4,7 +4,7 @@
   <title><![CDATA[Learning Programming <br> & <br> Stuff]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-06-13T00:26:09-04:00</updated>
+  <updated>2014-06-13T00:27:31-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -403,20 +403,11 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Learn To Program By Blogging]]></title>
+    <title type="html"><![CDATA[Learn to Program by Blogging]]></title>
     <link href="http://kylefdoherty.github.io/blog/2014/05/28/learn-to-program-by-blogging/"/>
-    <updated>2014-05-28T00:00:00-04:00</updated>
+    <updated>2014-05-28T19:33:37-04:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/05/28/learn-to-program-by-blogging</id>
-    <content type="html"><![CDATA[<hr />
-
-<p>layout: post
-title: &ldquo;Learn to Program by Blogging&rdquo;
-date: 2014-05-28 19:33:37 -0400
-comments: true</p>
-
-<h2>categories: </h2>
-
-<p>Last week I was explaining to some of my <a href="http://flatironschool.com/">Flatiron School</a> Ruby005 compadres how blogging is helping me learn Ruby.  To help re-motivate myself to start blogging again (it’s been a while) and to motivate others, below is my logic for using a blog to help you learn faster.</p>
+    <content type="html"><![CDATA[<p>Last week I was explaining to some of my <a href="http://flatironschool.com/">Flatiron School</a> Ruby005 compadres how blogging is helping me learn Ruby.  To help re-motivate myself to start blogging again (it’s been a while) and to motivate others, below is my logic for using a blog to help you learn faster.</p>
 
 <h2>Know Your Audience</h2>
 
