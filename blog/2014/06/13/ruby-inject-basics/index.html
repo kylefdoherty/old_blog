@@ -1,0 +1,573 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby Inject Basics - Learning Programming <br> & <br> Stuff</title>
+  <meta name="author" content="Kyle Doherty">
+
+  
+  <meta name="description" content="This week during lecture at Flatiron school, Avi showed us Ruby’s .inject method (also known as .reduce). I thought this seemed like a pretty cool &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/06/13/ruby-inject-basics">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Learning Programming <br> & <br> Stuff" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<aside class="left">
+			<div class="inner-left">
+				<header>
+					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
+<hgroup>
+  <h1><a href="/">Learning Programming <br> & <br> Stuff</a></h1>
+  
+</hgroup>
+
+
+				</header>
+				<footer>
+					<p>
+	
+		<a href="http://github.com/kylefdoherty" class="btn btn-dark">GitHub</a>
+	
+	
+		<a href="http://twitter.com/kylefdoherty" class="btn btn-dark">Twitter</a>
+	
+</p>
+				</footer>
+			</div>
+		</aside>
+    	<section class="right">
+    		<div class="inner-right">
+    			<div id="posts">
+    			  	<article class="post">
+    
+  <header>
+    
+      <h1 class="entry-title">Ruby Inject Basics</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-13T00:06:01-04:00" pubdate data-updated="true">Jun 13<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This week during lecture at Flatiron school, <a href="https://twitter.com/aviflombaum" target="_blank">Avi</a> showed us Ruby’s <code>.inject</code> method (also known as .reduce).  I thought this seemed like a pretty cool and potentially powerful method and decided to do a bit more research so I could start using it with confidence in my code.</p>
+
+<h2>Inject Basics</h2>
+
+<p><code>.inject</code> is an iterator method (technically an enumerable method) that creates an accumulator variable that “accumulates” whatever you want as you iterate over some sort of collection and returns the accumulator when the iteration is complete.</p>
+
+<p>Instead of trying to explain further let’s take a peek at a simple example.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">].</span><span class="n">inject</span> <span class="k">do</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;accumulator: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2">, element: </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> - </span>
+</span><span class='line'><span class="s2">  Adding them: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2"> +  </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">accumulator</span> <span class="o">+</span> <span class="n">element</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">accumulator</span> <span class="o">+</span> <span class="n">element</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 1, element: 2 - Adding them: 1 +  2 = 3</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 3, element: 3 - Adding them: 3 +  3 = 6</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 6, element: 4 - Adding them: 6 +  4 = 10</span>
+</span><span class='line'><span class="c1">#=&gt;  =&gt; 10 </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we can see we’re iterating over the array and adding the element to the accumulator each time through.  If you look at the output from the puts you can see that the accumulator starts at 1, the first element in the array, and the element variable is given the 2nd element of the array.  As it iterates through the array, the sum becomes the accumulator’s value and then is returned at the end of the iteration.</p>
+
+<p>Here’s that same example but this time we’re multiplying the elements in the array.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">].</span><span class="n">inject</span> <span class="k">do</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;accumulator: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2">, element: </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> - </span>
+</span><span class='line'><span class="s2">  Mulitplying them:</span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2"> *  </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">accumulator</span> <span class="o">*</span> <span class="n">element</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">accumulator</span> <span class="o">*</span> <span class="n">element</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 1, element: 2 - Mulitplying them: 1 *  2 = 2</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 2, element: 3 - Mulitplying them: 2 *  3 = 6</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 6, element: 4 - Mulitplying them: 6 *  4 = 24</span>
+</span><span class='line'><span class="c1">#=&gt;  =&gt; 24 </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Giving the Accumulator a Starting Value</h2>
+
+<p>In the last two examples we’re not giving the accumulator a starting value, however we have the option to do this by passing the value to the .inject method.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;accumulator: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2">, element: </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> - </span>
+</span><span class='line'><span class="s2">  Adding them: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2"> +  </span><span class="si">#{</span><span class="n">element</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">accumulator</span> <span class="o">+</span> <span class="n">element</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">accumulator</span> <span class="o">+</span> <span class="n">element</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 0, element: 1 - Adding them: 0 +  1 = 1</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 1, element: 2 - Adding them: 1 +  2 = 3</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 3, element: 3 - Adding them: 3 +  3 = 6</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 6, element: 4 - Adding them: 6 +  4 = 10</span>
+</span><span class='line'><span class="c1">#=&gt;  =&gt; 10 </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time we’re summing the contents of the array, like in the first example, but we’re giving the inject method a value to set the accumulator to.  Here we’ve set it to 0, but you can set it to anything you want.  You can see from the output that the accumulator starts at 0 and the element variable is set to the first element in the array, 1.</p>
+
+<p>But why do we want to set the accumulator to 0?  This is just making us loop through one additional time?</p>
+
+<p>For this summing example, this is true but if we we’re doing something to the element on each iteration, like say incrementing it by two, we need to give the accumulator variable a starting value.  If we don’t then it uses the first element in the array, we can’t increment it, and thus don’t get the return value we want.</p>
+
+<p>Here’s a look at this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">##### Giving the Accumulator a Starting Value #####</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;accumulator: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2">, element + 2: </span><span class="si">#{</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="si">}</span><span class="s2"> - Adding them: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2"> +  </span><span class="si">#{</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">accumulator</span> <span class="o">+</span> <span class="p">(</span><span class="n">element</span> <span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">accumulator</span> <span class="o">+</span> <span class="p">(</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 0,   (element + 2):  3 - Adding them:   0 +  3 = 3</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 3,   (element + 2):  4 - Adding them:   3 +  4 = 7</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 7,   (element + 2):  5 - Adding them:   7 +  5 = 12</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 12, (element + 2):  6 - Adding them: 12 +  6 = 18</span>
+</span><span class='line'><span class="c1">#=&gt; =&gt;18</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">##### Omitting a Starting Value #####</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="o">].</span><span class="n">inject</span> <span class="k">do</span> <span class="o">|</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;accumulator: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2">, element + 2: </span><span class="si">#{</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="si">}</span><span class="s2"> - Adding them: </span><span class="si">#{</span><span class="n">accumulator</span><span class="si">}</span><span class="s2"> +  </span><span class="si">#{</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="si">}</span><span class="s2"> = </span><span class="si">#{</span><span class="n">accumulator</span> <span class="o">+</span> <span class="p">(</span><span class="n">element</span> <span class="o">+</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">accumulator</span> <span class="o">+</span> <span class="p">(</span><span class="n">element</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 1,   (element + 2):  4 - Adding them:   1 +  4 = 5</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 5,   (element + 2):  5 - Adding them:   5 +  5 = 10</span>
+</span><span class='line'><span class="c1">#=&gt; accumulator: 10, (element + 2):  6 - Adding them: 10 +  6 = 16</span>
+</span><span class='line'><span class="c1">#=&gt; =&gt;16</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see that if we don’t set the accumulator to 0 we don’t increment the first element by 2 and thus get 16 when we really wanted 18.  Because of this, it’s probably a good idea to get in the habit of setting the accumulator value no matter what.</p>
+
+<h2>Altering Hashes</h2>
+
+<p>Another use case for .inject (.reduce) is if you need to change the key or value in a hash.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">hash_of_state_capitals</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;CA&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Sacramento&quot;</span><span class="p">,</span> <span class="s2">&quot;NY&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Albany&quot;</span><span class="p">,</span> <span class="s2">&quot;ND&quot;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Bismarck&quot;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">hash_of_state_capitals</span> <span class="o">=</span> <span class="n">hash_of_state_capitals</span><span class="o">.</span><span class="n">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">new_hash</span><span class="p">,</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">capital</span><span class="p">)</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">new_hash</span><span class="o">[</span><span class="n">state</span><span class="o">.</span><span class="n">to_sym</span><span class="o">]</span> <span class="o">=</span> <span class="n">capital</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">new_hash</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt;  {:CA=&gt;&quot;Sacramento&quot;, :NY=&gt;&quot;Albany&quot;, :ND=&gt;&quot;Bismarck&quot;}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, we have a <code>hash_of_state_capitals</code> whose keys are strings, and we want to change them to symbols.</p>
+
+<p>This time around, instead of setting the accumulator to a number we’re setting it to an empty hash ( <code>hash_of_state_capitals.reduce({})</code> ), which we’re calling “new_hash”.  Then each time we loop through the hash_of_state_capitals we create the new_hash by setting the key to the <code>state.to_sym</code> and the value to capital.  Then at the bottom we return the new hash, which is a must, and will throw an error if you don’t.</p>
+
+<p>This method of altering a hash is a bit cleaner than using <code>.each</code> and can actually be done on a single line.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">hash_of_state_capitals</span> <span class="o">=</span> <span class="n">hash_of_state_capitals</span><span class="o">.</span><span class="n">reduce</span><span class="p">({})</span>  <span class="p">{</span><span class="o">|</span><span class="n">new_hash</span><span class="p">,</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">capital</span><span class="p">)</span><span class="o">|</span> <span class="n">new_hash</span><span class="o">[</span><span class="n">state</span><span class="o">.</span><span class="n">to_sym</span><span class="o">]</span> <span class="o">=</span> <span class="n">capital</span><span class="p">;</span> <span class="n">new_hash</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">### OR ###</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">hash_of_state_capitals</span> <span class="o">=</span> <span class="n">hash_of_state_capitals</span><span class="o">.</span><span class="n">reduce</span><span class="p">({})</span>  <span class="p">{</span><span class="o">|</span><span class="n">new_hash</span><span class="p">,</span> <span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">capital</span><span class="p">)</span><span class="o">|</span> <span class="n">new_hash</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">to_sym</span> <span class="o">=&gt;</span> <span class="n">capital</span><span class="p">)}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Building Arrays &amp; Hashes</h2>
+
+<p>You can use inject to build arrays and hashes similar to how you use other methods such as .map or .select.  The advantage that inject has over these is you can use inject instead of chaining several methods together. This isn’t a big deal if you’re chaining just two methods together to achieve whatever you’re doing but your code could get messy if you go beyond that.</p>
+
+<p>Here is a great example from Jay Fields’ blog post on Inject demonstrating how to use <code>.inject</code> to get all the integers of an array, that are even, as strings.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">### Chaining Select &amp; Collect ###</span>
+</span><span class='line'><span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">].</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">}</span><span class="o">.</span><span class="n">collect</span> <span class="p">{</span> <span class="o">|</span><span class="n">element</span><span class="o">|</span> <span class="n">element</span><span class="o">.</span><span class="n">to_s</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># =&gt; [&quot;2&quot;, &quot;4&quot;, &quot;6&quot;]</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c1">### Using Inject ###</span>
+</span><span class='line'><span class="n">array</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="o">].</span><span class="n">inject</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">result</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">element</span><span class="o">.</span><span class="n">to_s</span> <span class="k">if</span> <span class="n">element</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'> <span class="n">result</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># =&gt; array =  [&quot;2&quot;, &quot;4&quot;, &quot;6&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>An example of building a hash would be if you received an array with nested arrays, that you wanted to convert into a hash as key, value pairs.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">students</span> <span class="o">=</span> <span class="o">[[</span><span class="mo">01</span><span class="p">,</span> <span class="s2">&quot;Jon&quot;</span><span class="o">]</span><span class="p">,</span><span class="o">[</span><span class="mo">02</span><span class="p">,</span> <span class="s2">&quot;Becca&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mo">03</span><span class="p">,</span> <span class="s2">&quot;Pete&quot;</span><span class="o">]</span><span class="p">,</span> <span class="o">[</span><span class="mo">04</span><span class="p">,</span> <span class="s2">&quot;Laura&quot;</span><span class="o">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">students_hash</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="n">reduce</span><span class="p">({})</span> <span class="k">do</span> <span class="o">|</span><span class="n">students</span><span class="p">,</span> <span class="n">array</span><span class="o">|</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">students</span><span class="o">[</span><span class="n">array</span><span class="o">.</span><span class="n">first</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">last</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">students</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; {1=&gt;&quot;Jon&quot;, 2=&gt;&quot;Becca&quot;, 3=&gt;&quot;Pete&quot;, 4=&gt;&quot;Laura&quot;}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+Here we have student’s IDs and names given to us as an array of arrays, but we want to convert this to a hash.  The inject method takes care of this in a nice compact way, without having to create empty variables outside our loop.</p>
+
+<p>Finally here is an example from the anagram_detector lab we did today.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">anamgrams</span> <span class="o">=</span> <span class="sx">%w(gallery ballerina regally clergy largely leading)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">word</span> <span class="o">=</span> <span class="s1">&#39;allergy&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Anagram</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:word</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">word</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">word_sorter</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">word</span><span class="o">.</span><span class="n">chars</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">array</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="o">[]</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">array</span><span class="p">,</span> <span class="n">element</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">array</span> <span class="o">&lt;&lt;</span> <span class="n">element</span> <span class="k">if</span> <span class="n">word_sorter</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">==</span> <span class="n">word_sorter</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">array</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># def match(array)</span>
+</span><span class='line'>  <span class="c1">#   array.select do |element|</span>
+</span><span class='line'>  <span class="c1">#     word_sorter(element) == word_sorter(word)</span>
+</span><span class='line'>  <span class="c1">#   end </span>
+</span><span class='line'>  <span class="c1"># end </span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="no">Anagram</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">a</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">anamgrams</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; [&quot;gallery&quot;, &quot;regally&quot;, &quot;largely&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You can see in my commented out code that you can do the same thing with the <code>.select</code> method but I think inject is almost as elegant and gives us the ability to do additional things that <code>.select</code> can’t.  Such as, build a hash with the returned strings or manipulate the strings further.</p>
+
+<h2>That’s All Folks</h2>
+
+<p>And that’s all I’ve got on Ruby’s Inject for now.  From what I’ve read it seems <code>.inject</code> becomes even more powerful when you start using it with objects but that’s for another blog post.  To learn more below are links to all the blog posts I referenced for writing this post and I suggest reading them if you want to learn more.</p>
+
+<h2>Additional Resources:</h2>
+
+<ul>
+<li><p><a href=”http://blog.jayfields.com/2008/03/ruby-inject.html” target=”_blank”>Ruby Inject &ndash; Jay Fields’ Thoughts</a></p></li>
+<li><p><a href=”http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/” target=”_blank”>A Guide to Ruby Collections III: Enumerable and Enumerator &ndash; Sitepoint</a></p></li>
+<li><p><a href=”http://blog.teamtreehouse.com/ruby-arrays” target=”_blank”>The Basics of Ruby Arrays &ndash; Team Treehouse Blog</a></p></li>
+<li><p><a href=”http://chrisholtz.com/blog/lets-make-a-ruby-hash-map-method-that-returns-a-hash-instead-of-an-array/” target=”_blank”>Let&rsquo;s Make a Ruby Hash Map Method That Returns a Hash Instead of an Array</a></p></li>
+</ul>
+
+</div>
+
+
+</article>
+
+
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kylefdoherty.github.io/blog/2014/06/13/ruby-inject-basics/" data-via="kylefdoherty" data-counturl="http://kylefdoherty.github.io/blog/2014/06/13/ruby-inject-basics/" >Tweet</a>
+  
+  
+  
+</div>
+
+
+
+
+<section id="comments">
+    <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+
+    			</div>
+    			<footer id="footer">
+    				<p class="credit">
+  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+</p>
+
+
+    			</footer>
+    			
+
+<script type="text/javascript">
+      var disqus_shortname = 'learningprogrammingandstuff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://kylefdoherty.github.io/blog/2014/06/13/ruby-inject-basics/';
+        var disqus_url = 'http://kylefdoherty.github.io/blog/2014/06/13/ruby-inject-basics/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+    		</div>
+    	</section>
+  	</div>
+</body>
+</html>
