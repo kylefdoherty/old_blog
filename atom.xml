@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Learning Programming <br> & <br> Stuff]]></title>
+  <title><![CDATA[Learning to Code]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-06-26T23:42:46-04:00</updated>
+  <updated>2014-06-27T14:12:22-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
