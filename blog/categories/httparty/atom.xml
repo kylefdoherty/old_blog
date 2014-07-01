@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ruby, | Learning to Code]]></title>
-  <link href="http://kylefdoherty.github.io/blog/categories/ruby/atom.xml" rel="self"/>
+  <title><![CDATA[Category: HTTParty, | Learning to Code]]></title>
+  <link href="http://kylefdoherty.github.io/blog/categories/httparty/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
   <updated>2014-06-30T22:28:10-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>

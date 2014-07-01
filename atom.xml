@@ -4,7 +4,7 @@
   <title><![CDATA[Learning to Code]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-06-27T14:12:22-04:00</updated>
+  <updated>2014-06-30T22:28:10-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,6 +12,148 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting and Parsing the Citi Bike JSON Feed with HTTParty]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/06/30/getting-and-parsing-the-citi-bike-json-feed-with-httparty/"/>
+    <updated>2014-06-30T22:02:46-04:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/06/30/getting-and-parsing-the-citi-bike-json-feed-with-httparty</id>
+    <content type="html"><![CDATA[<h2>BigApps BigIdeas Citi Bike FInder Challenge</h2>
+
+<p>For our Flatiron School Meetup Presentation, <a href="http://amyrjohnson.github.io/" target="_blank">Amy Johnson</a> and I are trying to tackle at least part of one of NYCBigApps’ BigIdeas Challenges posted by Citi Bike, <a href="http://citibikefinder.splashthat.com/" target="_blank"><a href="http://citibikefinder.splashthat.com/">http://citibikefinder.splashthat.com/</a></a>.  The main problem they outline is that during high commute times people often find themselves being “dockblocked” or “bluebiked”, as the <a href="http://gothamist.com/2013/06/27/citibike_fail_dumbo_totally_dockblo.php" target="_blank">Gothamist put it</a>, because there aren’t any available spaces to deposit their bike.</p>
+
+<p>The main idea for a solution is to have some sort of suggestion app for starting and ending locations with estimated availability based on historical data.  There are some other features they have on their wishlist for the app, but we figure this alone is about all we want to try to bite off for the moment.</p>
+
+<h2>Our Potential Solution</h2>
+
+<p>Obviously the first thing we need to figure out is, is what data is available to us. It seems, for the moment at least, that there isn’t historical data on bike dock stations readily available to us (we’ve reached out and are waiting to hear back on this), so for the time being it looks like we’ll potentially need to hit the real time <a href="http://www.citibikenyc.com/stations/json" target="_blank">JSON feed</a>, and gather data that way.  Plus even if there is historical data we can get we still may want to collect our own and we’ll definitely want to be grabbing data about station’s current available bikes and docks, if they’re in service, etc.</p>
+
+<h2>It’s a HTTParty</h2>
+
+<p>The first to do then is figure out how to get and parse this JSON feed. JSON by the way stands for <a href="http://en.wikipedia.org/wiki/JSON" target="_blank">JavaScript Object Notation</a> and gives you back data in attribute-value pairs&hellip;basically a hash.  After a quick search on the Google I found the HTTParty gem, which is a HTTP client gem that allows you to easily make HTTP requests as well as automatically parses JSON or XML responses you get back.</p>
+
+<h2>Ok down to business&hellip;Parsing the Citi Bike Feed.</h2>
+
+<p>This is super simple with HTTParty.  All you have to do is require the gem and then use <code>HTTParty.get(“the_url”)</code>, and if you stick pry in your file it becomes super duper easy to play with the <code>HTTParty::Response</code> object that is returned to you.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;httparty&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;pry&#39;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="n">response</span> <span class="o">=</span> <span class="no">HTTParty</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://www.citibikenyc.com/stations/json&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">binding</span><span class="o">.</span><span class="n">pry</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What you get back is technically, as mentioned, a <code>HTTParty::Response</code> object, but really it’s a hash.  So if we call <code>.keys</code> on it we can see what keys it has.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span><span class="o">.</span><span class="n">keys</span>
+</span><span class='line'><span class="c1"># =&gt; [&quot;executionTime&quot;, &quot;stationBeanList&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>My guess is “stationBeanList” is what we want and sure enough it gives us back a big array of 332 station hashes.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span><span class="o">[</span><span class="s2">&quot;stationBeanList&quot;</span><span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># =&gt; [{&quot;id&quot;=&gt;72,</span>
+</span><span class='line'> <span class="c1">#  &quot;stationName&quot;=&gt;&quot;W 52 St &amp; 11 Ave&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;availableDocks&quot;=&gt;19,</span>
+</span><span class='line'> <span class="c1">#  &quot;totalDocks&quot;=&gt;38,</span>
+</span><span class='line'> <span class="c1">#  &quot;latitude&quot;=&gt;40.76727216,</span>
+</span><span class='line'> <span class="c1">#  &quot;longitude&quot;=&gt;-73.99392888,</span>
+</span><span class='line'> <span class="c1">#  &quot;statusValue&quot;=&gt;&quot;In Service&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;statusKey&quot;=&gt;1,</span>
+</span><span class='line'> <span class="c1">#  &quot;availableBikes&quot;=&gt;13,</span>
+</span><span class='line'> <span class="c1">#  &quot;stAddress1&quot;=&gt;&quot;W 52 St &amp; 11 Ave&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;stAddress2&quot;=&gt;&quot;&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;city&quot;=&gt;&quot;&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;postalCode&quot;=&gt;&quot;&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;location&quot;=&gt;&quot;&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;altitude&quot;=&gt;&quot;&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;testStation&quot;=&gt;false,</span>
+</span><span class='line'> <span class="c1">#  &quot;lastCommunicationTime&quot;=&gt;nil,</span>
+</span><span class='line'> <span class="c1">#  &quot;landMark&quot;=&gt;&quot;&quot;},</span>
+</span><span class='line'> <span class="c1"># {&quot;id&quot;=&gt;79,</span>
+</span><span class='line'> <span class="c1">#  &quot;stationName&quot;=&gt;&quot;Franklin St &amp; W Broadway&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;availableDocks&quot;=&gt;32,</span>
+</span><span class='line'> <span class="c1">#  &quot;totalDocks&quot;=&gt;33,</span>
+</span><span class='line'> <span class="c1">#  &quot;latitude&quot;=&gt;40.71911552,</span>
+</span><span class='line'> <span class="c1">#  &quot;longitude&quot;=&gt;-74.00666661,</span>
+</span><span class='line'> <span class="c1">#  &quot;statusValue&quot;=&gt;&quot;In Service&quot;,</span>
+</span><span class='line'> <span class="c1">#  &quot;statusKey&quot;=&gt;1,</span>
+</span><span class='line'> <span class="c1">#  &quot;availableBikes&quot;=&gt;1,</span>
+</span><span class='line'> <span class="c1">#  .....</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From here it’s easy to grab specific data out of this array of stations.  For example, the stations whose “statusKey” does not equal 1 since that probably will mean they’re not in service and might show me the other possible status keys.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">response</span><span class="o">[</span><span class="s2">&quot;stationBeanList&quot;</span><span class="o">].</span><span class="n">select</span> <span class="p">{</span><span class="o">|</span><span class="n">station</span><span class="o">|</span> <span class="n">station</span><span class="o">[</span><span class="s2">&quot;statusKey&quot;</span><span class="o">]</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">}}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># =&gt; returns array of 5 station hashes with “statusKey” =&gt; 3 and “statusValue” =&gt; “Not in Service</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or let’s say we want to see the stations that have over 50 docks i.e the big ass docks in the city.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">big_ass_docks</span> <span class="o">=</span> <span class="n">response</span><span class="o">[</span><span class="s2">&quot;stationBeanList&quot;</span><span class="o">].</span><span class="n">select</span> <span class="p">{</span><span class="o">|</span><span class="n">station</span><span class="o">|</span> <span class="n">station</span><span class="o">[</span><span class="s2">&quot;totalDocks&quot;</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="mi">50</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1"># =&gt; An array of 32 station hashes </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Next Steps</h2>
+
+<p>Getting the JSON feed and parsing it was way simpler than I had imagined. From here we need to figure out what our absolute bare bones app needs to do and then plan from there. We can also for sure create a Station class and generate a bunch of Station objects from the stations array.  This way anytime we hit the JSON feed we can have these objects update their attributes.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Close Reading Code]]></title>
