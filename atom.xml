@@ -4,7 +4,7 @@
   <title><![CDATA[Learning to Code]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-06-30T22:28:10-04:00</updated>
+  <updated>2014-07-01T08:34:00-04:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -18,7 +18,7 @@
     <link href="http://kylefdoherty.github.io/blog/2014/06/30/getting-and-parsing-the-citi-bike-json-feed-with-httparty/"/>
     <updated>2014-06-30T22:02:46-04:00</updated>
     <id>http://kylefdoherty.github.io/blog/2014/06/30/getting-and-parsing-the-citi-bike-json-feed-with-httparty</id>
-    <content type="html"><![CDATA[<h2>BigApps BigIdeas Citi Bike FInder Challenge</h2>
+    <content type="html"><![CDATA[<h2>BigIdeas Citi Bike Finder Challenge</h2>
 
 <p>For our Flatiron School Meetup Presentation, <a href="http://amyrjohnson.github.io/" target="_blank">Amy Johnson</a> and I are trying to tackle at least part of one of NYCBigApps’ BigIdeas Challenges posted by Citi Bike, <a href="http://citibikefinder.splashthat.com/" target="_blank"><a href="http://citibikefinder.splashthat.com/">http://citibikefinder.splashthat.com/</a></a>.  The main problem they outline is that during high commute times people often find themselves being “dockblocked” or “bluebiked”, as the <a href="http://gothamist.com/2013/06/27/citibike_fail_dumbo_totally_dockblo.php" target="_blank">Gothamist put it</a>, because there aren’t any available spaces to deposit their bike.</p>
 
