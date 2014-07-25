@@ -1,0 +1,89 @@
+---
+layout: post
+title: "Ruby Notes - Structs"
+date: 2014-03-07 16:11:19 +0100
+comments: true
+categories: [Ruby, Structs]
+---
+
+I recently learned about Structs while working my way through <a href="http://pragmaticstudio.com/courses" target="_blank">Pragmatic Studio’s Ruby Programming course</a>, which I highly recommend btw.  If you’re a beginner like me it will apply your basic Ruby knowledge to a project and teach you some new things along the way...like Structs.
+
+<h2>What Are Structs</h2>
+Structs are simply a collection of attributes, meaning they only have state, whereas Classes have both attributes and methods (state and behavior).  To illustrate imagine we have a library class containing a bunch of book objects (its state) that you can check out and do other things to (its behavior). This type of object, since it has state and behavior warrants using a class.
+
+``` ruby Library Class
+class Library 
+  def initialize 
+    @books = []
+  end 
+
+  def checkout 
+    # code to checkout a book
+  end 
+end  
+```
+Now, let’s assume the book objects the library class will contain won’t have any behavior i.e. they won’t have methods, they’ll simply have attributes such as: <code>@title</code>, <code>@author</code>, and <code>@page_number</code>.  We could create a book class like this:
+
+```ruby Book Class
+class Book
+  attr_reader :title, :author, :page_number
+
+  def initialize(title, author, page_number)
+    @title = title
+    @author = author
+    @page_number = page_number
+  end
+end 
+```
+OR since the book object has no methods we can use a Struct like so:
+
+```ruby Book Struct
+Book = Struct.new(:title, :author, :page_number)
+#=> Book 
+
+Book.class
+#=> Class
+```
+Using a Struct required far less code than writing out the book class ourselves and by calling <code>.class</code> on Book we can see that <code>Struct.new</code> actually went and generated the book class we made above for us...pretty cool huh! 
+
+<h2>Create Object Instances</h2>
+With this Book class we can create as many new book objects as we want by calling <code>Book.new</code> and passing it a title, author, and number of pages, like below:
+
+```ruby 
+book1 = Book.new(“Learn to Program”, “Chris Pine”, 171)
+#=> <struct Book title="Learn to Program", author="Chris Pine", page_number=171> 
+
+book2 = Book.new(“The Well Grounded Rubyist”, “David A. Black”, 500)
+#=> <struct Book title="The Well Grounded Rubyist", author="David A. Black", page_number=500> 
+
+book3 = Book.new(“Programming Ruby 1.9 & 2.0: The Pragmatic Programmers Guide (The Facets of Ruby)”, “Dave Thomas, Andy Hunt, Chris Fowler”, 888)
+#=> <struct Book title="Programming Ruby 1.9 & 2.0: The Pragmatic Programmers' Guide (The Facets of Ruby)", author="Dave Thomas, Andy Hunt, Chris Fowler", page_number=888> 
+```
+This code instantiated 3 new book objects each with readable and writable attributes.  One interesting thing about these book objects is they are actually Struct objects and therefore have some handy struct methods for accessing their attributes.  
+
+<h2>Accessing Attributes</h2>
+In addition to the normal way of accessing class attributes you can also use the <code>[]</code> method to access attributes like you would from an array by inserting the index in the brackets or like you from a hash by inserting the key in the brackets.  Here are some examples:
+
+```ruby Accessing Struct Attributes 
+book1[0]
+#=> “Learn to Program”
+
+book1[“title”]
+#=> “Learn to Program”
+
+book1[:title]
+#=> “Learn to Program”
+```
+
+As you can see you can access the <code>title</code> attribute by index or by name using a String or Symbol.
+
+<h2>Learn More About Structs</h2>
+
+<ul>
+  <li>You can see more Struct methods by checking out the <a href="http://ruby-doc.org/core-1.9.3/Struct.html" target="_blank">Struct Class doc</a>.</li>
+
+  <li>For a more comprehensive explination of Structs read the blog post <a href="http://blog.rubybestpractices.com/posts/rklemme/017-Struct.html" target="_blank">Structs Inside and Out</a></li>
+
+  <li>If you want to make Read-only Structs check out the <a href="https://github.com/janlelis/value_struct" target="_blank">Value Struct Gem</a> and this <a href="http://ruby.janlelis.de/65-value_struct-read-only-structs-in-ruby" target="_blank">blog post</a> about it.</li>
+</ul>
+
