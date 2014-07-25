@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Maps On Maps On Maps! - Learning to Code</title>
+  <meta name="author" content="Kyle Doherty">
+
+  
+  <meta name="description" content="The past two weeks I spent a lot of time learning and working with the Google Maps API, well at least part of it. The part I worked with was setting &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Learning to Code" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<aside class="left">
+			<div class="inner-left">
+				<header>
+					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
+<hgroup>
+  <h1><a href="/">Learning to Code</a></h1>
+  
+</hgroup>
+
+
+				</header>
+				<footer>
+					<p>
+	
+		<a href="http://github.com/kylefdoherty" class="btn btn-dark">GitHub</a>
+	
+	
+		<a href="http://twitter.com/kylefdoherty" class="btn btn-dark">Twitter</a>
+	
+</p>
+				</footer>
+			</div>
+		</aside>
+    	<section class="right">
+    		<div class="inner-right">
+    			<div id="posts">
+    			  	<article class="post">
+    
+  <header>
+    
+      <h1 class="entry-title">Maps on Maps on Maps!</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-24T22:36:39-04:00" pubdate data-updated="true">Jul 24<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The past two weeks I spent a lot of time learning and working with the Google Maps API, well at least part of it.  The part I worked with was setting a map on a webpage, setting markers, and mapping directions. To start to understand how to do all these things, I slowly made my way through the doc and code examples, which are incrediably detailed and easy to follow and I highly recommend checking them out.  With that said, the doc is also massive and can be a bit overwhelming if you only want to do basic things.  On top of that the code examples don&rsquo;t explain what the Javascript is doing so that can be a bit confusing if you&rsquo;re a JS noob like I was two weeks ago.</p>
+
+<p>To learn the basics, I did what I usually do when I see new code I don&rsquo;t understand, I went through it line by line and tried to explain what it was doing in comments.  I also then stuck it in CodePen to play around with it.  Below are those code samples with my comments expalaining what&rsquo;s going on and my codepens so you can play around with the code.</p>
+
+<h2>Centering a Map on a Page</h2>
+
+<p>The first thing you’re going to want to do is create a map object and set the center of the map and zoom level.  The Google Maps API provides a nice <a href="https://developers.google.com/maps/documentation/javascript/examples/map-simple" target='_blank'>code sample</a> for making a simple map.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;viewport&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;initial-scale=1.0, user-scalable=no&quot;</span> <span class="o">/&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">style</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/css&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="cm">/* simple styling for the webpage and </span>
+</span><span class='line'><span class="cm">    specifically the #map-canvas id */</span>
+</span><span class='line'>      <span class="nx">html</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">}</span>
+</span><span class='line'>      <span class="nx">body</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span><span class="p">;</span> <span class="nx">margin</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
+</span><span class='line'>      <span class="err">#</span><span class="nx">map</span><span class="o">-</span><span class="nx">canvas</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">}</span> <span class="cm">/*BE SURE TO - set the</span>
+</span><span class='line'><span class="cm">      height of the map-canvas div */</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/style&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span>
+</span><span class='line'>      <span class="cm">/*uses the google maps api with your api key, </span>
+</span><span class='line'><span class="cm">      https://developers.google.com/maps/documentation/</span>
+</span><span class='line'><span class="cm">      javascript/tutorial#api_key*/</span>
+</span><span class='line'>      <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://maps.googleapis.com/maps/api/js?key=API_KEY&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="c1">// creates the funtion initialize which is called at the bottom of the script.</span>
+</span><span class='line'>      <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="cm">/*creates a mapOptions object literal with a center</span>
+</span><span class='line'><span class="cm">        and zoom level. A JS object literal looks a lot like </span>
+</span><span class='line'><span class="cm">        a hash in Ruby.  Here is a blog post describing the</span>
+</span><span class='line'><span class="cm">        difference, http://stantona.github.io/blog/2012/12/12/a</span>
+</span><span class='line'><span class="cm">        -tale-of-two-object-models-javascript-and-ruby/*/</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>          <span class="cm">/*the center key sets the center of the map to the</span>
+</span><span class='line'><span class="cm">          specified latitude and longitude. It&#39;s currently set</span>
+</span><span class='line'><span class="cm">          to be centered on Manhattan*/</span>
+</span><span class='line'>          <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
+</span><span class='line'>          <span class="cm">/*zoom key sets how zoomed in or out you are, with 0</span>
+</span><span class='line'><span class="cm">          being the farthest zoomed out and 20 being the </span>
+</span><span class='line'><span class="cm">          most zoomed in*/</span>
+</span><span class='line'>          <span class="nx">zoom</span><span class="o">:</span> <span class="mi">8</span>
+</span><span class='line'>        <span class="p">};</span> <span class="c1">//end of var mapOptions</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="cm">/*sets the var map to a new instance of a google map </span>
+</span><span class='line'><span class="cm">        and injects it in the div with id=&quot;map-canvas&quot;.</span>
+</span><span class='line'><span class="cm">        It sets the center and zoom of the new map to the</span>
+</span><span class='line'><span class="cm">        mapOptions object literal defined above*/</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
+</span><span class='line'>            <span class="nx">mapOptions</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="cm">/*using the event addDomListenever to call the </span>
+</span><span class='line'><span class="cm">      initialize method. this is similar to the</span>
+</span><span class='line'><span class="cm">      addEventListener method.  we tell the </span>
+</span><span class='line'><span class="cm">      addDomListener which DOM element to use</span>
+</span><span class='line'><span class="cm">      (window in this case), what event to listen </span>
+</span><span class='line'><span class="cm">      for (load), and which method to call after </span>
+</span><span class='line'><span class="cm">      the event has occurred.*/</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="cm">/*For more info on the DOM check out this video </span>
+</span><span class='line'><span class="cm">      series on the DOM, https://www.youtube.</span>
+</span><span class='line'><span class="cm">      com/playlist?list=PL18600E7CA651B16B and this </span>
+</span><span class='line'><span class="cm">      Mozilla article on event listeners, https://developer.</span>
+</span><span class='line'><span class="cm">      mozilla.org/en-US/docs/Web/API/EventTarget.</span>
+</span><span class='line'><span class="cm">      addEventListener*/</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="cm">/*finally to really rip through what is going on here</span>
+</span><span class='line'><span class="cm">      and what other things you can do such as asynchronously</span>
+</span><span class='line'><span class="cm">      loading the API visit the Google maps getting started </span>
+</span><span class='line'><span class="cm">      doc, https://developers.google.</span>
+</span><span class='line'><span class="cm">      com/maps/documentation/javascript/tutorial*/</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/head&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="c">&lt;!--</span> <span class="nx">creates</span> <span class="nx">a</span> <span class="nx">div</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">map</span> <span class="nx">canvas</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">injected</span> <span class="nx">into</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">html</span> <span class="nx">page</span> <span class="o">--&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;map-canvas&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="err">/body&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Dropping a Pen the Map</h2>
+
+<p>Here is what the initialize function looks like when dropping a marker on the map.  Not much is changing, as you can see.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">myLatlng</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.753597</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.983233</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
+</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
+</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/*var marker gives us a new google maps marker </span>
+</span><span class='line'><span class="cm">    with a position and map we tell it to use*/</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
+</span><span class='line'>      <span class="nx">position</span><span class="o">:</span> <span class="nx">myLatlng</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">map</span><span class="o">:</span> <span class="nx">map</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p data-height="456" data-theme-id="7476" data-slug-hash="jpBnb" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/jpBnb/'>Dropping Pens on the Map </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
+
+<h2>Directions with a Text Panel</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://maps.googleapis.com/maps/api/js?v=3.exp&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// sets a global variable called directionsDisplay so </span>
+</span><span class='line'>  <span class="c1">// it can be used inside and out of methods.  More on JS </span>
+</span><span class='line'>  <span class="c1">// variable scope here, </span>
+</span><span class='line'>  <span class="c1">// http://msdn.microsoft.com/en-us/library/ie/bzt2dkta(v=vs.94).aspx</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">directionsDisplay</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// sets variable directionsService to a </span>
+</span><span class='line'>  <span class="c1">// new google maps DirectionsService object </span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">directionsService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsService</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// creates initialize function </span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// directionsDisplay var and sets it to a new google </span>
+</span><span class='line'>    <span class="c1">// maps Renderer object which handles the direction </span>
+</span><span class='line'>    <span class="c1">// results returned i.e. parases the results for you.</span>
+</span><span class='line'>    <span class="nx">directionsDisplay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets the zoom and center of the map shown on the page</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">7</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets a new map object to map variable and injects </span>
+</span><span class='line'>    <span class="c1">// it into the map-canvas div</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;map-canvas&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets the map the directionsDisplay variable </span>
+</span><span class='line'>    <span class="c1">// (which is the directionsRenderer i.e. the directiosn </span>
+</span><span class='line'>      <span class="c1">// parser, to the map defined above)</span>
+</span><span class='line'>    <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setMap</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets the panel for the directionsDisplay variable, </span>
+</span><span class='line'>    <span class="c1">// i.e. the panel where it shows the directions to </span>
+</span><span class='line'>    <span class="c1">// the div directions-panel</span>
+</span><span class='line'>    <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c1">// sets a control var that grabs the control div </span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">control</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;control&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// takes div and gives it a block style </span>
+</span><span class='line'>    <span class="nx">control</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;block&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// takes map.controls and sets their position to </span>
+</span><span class='line'>    <span class="c1">// &quot;TOP_CENTER&quot; and pushes the control variable into them, </span>
+</span><span class='line'>    <span class="c1">// which I think adds the entire div below with form fields </span>
+</span><span class='line'>    <span class="c1">// available to be used by the funtion calcRoute(), below.</span>
+</span><span class='line'>    <span class="nx">map</span><span class="p">.</span><span class="nx">controls</span><span class="p">[</span><span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">ControlPosition</span><span class="p">.</span><span class="nx">TOP_CENTER</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">control</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">}</span> <span class="c1">//end of initialize method</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// calcRoute() method to, used guessed it, calculat the route</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">calcRoute</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets start and end variables, which grab the contents </span>
+</span><span class='line'>    <span class="c1">// of the elements with an id of &#39;start&#39; and &#39;end&#39;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// sets a object literal with an origin of start, destination </span>
+</span><span class='line'>    <span class="c1">// of end and the travel mode </span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">origin</span><span class="o">:</span> <span class="nx">start</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">destination</span><span class="o">:</span> <span class="nx">end</span><span class="p">,</span>
+</span><span class='line'>      <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
+</span><span class='line'>    <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// this gives the directionsService var a route of the request </span>
+</span><span class='line'>    <span class="c1">// object literal, and a callback method that executes upon the </span>
+</span><span class='line'>    <span class="c1">// receipt of the response from directionsService.  Learn more </span>
+</span><span class='line'>    <span class="c1">// about callbacks here, </span>
+</span><span class='line'>    <span class="c1">// http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/</span>
+</span><span class='line'>    <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p data-height="337" data-theme-id="7476" data-slug-hash="wcCFg" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/wcCFg/'>Directions with Text Panel </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
+
+<h2>Custom Directions &ndash; Multiple Waypoints &amp; Modes</h2>
+
+<p>This is the customized directions code I wrote to be able to have multiple waypoints with different modes of transportation.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// creating variables for the 3 displays I need for the </span>
+</span><span class='line'>    <span class="c1">// 3 legs of the journey</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay1</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay2</span><span class="p">;</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay3</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">directionsService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsService</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">//set map like normal</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.735863</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.991084</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;map-canvas&#39;</span><span class="p">),</span>
+</span><span class='line'>            <span class="nx">mapOptions</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">//set diretionsDisplay variables to directions rendererer </span>
+</span><span class='line'>        <span class="c1">// objects and customizing their attributes </span>
+</span><span class='line'>        <span class="nx">directionsDisplay1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
+</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
+</span><span class='line'>
+</span><span class='line'>                            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">directionsDisplay2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
+</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>           <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
+</span><span class='line'>                            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>        <span class="nx">directionsDisplay3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
+</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>           <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
+</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
+</span><span class='line'>                            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>     <span class="c1">// setting the panel of each renderer to use the div with the </span>
+</span><span class='line'>     <span class="c1">// id &#39;directions-panel&#39;. This results in the text directions </span>
+</span><span class='line'>     <span class="c1">// being injected into this div</span>
+</span><span class='line'>        <span class="nx">directionsDisplay1</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">directionsDisplay2</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">directionsDisplay3</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="p">}</span> <span class="c1">//end of initialize method</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// calcRoute() method to, used guessed it, calculate the route</span>
+</span><span class='line'>      <span class="kd">function</span> <span class="nx">calcRoute</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// setting the route details for each leg</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">route1</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;230 ashland pl, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;130 Court St, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">route2</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;130 Court St, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;11 broadway, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">BICYCLING</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">route3</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;11 broadway, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;central park, ny&#39;</span><span class="p">,</span>
+</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
+</span><span class='line'>        <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>       <span class="c1">// sending the route to the directions service object one</span>
+</span><span class='line'>       <span class="c1">// at a time and recieving the response back with the callback</span>
+</span><span class='line'>       <span class="c1">// method. </span>
+</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route1</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">directionsDisplay1</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">directionsDisplay2</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route3</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">directionsDisplay3</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">});</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
+</span><span class='line'>     <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">calcRoute</span><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p data-height="434" data-theme-id="7476" data-slug-hash="zskCi" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/zskCi/'>My Multiple Waypoints & Modes </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+
+<script async src="//codepen.io/assets/embed/ei.js"></script>
+
+</div>
+
+
+</article>
+
+
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps/" data-via="kylefdoherty" data-counturl="http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps/" >Tweet</a>
+  
+  
+  
+</div>
+
+
+
+
+<section id="comments">
+    <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+
+    			</div>
+    			<footer id="footer">
+    				<p class="credit">
+  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+</p>
+
+
+    			</footer>
+    			
+
+<script type="text/javascript">
+      var disqus_shortname = 'learningprogrammingandstuff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps/';
+        var disqus_url = 'http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+    		</div>
+    	</section>
+  	</div>
+</body>
+</html>
