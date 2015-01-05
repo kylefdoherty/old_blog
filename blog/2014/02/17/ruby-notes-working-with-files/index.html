@@ -1,0 +1,583 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Ruby Notes - Working with Files - Learning to Code</title>
+  <meta name="author" content="Kyle Doherty">
+
+  
+  <meta name="description" content="My next “Ruby Notes” post was going to be on arrays but in my last couple of mini projects, Text Munger problem on RubyQuiz, and building an image &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Learning to Code" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+
+<body>
+	<div class="container">
+		<aside class="left">
+			<div class="inner-left">
+				<header>
+					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
+<hgroup>
+  <h1><a href="/">Learning to Code</a></h1>
+  
+</hgroup>
+
+
+				</header>
+				<footer>
+					<p>
+	
+		<a href="http://github.com/kylefdoherty" class="btn btn-dark">GitHub</a>
+	
+	
+		<a href="http://twitter.com/kylefdoherty" class="btn btn-dark">Twitter</a>
+	
+</p>
+				</footer>
+			</div>
+		</aside>
+    	<section class="right">
+    		<div class="inner-right">
+    			<div id="posts">
+    			  	<article class="post">
+    
+  <header>
+    
+      <h1 class="entry-title">Ruby Notes - Working With Files</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-17T16:56:05-05:00" pubdate data-updated="true">Feb 17<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>My next “Ruby Notes” post was going to be on arrays but in my last couple of mini projects, <a href="https://github.com/kylefdoherty/ruby-quiz-solutions/tree/master/text_munger_76" target="_blank">Text Munger problem on RubyQuiz</a>, and building an <a href="https://github.com/kylefdoherty/image-editor" target="_blank">image editor command line app</a>, I had to work a lot with files and directories and realized I didn’t have a great handle on them.  To remedy this I did what I always do, a bunch of reading, practice problems, and put it all down in my notebook.  There still is a lot for me to learn but I think this lays a good foundation for understanding and working with files in Ruby.</p>
+
+<!-- more -->
+
+
+<h2>IO Class</h2>
+
+
+<p>The IO class is the parent class for the File class and thus is where it gets a ton of its methods such as readlines and readline.  IO stands for input/output, specifically input/output streams which are sequences of data that allow you to do things like play sound on your speakers and print output to a screen.  The IO class allows you to initialize streams and do things with them.</p>
+
+<h2>Standard Output, Input, and Error</h2>
+
+
+<p>STDOUT, STDIN, and STDERR are ruby constants that are IO objects pointing to your programs output, input, and error streams.  You can access these streams through the terminal without opening any files.</p>
+
+<p>When you do something like call puts, output is sent to the IO object that STDOUT points to.  Conversely when you call get, input is captured by the IO object that STDIN points to.</p>
+
+<p><strong>Further Reading:</strong> <a href="https://rubymonk.com/learning/books/1-ruby-primer/chapters/42-introduction-to-i-o/lessons/89-streams" target="_blank"><a href="https://rubymonk.com/learning/books/1-ruby-primer/chapters/42-introduction-to-i-o/lessons/89-streams">https://rubymonk.com/learning/books/1-ruby-primer/chapters/42-introduction-to-i-o/lessons/89-streams</a></a></p>
+
+<h2>File Class</h2>
+
+
+<p>According to the <a href="http://ruby-doc.org/core-1.9.3/File.html" target="_blank">ruby doc</a>, a File is an abstraction of any file object accessible by the program and is closely associated with the class IO (it’s a subclass of IO).</p>
+
+<p>You use the File class to create files, read them, and write to them.  There are various modes that can be given to the File class telling it what its behaviour is i.e. can read it, can write to it, can do both, etc.  These modes are inherited from the IO class and are listed below.</p>
+
+<p></style></p>
+
+<h3>Modes</h3>
+
+
+<table style="width:700px">
+    <tr>
+      <th>Mode</th>
+      <th>Meaning</th>      
+    </tr>
+    <tr>
+      <td>&#8220;r&#8221;</td>
+      <td>Read-only, starts at beginning of file  (default mode).</td>      
+     </tr>
+    <tr>
+      <td>&#8220;r+&#8221;</td>
+      <td>Read-write, starts at beginning of file.</td>     
+    </tr>
+    <tr>
+      <td>&#8220;w&#8221;</td>
+      <td>Write-only, truncates existing file to zero length or creates a new file for writing.</td>        
+    </tr>
+    <tr>
+      <td>&#8220;w+&#8221;</td>
+      <td>Read-write, truncates existing file to zero length or creates a new file for reading and writing.</td>        
+    </tr>
+    <tr>
+      <td>&#8220;a&#8221;</td>
+      <td>Write-only, starts at end of file if file exists, otherwise creates a new file for writing.</td>      
+    </tr>
+    <tr>
+      <td>&#8220;a+&#8221;</td>
+      <td>Read-write, starts at end of file if file exists, otherwise creates a new file for reading and writing.</td>      
+    </tr>
+    <tr>
+      <td>&#8220;b&#8221;</td>
+      <td>Binary file mode (may appear with any of the key letters listed above). Suppresses EOL <-> CRLF conversion on Windows. And sets external encoding to ASCII-8BIT unless explicitly specified.</td>     
+    </tr>
+    <tr>
+      <td>&#8220;t&#8221;</td>
+      <td>Text file mode (may appear with any of the key letters listed above except &#8220;b&#8221;).</td>     
+    </tr>
+</table>
+
+
+<br>
+
+
+
+
+<h2>Writing to a File</h2>
+
+
+<figure class='code'><figcaption><span>Writing to a File </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">file</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">text</span><span class="o">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">w</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">file</span><span class="o">.</span><span class="n">puts</span> <span class="err">“</span><span class="no">Hello</span> <span class="n">from</span> <span class="c1">#{$0}”</span>
+</span><span class='line'><span class="n">file</span><span class="o">.</span><span class="n">close</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#=&gt; writes “Hello from io.rb” to the file text.txt</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>On the first line I’m calling the <code>.open</code> method on the File class and passing it the file text.txt and the mode I want the file to use, “w”.  Next I’m using the <code>.puts</code> method to write to the file and passing it the text I want it to write to the file.  Note, that If we didn’t have a file text.txt in our directory, this script would have created it.</p>
+
+<h3>Using Block Notation</h3>
+
+
+<figure class='code'><figcaption><span>Writing to a File with Block Notation</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">text</span><span class="o">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span><span class="err">”</span><span class="n">w</span><span class="err">”</span><span class="p">){</span><span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span><span class="o">.</span><span class="n">puts</span><span class="err">”</span><span class="no">Hola</span> <span class="n">from</span> <span class="vg">$0</span><span class="err">”</span><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that when passing a block to File you don’t have to close it because when the block is exited it closes the File for you.</p>
+
+<h2>Reading a File</h2>
+
+
+<figure class='code'><figcaption><span>Reading from a File</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">file</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">lib</span><span class="o">/</span><span class="no">I_have_a_dream</span><span class="o">.</span><span class="n">txt</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="n">contents</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">contents</span>
+</span><span class='line'><span class="n">file</span><span class="o">.</span><span class="n">close</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is pretty simple.  We’re opening the file we want to read with the <code>.open</code> method and storing it in the file variable.  Then we call the <code>.read</code> method on file and store it in contents and then puts the contents.
+<code>.read</code> starts reading from the place the last <code>.read</code> operation stopped. Here we’ve read the entire file and thus if below <code>puts contents</code> we tried to read the file again there would be nothing to read because we&rsquo;re at the end of the file.</p>
+
+<h3>Reading a File Block Notation</h3>
+
+
+<figure class='code'><figcaption><span>Reading from a File Block Notation</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">contents</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="err">“</span><span class="n">lib</span><span class="o">/</span><span class="no">I_have_a_dream</span><span class="o">.</span><span class="n">txt</span><span class="err">”</span><span class="p">,</span> <span class="err">“</span><span class="n">r</span><span class="err">”</span><span class="p">){</span><span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">}</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">contents</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Closing Files</h2>
+
+
+<p>If you open a file make sure you close it, unless you’re passing File a block and then the block will close the file when it ends.</p>
+
+<p>The reason you need to close files is it forces a “flush”, which means it pushes the data-to-be-written to where you want it to be.  This frees up memory for the rest of your program and ensures the file is available for other processes to access.</p>
+
+<p><strong>Further Reading:</strong> <a href="http://ruby.bastardsbook.com/chapters/io/" target="_blank"><a href="http://ruby.bastardsbook.com/chapters/io/">http://ruby.bastardsbook.com/chapters/io/</a></a></p>
+
+<h2>More File Methods</h2>
+
+
+<p>We’ve already seen some file methods like .open and .close but here are some more useful ones. Checkout the ruby doc for File and IO for the rest of them.</p>
+
+<h3>.readlines & .readline</h3>
+
+
+<p>These two methods can be very handy when you want to read one line at a time.  This would be useful for instance if you are reading a comma delimited file.</p>
+
+<h3>.readlines</h3>
+
+
+<p> &ndash; takes in all the content of the file and stores each line as an element of an array.  From here you can iterate over each line using each.</p>
+
+<figure class='code'><figcaption><span>Using Readlines </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">read_file</span><span class="p">)</span><span class="o">.</span><span class="n">readlines</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">line</span><span class="o">|</span>
+</span><span class='line'><span class="nb">puts</span> <span class="n">line</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.readline</h3>
+
+
+<p> &ndash; is a bit different in it only reads one line at a time and thus you need to keep advancing it forward in the file, which can be done with a <code>while</code> or <code>until</code> method.</p>
+
+<figure class='code'><figcaption><span>Using Readline </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">file</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;lib/blood_sweat_tears.txt&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">until</span> <span class="n">file</span><span class="o">.</span><span class="n">eof?</span>
+</span><span class='line'>   <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span>
+</span><span class='line'>   <span class="nb">puts</span> <span class="n">line</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">file</span><span class="o">.</span><span class="n">close</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason you would want to <code>.readline</code> vs <code>.readlines</code> is because <code>.readlines</code> loads the entire contents of the file into memory.  For a small script working with small files this isn’t a problem but if you are using large files and/or have multiple users this is bad.</p>
+
+<h3>.exists?</h3>
+
+
+<p> &ndash; checks for the existence of the file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="err">“</span><span class="n">file_name</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">#do something </span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.absolute_path</h3>
+
+
+<p> &ndash; gets the absolute path for the.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="no">File</span><span class="o">.</span><span class="n">absolute_path</span><span class="p">(</span><span class="s2">&quot;lib/blood_sweat_tears.txt&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; “/Users/kyledoherty/Dropbox/Ruby/learn_to_program/working_w_files/lib/blood_sweat_tears.txt”</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.basename</h3>
+
+
+<p> &ndash; gives you just the filename.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="err">“</span><span class="o">/</span><span class="no">Users</span><span class="o">/</span><span class="n">kyledoherty</span><span class="o">/</span><span class="no">Dropbox</span><span class="o">/</span><span class="no">Ruby</span><span class="o">/</span><span class="n">learn_to_program</span><span class="o">/</span><span class="n">working_w_files</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">blood_sweat_tears</span><span class="o">.</span><span class="n">txt</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; “blood_sweat_tears.txt’</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.directory?</h3>
+
+
+<p> &ndash; returns true if the string passed to it is a directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">filename</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">next</span> <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">directory?</span> <span class="n">filename</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Dir Class</h2>
+
+
+<p>The Directory class allows you to work with driectories as you’d expect.  Most of the methods you can use on the directory class are the same as the commands you use in the console.</p>
+
+<h2>Some Dir Methods</h2>
+
+
+
+
+<h3>.pwd</h3>
+
+
+<p> &ndash; tells you what directory you’re in.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">puts</span> <span class="no">Dir</span><span class="o">.</span><span class="n">pwd</span>
+</span><span class='line'><span class="c1">#=&gt; &quot;/Users/kyledoherty/Dropbox/Ruby/image_edit&quot;  </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.chdir</h3>
+
+
+<p> &ndash;  allows you to change to a new directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="err">“</span><span class="s2">&quot;/Users/kyledoherty/Dropbox/Ruby/rubyquiz”</span>
+</span><span class='line'><span class="s2">#=&gt; 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.mkdir</h3>
+
+
+<p> &ndash; makes a new directory named the string it is passed.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="err">“</span><span class="n">stuff</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h3>.rmdir</h3>
+
+
+<p> &ndash; removes an empty directory but throws an error if it contains files.  To remove a directory with files you must use the FileUtils module.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">rmdir</span><span class="p">(</span><span class="err">“</span><span class="n">stuff</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<h2>Accessing Directory Content</h2>
+
+
+<p>There are two ways to grab content from directories, using .entries and .glob.</p>
+
+<h3>.entries</h3>
+
+
+<p> &ndash;  returns an array with every single entry inside the diretory including “.” and hidden files.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="err">“</span><span class="o">.</span><span class="n">.</span><span class="o">/</span><span class="n">rubyquiz</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; [&quot;.&quot;, &quot;..&quot;, &quot;.DS_Store&quot;, &quot;.git&quot;, &quot;README&quot;, &quot;text_munger_76&quot;] </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.glob</h3>
+
+
+<p> &ndash; can be passed a directory name or pattern such as <code>*.txt</code> and returns an array of just the visible files</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="err">“</span><span class="o">*</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; [&quot;README&quot;, &quot;text_munger_76&quot;] </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Gives us the files in the current directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="err">“</span><span class="o">**/*.</span><span class="n">txt</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="c1">#=&gt; [&quot;text_munger_76/lib/blood_sweat_tears.txt&quot;, &quot;text_munger_76/lib/gettysburg_address.txt&quot;, &quot;text_munger_76/lib/I_have_a_dream.txt&quot;, &quot;text_munger_76/lib/pearl_harbor_address.txt&quot;, &quot;text_munger_76/lib/strength_and_decency.txt&quot;] </span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we use <code><em>*/</em>.txt</code> to search the current directory and all it’s sub directories for any .txt files using a recursive search and passing it the pattern .txt.</p>
+
+<h2>FileUtils Module</h2>
+
+
+<p>I’m not going to go into FileUtils too much but it allows more control over files and mimics a lot of the command line commands and flags you can use such as <code>rm -rf</code> for removing directories that contain files.</p>
+
+<h2>Some Methods</h2>
+
+
+
+
+<h3>.mkdir</h3>
+
+
+<p> &ndash; makes a directory</p>
+
+<h3>.touch</h3>
+
+
+<p> &ndash; makes a file</p>
+
+<h3>.rm_rf</h3>
+
+
+<p> &ndash; removes a directory whether it contains other files and directories or not</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">exists?</span><span class="p">(</span><span class="err">“</span><span class="n">file_name</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="no">FileUtils</span><span class="o">.</span><span class="n">rm_rf</span><span class="p">(</span><span class="err">“</span><span class="n">file_name</span><span class="err">”</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Note: you need to require FileUtils in your files with <code>require ‘fileutils’</code></p>
+</div>
+
+
+</article>
+
+
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/" data-via="kylefdoherty" data-counturl="http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/" >Tweet</a>
+  
+  
+  
+</div>
+
+
+
+
+<section id="comments">
+    <div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+
+
+    			</div>
+    			<footer id="footer">
+    				<p class="credit">
+  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+</p>
+
+
+    			</footer>
+    			
+
+<script type="text/javascript">
+      var disqus_shortname = 'learningprogrammingandstuff';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/';
+        var disqus_url = 'http://kylefdoherty.github.io/blog/2014/02/17/ruby-notes-working-with-files/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Quattrocento+Sans|Roboto:400,300' rel='stylesheet' type='text/css'>
+
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-47629978-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+
+
+    		</div>
+    	</section>
+  	</div>
+</body>
+</html>

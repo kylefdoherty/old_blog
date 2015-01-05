@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: blogging | Learning to Code]]></title>
+  <link href="http://kylefdoherty.github.io/blog/categories/blogging/atom.xml" rel="self"/>
+  <link href="http://kylefdoherty.github.io/"/>
+  <updated>2014-07-25T09:33:23-04:00</updated>
+  <id>http://kylefdoherty.github.io/</id>
+  <author>
+    <name><![CDATA[Kyle Doherty]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learn to Program by Blogging]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/05/28/learn-to-program-by-blogging/"/>
+    <updated>2014-05-28T19:33:37-04:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/05/28/learn-to-program-by-blogging</id>
+    <content type="html"><![CDATA[<p>Last week I was explaining to some of my <a href="http://flatironschool.com/">Flatiron School</a> Ruby005 compadres how blogging is helping me learn Ruby.  To help re-motivate myself to start blogging again (it’s been a while) and to motivate others, below is my logic for using a blog to help you learn faster.</p>
+
+<h2>Know Your Audience</h2>
+
+
+<p>Before I get into why blogging helps you learn to program, one of the basics of blogging is knowing who your audience is. In my opinion your audience for now is&hellip;YOU!</p>
+
+<p>Maybe your blog will instantly take off and have millions of readers, but more likely it will be like mine and you&rsquo;ll be lucky if your Mom reads it. With this in mind I don&rsquo;t worry about whether the content I write is unique and interesting, (though I try to make it interesting) instead I focus on whether or not it will help me learn more about programming.</p>
+
+<h2>Why Blogging Will Help You Learn to Program</h2>
+
+
+<p>Now that you know who you&rsquo;re writing for the biggest reason I think people don’t want to blog is they’re worried about taking time away from coding.  I know I thought this, but I promise blogging will force you to code more, read more code, and make you better at programming.</p>
+
+<p>So without further ado, here are my reseasons for why you should blog to help you learn to program.</p>
+
+<ol>
+  <li><strong>Forces in Depth Research -</strong> if you start writing about fundamental topics, such as Ruby’s File class, it’ll require you to research that topic vigorously. This results in you reading multiple blog posts, book chapters, and lots of code.
+
+  I doubt many people read my File class post, but now I truly understand how to use it and even better I use that post as a quick reference when coding.</li><br>
+
+  <li><strong>Forces Practice -</strong> if you really want to grasp something well enough to blog about it, you need to practice using it i.e. you need to code. While learning about control flow in Ruby I practiced using: If Else, Case statements, and the ternary operator, and learned when to use each.</li><br>
+
+  <li><strong>Forces Reflection -</strong> For one of my personal projects I blogged about each milestone I reached.  For instance if I added a Command Line Interface to my app I blogged about it.  This meant I had to go back through my code and reflect on why I wrote it that way.  You should be doing this anyways but blogging about it forced me to really scrutinize my code, highlighted errors, and always left me with improved knowledge and skills.</li><br>
+
+  <li><strong>Creates References -</strong> I already mentioned this in #1 but I think it warrants its own spot in this list.  Once you’ve written a post on a topic you can refer back to it anytime.  This reduces time spent brushing up on a topic because you know exactly where to find your post.</li><br>
+
+  <li><strong>Creates a Timeline of Your Progress -</strong> by blogging consistently while you’re learning to program, you’re chronicling the evolution of your skills. Seeing my progress from post to post has been incredibly rewarding and keeps me motivated. 
+
+  I’ve also been told that potential employers like to see this as well, so if a side effect is it helps me/you get a job, SWEET!</li>
+</ol>
+
+
+<p>That’s all I got.  If you got nothing from the 550+ words above then just remember this, smart people say if you want to become a good programmer, you need to write a lot of code and read even more than you write.  And I say if you start blogging about coding, you’ll achieve both of those.</p>
+
+<p>Happy Blogging!</p>
+]]></content>
+  </entry>
+  
+</feed>
