@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby methods | Learning to Code]]></title>
+  <link href="http://kylefdoherty.github.io/blog/categories/ruby-methods/atom.xml" rel="self"/>
+  <link href="http://kylefdoherty.github.io/"/>
+  <updated>2014-07-25T09:33:23-04:00</updated>
+  <id>http://kylefdoherty.github.io/</id>
+  <author>
+    <name><![CDATA[Kyle Doherty]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[.[ ] Method...Huh?]]></title>
+    <link href="http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method/"/>
+    <updated>2014-02-27T12:25:28-05:00</updated>
+    <id>http://kylefdoherty.github.io/blog/2014/02/27/square-brackets-ruby-method</id>
+    <content type="html"><![CDATA[<p>I came across the blog post <a href="http://sirupsen.com/what-I-wish-a-ruby-programmer-had-told-me-one-year-ago/" target="_blank">“What I Wish a Ruby Programmer Had Told Me One Year Ago”</a> and started reading through the author Simon’s code for the first iteration of his todo app to figure out what was going on.  One method he used was:
+<code>ruby
+def [](id)
+  @list[id]
+end
+</code>
+This had me pretty confused at first. Then when I looked at how he was running the code I saw he was calling this method like you would access an element in an array.
+<code>ruby
+list = TodoList.load("todo.td")
+list[0].done = true
+</code>
+It turns out in Ruby you can use special characters to name methods including the array lookup syntax, square brackets.  In this way he names the method <code>[ ]</code> and passes it an <code>(id)</code>, which is then passed to the array <code>@list</code> to lookup that element in the <code>@list</code> array.  Essentially he’s creating a lookup on the instance of his class <code>TodoList</code>, so he can use <code>[ ]</code> to lookup specific todo items just like he would if here were accessing them in array, which technically he is&hellip;the @list array.  Pretty Cool!</p>
+
+<p>Check out this Stackoverflow answer for some good examples of how to use the [ ] method, <a href="http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work" target="_blank"><a href="http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work">http://stackoverflow.com/questions/10018900/how-does-defining-square-bracket-method-in-ruby-work</a></a></p>
+
+<p>Here is another great Stackoverflow answer about Ruby Method names, <a href="http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby" target="_blank"><a href="http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby">http://stackoverflow.com/questions/10542354/what-are-the-restrictions-for-method-names-in-ruby</a></a></p>
+]]></content>
+  </entry>
+  
+</feed>
