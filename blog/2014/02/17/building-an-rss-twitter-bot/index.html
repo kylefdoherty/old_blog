@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Building an RSS Twitter Bot - Learning to Code</title>
+  <title>Building an RSS Twitter Bot - T-Shaped Developer</title>
   <meta name="author" content="Kyle Doherty">
 
   
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/02/17/building-an-rss-twitter-bot">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Learning to Code" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="T-Shaped Developer" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -51,8 +51,10 @@
 				<header>
 					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
 <hgroup>
-  <h1><a href="/">Learning to Code</a></h1>
+  <h1><a href="/">T-Shaped Developer</a></h1>
   
+    <h2 class="subtitle">Working on building out the top of my T</h2>
+   
 </hgroup>
 
 
@@ -92,7 +94,7 @@
   
 
 
-<time datetime="2014-02-17T07:07:55-05:00" pubdate data-updated="true">Feb 17<sup>th</sup>, 2014</time>
+<time datetime="2014-02-17T07:07:55-05:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -120,7 +122,7 @@
 <h2>Getting Off Track</h2>
 
 
-<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE &ndash; 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
+<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE - 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
 
 <h2>Sort Them Feeds</h2>
 
@@ -263,7 +265,7 @@
 </span><span class='line'>      <span class="vi">@sorted_feeds</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span class='line'>      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span><span class='line'>      
-</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="no">Twitter</span><span class="o">::</span><span class="no">REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_key</span>        <span class="o">=</span> <span class="s2">&quot;Consumer_Key&quot;</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_secret</span>     <span class="o">=</span> <span class="s2">&quot;Consumer_Secret&quot;</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">access_token</span>        <span class="o">=</span> <span class="s2">&quot;Access_Token&quot;</span>
@@ -398,7 +400,7 @@
     			</div>
     			<footer id="footer">
     				<p class="credit">
-  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+  Copyright &copy; 2015 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
 </p>
 
 

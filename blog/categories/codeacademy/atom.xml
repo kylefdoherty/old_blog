@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: codeacademy | Learning to Code]]></title>
+  <title><![CDATA[Category: codeacademy | T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/codeacademy/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -36,38 +36,32 @@
 
 <p>So for example, I have an array of people&rsquo;s heights, like so:</p>
 
-<p><code>ruby
-array = [4.5, 5, 6, 3.5, 3]
-</code></p>
+<pre><code class="ruby">array = [4.5, 5, 6, 3.5, 3]
+</code></pre>
 
 <p>And I want to get all the heights that are above 4 feet tall because that&rsquo;s how tall you have to be to ride the ride&hellip;le duh.</p>
 
 <p>I could write some long method called <code>rubyover_4_feet</code> where I pass it the array and then it returns the heights that are above 4 feet tall.  But that would require 9 lines of code&hellip;maybe less but that&rsquo;s how many lines it took me.</p>
 
-<p>``` ruby
-def over_4_feet(array)</p>
-
-<pre><code>new_arr = []
-array.each do |i|
-    unless i &lt; 4
-        new_arr &lt;&lt; i
+<pre><code class="ruby">def over_4_feet(array)
+    new_arr = []
+    array.each do |i|
+        unless i &lt; 4
+            new_arr &lt;&lt; i
+        end 
     end 
+    return new_arr
 end 
-return new_arr
 </code></pre>
-
-<p>end
-```</p>
 
 <p>Instead I can call the method <code>.select</code> on the array and pass it a Proc that tells it to only select heights that are taller than 4 feet.</p>
 
 <p>Below is a proc that checks for being over 4 feet tall. Then I just pass that proc to the <code>.select</code> method telling it to only &ldquo;select&rdquo; heights over 4 feet.</p>
 
-<p>``` ruby
-over_4_feet = Proc.new { |x| x >= 4 }</p>
+<pre><code class="ruby">over_4_feet = Proc.new { |x| x &gt;= 4 }
 
-<p>array.select(&amp;over_4_feet)
-```</p>
+array.select(&amp;over_4_feet)
+</code></pre>
 
 <p>So what took me 9 lines of code I did in 1, since passing the Proc to select is the same as calling the over_4_feet method.</p>
 
@@ -95,94 +89,75 @@ Below I’ve shown how I solved each of these so other people doing this problem
 
 <p>As a starting point here is my code for the initial Redacted project before I began solving for the above questions.</p>
 
-<p>``` ruby  Original code:
-puts &ldquo;block of text:&rdquo;
-text = gets.chomp</p>
+<pre><code class="ruby  Original code:">puts "block of text:"
+text = gets.chomp
 
-<p>puts &ldquo;word to be redacted:&rdquo;
-redact = gets.chomp</p>
+puts "word to be redacted:"
+redact = gets.chomp
 
-<p>words = text.split(&ldquo; &rdquo;)</p>
+words = text.split(" ")
 
-<p>words.each do |word|</p>
-
-<pre><code>if word == redact 
-    print "REDACTED "
-else
-    print word + " " 
-end
+words.each do |word|
+    if word == redact 
+        print "REDACTED "
+    else
+        print word + " " 
+    end
+end 
 </code></pre>
 
-<p>end
-```</p>
-
-<h2>Question #1 - What could you do to make sure your redactor redacts a word regardless of whether it's uppercase or lowercase?</h2>
+<h2>Question #1 - What could you do to make sure your redactor redacts a word regardless of whether it&#8217;s uppercase or lowercase?</h2>
 
 
 <p>To achieve this I figured I had two options.  Either downcase (or upcase) the block of text and the word(s) to be redacted given by the user as soon as they’re given by the user or do this when they are being compared.  Below are both ways.</p>
 
-<p>``` ruby When given by user:
-puts &ldquo;block of text:&rdquo;
-text = gets.downcase.chomp</p>
+<pre><code class="ruby When given by user:">puts "block of text:"
+text = gets.downcase.chomp
 
-<p>puts &ldquo;word to be redacted:&rdquo;
-redact = gets.downcase.chomp</p>
+puts "word to be redacted:"
+redact = gets.downcase.chomp
 
-<p>words = text.split(&ldquo; &rdquo;)</p>
+words = text.split(" ")
 
-<p>words.each do |word|</p>
-
-<pre><code>if word == redact 
-    print "REDACTED "
-else
-    print word + " " 
-end
+words.each do |word|
+    if word == redact 
+        print "REDACTED "
+    else
+        print word + " " 
+    end
+end 
 </code></pre>
 
-<p>end
-```</p>
+<pre><code class="ruby When comparing:">puts "block of text:"
+text = gets.chomp
 
-<p>``` ruby When comparing:
-puts &ldquo;block of text:&rdquo;
-text = gets.chomp</p>
+puts "word to be redacted:"
+redact = gets.chomp
 
-<p>puts &ldquo;word to be redacted:&rdquo;
-redact = gets.chomp</p>
+words = text.split(" ")
 
-<p>words = text.split(&ldquo; &rdquo;)</p>
-
-<p>words.each do |word|</p>
-
-<pre><code>if word.downcase == redact.downcase 
-    print "REDACTED "
-else
-    print word + " " 
-end
+words.each do |word|
+    if word.downcase == redact.downcase 
+        print "REDACTED "
+    else
+        print word + " " 
+    end
+end 
 </code></pre>
-
-<p>end
-```</p>
 
 <h2>Question #2 - How could you make your program take multiple, separate words to REDACT?</h2>
 
 
 <p>First I need to make it so the user can input as many words to be redacted as they want.  To achieve this I used a while loop and an if statement.  If the user inputs a keyword signifying they are done inputting words to be redacted the while loop breaks.</p>
 
-<p>``` ruby
-while input = gets.chomp
-  if input.downcase == &ldquo;done&rdquo;</p>
-
-<pre><code>  break 
+<pre><code class="ruby">while input = gets.chomp
+  if input.downcase == "done"
+      break 
+  else 
+      redact &lt;&lt; input.downcase
+  end 
+end 
 </code></pre>
-
-<p>  else</p>
-
-<pre><code>  redact &lt;&lt; input.downcase
-</code></pre>
-
-<p>  end
-end
-```</p>
 
 <p>Here I make “done” the keyword that breaks the while loop.</p>
 
@@ -193,65 +168,45 @@ The first thing I know I needed to do was loop through the words array with .eac
 
 <p>Here is what it looks like in code:</p>
 
-<p>``` ruby
-words.each do |word|
-  if redact.include? word</p>
-
-<pre><code>print "REDACTED "
-</code></pre>
-
-<p>  else</p>
-
-<pre><code>print word + " "
-</code></pre>
-
-<p>  end
+<pre><code class="ruby">words.each do |word|
+  if redact.include? word
+    print "REDACTED "
+  else
+    print word + " "
+  end
 end
-```</p>
+</code></pre>
 
 <p>And here is the entire script:</p>
 
-<p>``` ruby
-redact = []
-puts &ldquo;block of text:&rdquo;
-text = gets.downcase.chomp</p>
+<pre><code class="ruby">redact = []
+puts "block of text:"
+text = gets.downcase.chomp
 
-<p>words = text.split(&ldquo; &rdquo;)</p>
+words = text.split(" ")
 
-<p>puts &ldquo;Give as many words to be redacted as you want.&rdquo;
-puts &ldquo;Once you are done type \&lsquo;done\&rsquo;.&rdquo;
-puts &ldquo;Please give the words you want redacted:&rdquo;</p>
+puts "Give as many words to be redacted as you want."
+puts "Once you are done type \'done\'."
+puts "Please give the words you want redacted:"
 
-<p>while input = gets.chomp
-  if input.downcase == &ldquo;done&rdquo;</p>
+while input = gets.chomp
+  if input.downcase == "done"
+      break 
+  else 
+      redact &lt;&lt; input.downcase
+  end 
+end 
 
-<pre><code>  break 
-</code></pre>
+#common_words = redact &amp; words
 
-<p>  else</p>
-
-<pre><code>  redact &lt;&lt; input.downcase
-</code></pre>
-
-<p>  end
-end</p>
-
-<h1>common_words = redact &amp; words</h1>
-
-<p>words.each do |word|
-  if redact.include? word</p>
-
-<pre><code>print "REDACTED "
-</code></pre>
-
-<p>  else</p>
-
-<pre><code>print word + " "
-</code></pre>
-
-<p>  end
+words.each do |word|
+  if redact.include? word
+    print "REDACTED "
+  else
+    print word + " "
+  end
 end
-```</p>
+</code></pre>
 
 <h2>Question #3 - How might you make a new redacted string and save it as a variable, rather than just printing it to the console?</h2>
 

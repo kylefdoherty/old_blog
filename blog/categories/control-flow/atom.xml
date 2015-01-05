@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: control flow | Learning to Code]]></title>
+  <title><![CDATA[Category: control flow | T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/control-flow/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -46,21 +46,19 @@
 
 <p>An if statement tells the program what to do if a condition is met. That is, if the conditional that comes after <code>if</code> is true then execute the following code. If it evaluates to false, it doesn’t execute.</p>
 
-<p>```ruby Example 1 &ndash; If Statements
-money = true</p>
+<pre><code class="ruby Example 1 - If Statements">money = true
 
-<p>if money
+if money 
   puts “You have money.”
-end
-```</p>
+end 
+</code></pre>
 
 <p>This if statement is saying if the variable money is true, puts the message “You have money.”  In this case if money were set to false, nothing will puts to the screen.</p>
 
-<p><code>ruby Example 2 - If Statements
-if 2 &lt; 3
+<pre><code class="ruby Example 2 - If Statements ">if 2 &lt; 3
   puts “2 is less than 3”
-end
-</code></p>
+end 
+</code></pre>
 
 <p>Since 2 is less than 3 this if statement evaluates to true and thus puts’ “2 is less than 3”.  If we had typed <code>if 2 > 3</code>, puts would not have been executed and ‘nil’ would have been returned because the if statement would have evaluated to false.</p>
 
@@ -69,40 +67,32 @@ end
 
 <p>Adding an else into the if statement essentially creates a default i.e. in the event whatever comes after <code>if</code> is false then do this.</p>
 
-<p>```ruby Example &ndash; If/Else Statement
-password = 12345678</p>
+<pre><code class="ruby Example - If/Else Statement">password = 12345678
 
-<p>if  password.length >= 8</p>
-
-<pre><code>puts “your password is long enough”
+if  password.length &gt;= 8 
+    puts “your password is long enough”
+else 
+    puts “your password is too short”
+end 
 </code></pre>
-
-<p>else</p>
-
-<pre><code>puts “your password is too short”
-</code></pre>
-
-<p>end
-```</p>
 
 <h2>If/Elsif/Else</h2>
 
 
 <p>Using an elsif allows for multiple conditions to be added to the if statement.  In this way we can essentially add multiple if statements to check for many different possible conditions.</p>
 
-<p>```ruby Example &ndash; If/Elsif/Else Statement
-city = “San Francisco”</p>
+<pre><code class="ruby Example - If/Elsif/Else Statement ">city = “San Francisco”
 
-<p>if city == “New York”
+if city == “New York”
   puts “Jets &amp; Giants”
 elsif city == “Denver”
   puts “Broncos”
 elsif city == “San Francisco”
   puts “49ers”
-else
+else 
   puts “Hmm we don’t know what NFL team that city has.”
-end
-```</p>
+end 
+</code></pre>
 
 <p>If the variable <code>city</code> is set to any of the cities in our If/Else statement, the program will puts what NFL team that city has.  If <code>city</code> is not set to one of those cities then the program puts the default message, &ldquo;Hmm we don’t know what NFL team that city has.”</p>
 
@@ -113,44 +103,39 @@ end
 
 <p>The following if statement can be replaced with an unless statement.</p>
 
-<p>```ruby Example of Bad If Statement
-puts &ldquo;Give us a message.&rdquo;
-message = gets.chomp</p>
+<pre><code class="ruby Example of Bad If Statement">puts "Give us a message."
+message = gets.chomp
 
-<p>if message != “”
+if message != “”
   puts “#{message}
-end
-```</p>
+end 
+</code></pre>
 
 <p>By using unless this piece of code becomes much more readable.</p>
 
-<p>```ruby Example of When to Use Unless
-puts &ldquo;Give us a message.&rdquo;
-message = gets.chomp</p>
+<pre><code class="ruby Example of When to Use Unless">puts "Give us a message."
+message = gets.chomp
 
-<p>unless message.empty?
-  puts &ldquo;#{message}&rdquo;
-end
-```</p>
+unless message.empty? 
+  puts "#{message}"
+end 
+</code></pre>
 
 <p>Another good use case for Unless is to use them in a single line like so:</p>
 
-<p>```ruby Example 2 &ndash; When to Use Unless
-milk = false</p>
+<pre><code class="ruby Example 2 - When to Use Unless ">milk = false
 
-<p>puts “We’re out of milk.” unless milk</p>
+puts “We’re out of milk.” unless milk  
 
-<h1>=> We’re out of milk</h1>
-
-<p>```</p>
+#=&gt; We’re out of milk
+</code></pre>
 
 <p>Here we’re saying only puts we’re out of milk if the milk variable is set to false.  Since in this case milk is set to false then the message would be shown to the screen.</p>
 
 <p>One more example:</p>
 
-<p><code>ruby Example 3 - When to Use Unless
-i += 1 unless i &gt; 10
-</code></p>
+<pre><code class="ruby Example 3 - When to Use Unless">i += 1 unless i &gt; 10
+</code></pre>
 
 <p>Here <code>i</code> is being increased by 1 unless it is more than 10.</p>
 
@@ -162,7 +147,7 @@ i += 1 unless i &gt; 10
 <ol>
     <li>Don’t use else with unless.  Codeacademy does this in some of their examples with unless and they aren’t all that confusing but they aren’t that straightforward either. It’s probably better to use an if statement if you want to use else.</li>
     <li>Avoid using more than a single logical condition.  For example, doing things like <code>unless a && b</code> can become confusing fast.</li>
-    <li>No double negatives.  Unless is already a negative so don’t add in a != to make it a double negative...that’s just bad english.</li>
+    <li>No double negatives.  Unless is already a negative so don’t add in a != to make it a double negative&#8230;that’s just bad english.</li>
 </ol>
 
 
@@ -173,26 +158,23 @@ i += 1 unless i &gt; 10
 
 <p>As mentioned when discussing unless, sometimes it’s best to write an if or unless statement on 1 line.  Here are some examples:</p>
 
-<p><code>ruby Multy Line If Statement
-if zipcode &lt; 5
+<pre><code class="ruby Multy Line If Statement">if zipcode &lt; 5
   fail “zipcode too short”
-end
-</code></p>
+end 
+</code></pre>
 
 <p>Can become:</p>
 
-<p><code>ruby Single Line If Statement
-fail “zipcode too short” if zipcode.length &lt; 5
-</code></p>
+<pre><code class="ruby Single Line If Statement ">fail “zipcode too short” if zipcode.length &lt; 5
+</code></pre>
 
 <p>Some more examples:</p>
 
-<p><code>ruby Single Line If Statement
-puts “Input your name:” if name.empty?
-</code>
-<code>ruby Single Line Unless Statement
-puts fail “no username set” unless username
-</code></p>
+<pre><code class="ruby Single Line If Statement ">puts “Input your name:” if name.empty?
+</code></pre>
+
+<pre><code class="ruby Single Line Unless Statement ">puts fail “no username set” unless username
+</code></pre>
 
 <h2>The Ruby Ternary Operator</h2>
 
@@ -205,11 +187,10 @@ puts fail “no username set” unless username
 
 <p>This may not make sense 100% but an example should shore that up.</p>
 
-<p>```ruby Ternary Operator Example
-milk = true</p>
+<pre><code class="ruby Ternary Operator Example ">milk = true
 
-<p>puts milk ? “We have milk” : “We don’t have milk”
-```</p>
+puts milk ? “We have milk” : “We don’t have milk”
+</code></pre>
 
 <p>Here the ternary operator is saying if milk = true THEN puts “We have milk” OR if milk = false, puts “We don’t have milk.”</p>
 
@@ -222,22 +203,21 @@ milk = true</p>
 
 <p>Here’s an example:</p>
 
-<p>```ruby Case statement example
-animal = “dog”</p>
+<pre><code class="ruby Case statement example ">animal = “dog”
 
-<p>case animal
+case animal 
 when animal == “cat”
   puts “Meow!”
 when animal == “parrot”
   puts “Polly want a cracker!”
 when animal == “dog”
   puts “Woof!”
-else
+else 
   puts “What animal is that?”
-end
-```</p>
+end 
+</code></pre>
 
-<p>Further reading on sase statements try &ndash; <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
+<p>Further reading on sase statements try - <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
 ]]></content>
   </entry>
   

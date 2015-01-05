@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: json, | Learning to Code]]></title>
+  <title><![CDATA[Category: json, | T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/json/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -36,72 +36,68 @@
 
 <p>This is super simple with HTTParty.  All you have to do is require the gem and then use <code>HTTParty.get(“the_url”)</code>, and if you stick pry in your file it becomes super duper easy to play with the <code>HTTParty::Response</code> object that is returned to you.</p>
 
-<p>```ruby
-require &lsquo;httparty&rsquo;
-require &lsquo;pry&rsquo;</p>
+<pre><code class="ruby ">require 'httparty'
+require 'pry'
 
-<p>response = HTTParty.get(&ldquo;<a href="http://www.citibikenyc.com/stations/json">http://www.citibikenyc.com/stations/json</a>&rdquo;)</p>
 
-<p>binding.pry
-```
-What you get back is technically, as mentioned, a <code>HTTParty::Response</code> object, but really it’s a hash.  So if we call <code>.keys</code> on it we can see what keys it has.</p>
+response = HTTParty.get("http://www.citibikenyc.com/stations/json")
 
-<p>```ruby
-response.keys</p>
+binding.pry
+</code></pre>
 
-<h1>=> [&ldquo;executionTime&rdquo;, &ldquo;stationBeanList&rdquo;]</h1>
+<p>What you get back is technically, as mentioned, a <code>HTTParty::Response</code> object, but really it’s a hash.  So if we call <code>.keys</code> on it we can see what keys it has.</p>
 
-<p>```
-My guess is “stationBeanList” is what we want and sure enough it gives us back a big array of 332 station hashes.</p>
+<pre><code class="ruby ">response.keys
+# =&gt; ["executionTime", "stationBeanList"]
+</code></pre>
 
-<p>```ruby
-response[&ldquo;stationBeanList&rdquo;]</p>
+<p>My guess is “stationBeanList” is what we want and sure enough it gives us back a big array of 332 station hashes.</p>
 
-<h1>=> [{&ldquo;id&rdquo;=>72,</h1>
+<pre><code class="ruby ">response["stationBeanList"]
 
-<p> #  &ldquo;stationName&rdquo;=>&ldquo;W 52 St &amp; 11 Ave&rdquo;,
- #  &ldquo;availableDocks&rdquo;=>19,
- #  &ldquo;totalDocks&rdquo;=>38,
- #  &ldquo;latitude&rdquo;=>40.76727216,
- #  &ldquo;longitude&rdquo;=>-73.99392888,
- #  &ldquo;statusValue&rdquo;=>&ldquo;In Service&rdquo;,
- #  &ldquo;statusKey&rdquo;=>1,
- #  &ldquo;availableBikes&rdquo;=>13,
- #  &ldquo;stAddress1&rdquo;=>&ldquo;W 52 St &amp; 11 Ave&rdquo;,
- #  &ldquo;stAddress2&rdquo;=>&ldquo;&rdquo;,
- #  &ldquo;city&rdquo;=>&ldquo;&rdquo;,
- #  &ldquo;postalCode&rdquo;=>&ldquo;&rdquo;,
- #  &ldquo;location&rdquo;=>&ldquo;&rdquo;,
- #  &ldquo;altitude&rdquo;=>&ldquo;&rdquo;,
- #  &ldquo;testStation&rdquo;=>false,
- #  &ldquo;lastCommunicationTime&rdquo;=>nil,
- #  &ldquo;landMark&rdquo;=>&ldquo;&rdquo;},
- # {&ldquo;id&rdquo;=>79,
- #  &ldquo;stationName&rdquo;=>&ldquo;Franklin St &amp; W Broadway&rdquo;,
- #  &ldquo;availableDocks&rdquo;=>32,
- #  &ldquo;totalDocks&rdquo;=>33,
- #  &ldquo;latitude&rdquo;=>40.71911552,
- #  &ldquo;longitude&rdquo;=>-74.00666661,
- #  &ldquo;statusValue&rdquo;=>&ldquo;In Service&rdquo;,
- #  &ldquo;statusKey&rdquo;=>1,
- #  &ldquo;availableBikes&rdquo;=>1,
- #  &hellip;..
-```
-From here it’s easy to grab specific data out of this array of stations.  For example, the stations whose “statusKey” does not equal 1 since that probably will mean they’re not in service and might show me the other possible status keys.</p>
+# =&gt; [{"id"=&gt;72,
+ #  "stationName"=&gt;"W 52 St &amp; 11 Ave",
+ #  "availableDocks"=&gt;19,
+ #  "totalDocks"=&gt;38,
+ #  "latitude"=&gt;40.76727216,
+ #  "longitude"=&gt;-73.99392888,
+ #  "statusValue"=&gt;"In Service",
+ #  "statusKey"=&gt;1,
+ #  "availableBikes"=&gt;13,
+ #  "stAddress1"=&gt;"W 52 St &amp; 11 Ave",
+ #  "stAddress2"=&gt;"",
+ #  "city"=&gt;"",
+ #  "postalCode"=&gt;"",
+ #  "location"=&gt;"",
+ #  "altitude"=&gt;"",
+ #  "testStation"=&gt;false,
+ #  "lastCommunicationTime"=&gt;nil,
+ #  "landMark"=&gt;""},
+ # {"id"=&gt;79,
+ #  "stationName"=&gt;"Franklin St &amp; W Broadway",
+ #  "availableDocks"=&gt;32,
+ #  "totalDocks"=&gt;33,
+ #  "latitude"=&gt;40.71911552,
+ #  "longitude"=&gt;-74.00666661,
+ #  "statusValue"=&gt;"In Service",
+ #  "statusKey"=&gt;1,
+ #  "availableBikes"=&gt;1,
+ #  .....
+</code></pre>
 
-<p>```ruby
-response[&ldquo;stationBeanList&rdquo;].select {|station| station[&ldquo;statusKey&rdquo;] != 1}}</p>
+<p>From here it’s easy to grab specific data out of this array of stations.  For example, the stations whose “statusKey” does not equal 1 since that probably will mean they’re not in service and might show me the other possible status keys.</p>
 
-<p>  # => returns array of 5 station hashes with “statusKey” => 3 and “statusValue” => “Not in Service
-```</p>
+<pre><code class="ruby ">response["stationBeanList"].select {|station| station["statusKey"] != 1}}
+
+  # =&gt; returns array of 5 station hashes with “statusKey” =&gt; 3 and “statusValue” =&gt; “Not in Service
+</code></pre>
 
 <p>Or let’s say we want to see the stations that have over 50 docks i.e the big ass docks in the city.</p>
 
-<p>```ruby
- big_ass_docks = response[&ldquo;stationBeanList&rdquo;].select {|station| station[&ldquo;totalDocks&rdquo;] >= 50}</p>
+<pre><code class="ruby "> big_ass_docks = response["stationBeanList"].select {|station| station["totalDocks"] &gt;= 50}
 
-<p> # => An array of 32 station hashes
-```</p>
+ # =&gt; An array of 32 station hashes 
+</code></pre>
 
 <h2>Next Steps</h2>
 

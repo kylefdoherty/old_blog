@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: procs | Learning to Code]]></title>
+  <title><![CDATA[Category: procs | T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/procs/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -36,38 +36,32 @@
 
 <p>So for example, I have an array of people&rsquo;s heights, like so:</p>
 
-<p><code>ruby
-array = [4.5, 5, 6, 3.5, 3]
-</code></p>
+<pre><code class="ruby">array = [4.5, 5, 6, 3.5, 3]
+</code></pre>
 
 <p>And I want to get all the heights that are above 4 feet tall because that&rsquo;s how tall you have to be to ride the ride&hellip;le duh.</p>
 
 <p>I could write some long method called <code>rubyover_4_feet</code> where I pass it the array and then it returns the heights that are above 4 feet tall.  But that would require 9 lines of code&hellip;maybe less but that&rsquo;s how many lines it took me.</p>
 
-<p>``` ruby
-def over_4_feet(array)</p>
-
-<pre><code>new_arr = []
-array.each do |i|
-    unless i &lt; 4
-        new_arr &lt;&lt; i
+<pre><code class="ruby">def over_4_feet(array)
+    new_arr = []
+    array.each do |i|
+        unless i &lt; 4
+            new_arr &lt;&lt; i
+        end 
     end 
+    return new_arr
 end 
-return new_arr
 </code></pre>
-
-<p>end
-```</p>
 
 <p>Instead I can call the method <code>.select</code> on the array and pass it a Proc that tells it to only select heights that are taller than 4 feet.</p>
 
 <p>Below is a proc that checks for being over 4 feet tall. Then I just pass that proc to the <code>.select</code> method telling it to only &ldquo;select&rdquo; heights over 4 feet.</p>
 
-<p>``` ruby
-over_4_feet = Proc.new { |x| x >= 4 }</p>
+<pre><code class="ruby">over_4_feet = Proc.new { |x| x &gt;= 4 }
 
-<p>array.select(&amp;over_4_feet)
-```</p>
+array.select(&amp;over_4_feet)
+</code></pre>
 
 <p>So what took me 9 lines of code I did in 1, since passing the Proc to select is the same as calling the over_4_feet method.</p>
 

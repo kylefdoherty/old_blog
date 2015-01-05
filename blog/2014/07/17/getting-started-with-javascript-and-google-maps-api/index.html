@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Getting Started with JavaScript and Google Maps API - Learning to Code</title>
+  <title>Getting Started with JavaScript and Google Maps API - T-Shaped Developer</title>
   <meta name="author" content="Kyle Doherty">
 
   
@@ -21,7 +21,7 @@
   <link rel="canonical" href="http://kylefdoherty.github.io/blog/2014/07/17/getting-started-with-javascript-and-google-maps-api">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Learning to Code" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="T-Shaped Developer" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
@@ -51,8 +51,10 @@
 				<header>
 					<img src="http://www.gravatar.com/avatar/5ed83a11db84bd9b22dd34d8f72ebed4?s=200" alt="Gravatar of Kyle Doherty " title="Gravatar of Kyle Doherty" class="profilepic" />
 <hgroup>
-  <h1><a href="/">Learning to Code</a></h1>
+  <h1><a href="/">T-Shaped Developer</a></h1>
   
+    <h2 class="subtitle">Working on building out the top of my T</h2>
+   
 </hgroup>
 
 
@@ -92,7 +94,7 @@
   
 
 
-<time datetime="2014-07-17T11:56:31-04:00" pubdate data-updated="true">Jul 17<sup>th</sup>, 2014</time>
+<time datetime="2014-07-17T11:56:31-04:00" pubdate data-updated="true"></time>
         
       </p>
     
@@ -260,46 +262,16 @@
 
 <h2>Dropping a Pen the Map</h2>
 
-<p>Here is what the initialize function looks like when dropping a marker on the map.  Not much is changing, as you can see.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>Coffeescript Tricks start:51 mark:52,54-55</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">myLatlng</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.753597</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.983233</span><span class="p">);</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># Given an alphabet:</span>
+</span><span class='line'><span class="nv">alphabet = </span><span class="s">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
-</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
-</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="cm">/*var marker gives us a new google maps marker </span>
-</span><span class='line'><span class="cm">    with a position and map we tell it to use*/</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">position</span><span class="o">:</span> <span class="nx">myLatlng</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">map</span><span class="o">:</span> <span class="nx">map</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="c1"># Iterate over part of the alphabet:</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">letter</span> <span class="k">for</span> <span class="nx">letter</span> <span class="k">in</span> <span class="nx">alphabet</span><span class="p">[</span><span class="mi">4</span><span class="p">..</span><span class="mi">8</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -330,7 +302,7 @@
     			</div>
     			<footer id="footer">
     				<p class="credit">
-  Copyright &copy; 2014 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
+  Copyright &copy; 2015 - Kyle Doherty. Powered by <a href="http://octopress.org">Octopress</a>
 </p>
 
 

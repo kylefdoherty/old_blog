@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Learning to Code]]></title>
+  <title><![CDATA[T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -12,687 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Maps On Maps On Maps!]]></title>
-    <link href="http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps/"/>
-    <updated>2014-07-24T22:36:39-04:00</updated>
-    <id>http://kylefdoherty.github.io/blog/2014/07/24/maps-on-maps-on-maps</id>
-    <content type="html"><![CDATA[<p>The past two weeks I spent a lot of time learning and working with the Google Maps API, well at least part of it.  The part I worked with was setting a map on a webpage, setting markers, and mapping directions. To start to understand how to do all these things, I slowly made my way through the doc and code examples, which are incrediably detailed and easy to follow and I highly recommend checking them out.  With that said, the doc is also massive and can be a bit overwhelming if you only want to do basic things.  On top of that the code examples don&rsquo;t explain what the Javascript is doing so that can be a bit confusing if you&rsquo;re a JS noob like I was two weeks ago.</p>
-
-<p>To learn the basics, I did what I usually do when I see new code I don&rsquo;t understand, I went through it line by line and tried to explain what it was doing in comments.  I also then stuck it in CodePen to play around with it.  Below are those code samples with my comments expalaining what&rsquo;s going on and my codepens so you can play around with the code.</p>
-
-<h2>Centering a Map on a Page</h2>
-
-<p>The first thing you’re going to want to do is create a map object and set the center of the map and zoom level.  The Google Maps API provides a nice <a href="https://developers.google.com/maps/documentation/javascript/examples/map-simple" target='_blank'>code sample</a> for making a simple map.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;!</span><span class="nx">DOCTYPE</span> <span class="nx">html</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">html</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">head</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">meta</span> <span class="nx">name</span><span class="o">=</span><span class="s2">&quot;viewport&quot;</span> <span class="nx">content</span><span class="o">=</span><span class="s2">&quot;initial-scale=1.0, user-scalable=no&quot;</span> <span class="o">/&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">style</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/css&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="cm">/* simple styling for the webpage and </span>
-</span><span class='line'><span class="cm">    specifically the #map-canvas id */</span>
-</span><span class='line'>      <span class="nx">html</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">}</span>
-</span><span class='line'>      <span class="nx">body</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span><span class="p">;</span> <span class="nx">margin</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">padding</span><span class="o">:</span> <span class="mi">0</span> <span class="p">}</span>
-</span><span class='line'>      <span class="err">#</span><span class="nx">map</span><span class="o">-</span><span class="nx">canvas</span> <span class="p">{</span> <span class="nx">height</span><span class="o">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">}</span> <span class="cm">/*BE SURE TO - set the</span>
-</span><span class='line'><span class="cm">      height of the map-canvas div */</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/style&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span>
-</span><span class='line'>      <span class="cm">/*uses the google maps api with your api key, </span>
-</span><span class='line'><span class="cm">      https://developers.google.com/maps/documentation/</span>
-</span><span class='line'><span class="cm">      javascript/tutorial#api_key*/</span>
-</span><span class='line'>      <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://maps.googleapis.com/maps/api/js?key=API_KEY&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="c1">// creates the funtion initialize which is called at the bottom of the script.</span>
-</span><span class='line'>      <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="cm">/*creates a mapOptions object literal with a center</span>
-</span><span class='line'><span class="cm">        and zoom level. A JS object literal looks a lot like </span>
-</span><span class='line'><span class="cm">        a hash in Ruby.  Here is a blog post describing the</span>
-</span><span class='line'><span class="cm">        difference, http://stantona.github.io/blog/2012/12/12/a</span>
-</span><span class='line'><span class="cm">        -tale-of-two-object-models-javascript-and-ruby/*/</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>          <span class="cm">/*the center key sets the center of the map to the</span>
-</span><span class='line'><span class="cm">          specified latitude and longitude. It&#39;s currently set</span>
-</span><span class='line'><span class="cm">          to be centered on Manhattan*/</span>
-</span><span class='line'>          <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
-</span><span class='line'>          <span class="cm">/*zoom key sets how zoomed in or out you are, with 0</span>
-</span><span class='line'><span class="cm">          being the farthest zoomed out and 20 being the </span>
-</span><span class='line'><span class="cm">          most zoomed in*/</span>
-</span><span class='line'>          <span class="nx">zoom</span><span class="o">:</span> <span class="mi">8</span>
-</span><span class='line'>        <span class="p">};</span> <span class="c1">//end of var mapOptions</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="cm">/*sets the var map to a new instance of a google map </span>
-</span><span class='line'><span class="cm">        and injects it in the div with id=&quot;map-canvas&quot;.</span>
-</span><span class='line'><span class="cm">        It sets the center and zoom of the new map to the</span>
-</span><span class='line'><span class="cm">        mapOptions object literal defined above*/</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
-</span><span class='line'>            <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="cm">/*using the event addDomListenever to call the </span>
-</span><span class='line'><span class="cm">      initialize method. this is similar to the</span>
-</span><span class='line'><span class="cm">      addEventListener method.  we tell the </span>
-</span><span class='line'><span class="cm">      addDomListener which DOM element to use</span>
-</span><span class='line'><span class="cm">      (window in this case), what event to listen </span>
-</span><span class='line'><span class="cm">      for (load), and which method to call after </span>
-</span><span class='line'><span class="cm">      the event has occurred.*/</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="cm">/*For more info on the DOM check out this video </span>
-</span><span class='line'><span class="cm">      series on the DOM, https://www.youtube.</span>
-</span><span class='line'><span class="cm">      com/playlist?list=PL18600E7CA651B16B and this </span>
-</span><span class='line'><span class="cm">      Mozilla article on event listeners, https://developer.</span>
-</span><span class='line'><span class="cm">      mozilla.org/en-US/docs/Web/API/EventTarget.</span>
-</span><span class='line'><span class="cm">      addEventListener*/</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="cm">/*finally to really rip through what is going on here</span>
-</span><span class='line'><span class="cm">      and what other things you can do such as asynchronously</span>
-</span><span class='line'><span class="cm">      loading the API visit the Google maps getting started </span>
-</span><span class='line'><span class="cm">      doc, https://developers.google.</span>
-</span><span class='line'><span class="cm">      com/maps/documentation/javascript/tutorial*/</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/head&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="nx">body</span><span class="o">&gt;</span>
-</span><span class='line'>    <span class="c">&lt;!--</span> <span class="nx">creates</span> <span class="nx">a</span> <span class="nx">div</span> <span class="k">for</span> <span class="nx">the</span> <span class="nx">map</span> <span class="nx">canvas</span> <span class="nx">to</span> <span class="nx">be</span> <span class="nx">injected</span> <span class="nx">into</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">html</span> <span class="nx">page</span> <span class="o">--&gt;</span>
-</span><span class='line'>    <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s2">&quot;map-canvas&quot;</span><span class="o">/&gt;</span>
-</span><span class='line'>  <span class="o">&lt;</span><span class="err">/body&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/html&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Dropping a Pen the Map</h2>
-
-<p>Here is what the initialize function looks like when dropping a marker on the map.  Not much is changing, as you can see.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">myLatlng</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.753597</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.983233</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
-</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
-</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="cm">/*var marker gives us a new google maps marker </span>
-</span><span class='line'><span class="cm">    with a position and map we tell it to use*/</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">position</span><span class="o">:</span> <span class="nx">myLatlng</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">map</span><span class="o">:</span> <span class="nx">map</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p data-height="456" data-theme-id="7476" data-slug-hash="jpBnb" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/jpBnb/'>Dropping Pens on the Map </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-
-<script async src="//codepen.io/assets/embed/ei.js"></script>
-
-
-<h2>Directions with a Text Panel</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;https://maps.googleapis.com/maps/api/js?v=3.exp&quot;</span><span class="o">&gt;&lt;</span><span class="err">/script&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// sets a global variable called directionsDisplay so </span>
-</span><span class='line'>  <span class="c1">// it can be used inside and out of methods.  More on JS </span>
-</span><span class='line'>  <span class="c1">// variable scope here, </span>
-</span><span class='line'>  <span class="c1">// http://msdn.microsoft.com/en-us/library/ie/bzt2dkta(v=vs.94).aspx</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">directionsDisplay</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// sets variable directionsService to a </span>
-</span><span class='line'>  <span class="c1">// new google maps DirectionsService object </span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">directionsService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsService</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// creates initialize function </span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// directionsDisplay var and sets it to a new google </span>
-</span><span class='line'>    <span class="c1">// maps Renderer object which handles the direction </span>
-</span><span class='line'>    <span class="c1">// results returned i.e. parases the results for you.</span>
-</span><span class='line'>    <span class="nx">directionsDisplay</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets the zoom and center of the map shown on the page</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">7</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets a new map object to map variable and injects </span>
-</span><span class='line'>    <span class="c1">// it into the map-canvas div</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;map-canvas&#39;</span><span class="p">),</span>
-</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets the map the directionsDisplay variable </span>
-</span><span class='line'>    <span class="c1">// (which is the directionsRenderer i.e. the directiosn </span>
-</span><span class='line'>      <span class="c1">// parser, to the map defined above)</span>
-</span><span class='line'>    <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setMap</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets the panel for the directionsDisplay variable, </span>
-</span><span class='line'>    <span class="c1">// i.e. the panel where it shows the directions to </span>
-</span><span class='line'>    <span class="c1">// the div directions-panel</span>
-</span><span class='line'>    <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>   <span class="c1">// sets a control var that grabs the control div </span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">control</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;control&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// takes div and gives it a block style </span>
-</span><span class='line'>    <span class="nx">control</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s1">&#39;block&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// takes map.controls and sets their position to </span>
-</span><span class='line'>    <span class="c1">// &quot;TOP_CENTER&quot; and pushes the control variable into them, </span>
-</span><span class='line'>    <span class="c1">// which I think adds the entire div below with form fields </span>
-</span><span class='line'>    <span class="c1">// available to be used by the funtion calcRoute(), below.</span>
-</span><span class='line'>    <span class="nx">map</span><span class="p">.</span><span class="nx">controls</span><span class="p">[</span><span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">ControlPosition</span><span class="p">.</span><span class="nx">TOP_CENTER</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">control</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">}</span> <span class="c1">//end of initialize method</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// calcRoute() method to, used guessed it, calculat the route</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">calcRoute</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets start and end variables, which grab the contents </span>
-</span><span class='line'>    <span class="c1">// of the elements with an id of &#39;start&#39; and &#39;end&#39;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;start&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">).</span><span class="nx">value</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// sets a object literal with an origin of start, destination </span>
-</span><span class='line'>    <span class="c1">// of end and the travel mode </span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">origin</span><span class="o">:</span> <span class="nx">start</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">destination</span><span class="o">:</span> <span class="nx">end</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// this gives the directionsService var a route of the request </span>
-</span><span class='line'>    <span class="c1">// object literal, and a callback method that executes upon the </span>
-</span><span class='line'>    <span class="c1">// receipt of the response from directionsService.  Learn more </span>
-</span><span class='line'>    <span class="c1">// about callbacks here, </span>
-</span><span class='line'>    <span class="c1">// http://javascriptissexy.com/understand-javascript-callback-functions-and-use-them/</span>
-</span><span class='line'>    <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">request</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">directionsDisplay</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p data-height="337" data-theme-id="7476" data-slug-hash="wcCFg" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/wcCFg/'>Directions with Text Panel </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-
-<script async src="//codepen.io/assets/embed/ei.js"></script>
-
-
-<h2>Custom Directions &ndash; Multiple Waypoints &amp; Modes</h2>
-
-<p>This is the customized directions code I wrote to be able to have multiple waypoints with different modes of transportation.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// creating variables for the 3 displays I need for the </span>
-</span><span class='line'>    <span class="c1">// 3 legs of the journey</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay1</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay2</span><span class="p">;</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">directionsDisplay3</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">directionsService</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsService</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">//set map like normal</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.735863</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.991084</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;map-canvas&#39;</span><span class="p">),</span>
-</span><span class='line'>            <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">//set diretionsDisplay variables to directions rendererer </span>
-</span><span class='line'>        <span class="c1">// objects and customizing their attributes </span>
-</span><span class='line'>        <span class="nx">directionsDisplay1</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
-</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
-</span><span class='line'>
-</span><span class='line'>                            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">directionsDisplay2</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
-</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>           <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
-</span><span class='line'>                            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>        <span class="nx">directionsDisplay3</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsRenderer</span><span class="p">({</span>
-</span><span class='line'>          <span class="nx">map</span> <span class="o">:</span> <span class="nx">map</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">preserveViewport</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>           <span class="nx">suppressMarkers</span> <span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">polylineOptions</span> <span class="o">:</span> <span class="p">{</span><span class="nx">strokeColor</span><span class="o">:</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeOpacity</span><span class="o">:</span> <span class="p">.</span><span class="mi">7</span><span class="p">,</span>
-</span><span class='line'>                             <span class="nx">strokeWeight</span><span class="o">:</span> <span class="mi">5</span>
-</span><span class='line'>                            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>     <span class="c1">// setting the panel of each renderer to use the div with the </span>
-</span><span class='line'>     <span class="c1">// id &#39;directions-panel&#39;. This results in the text directions </span>
-</span><span class='line'>     <span class="c1">// being injected into this div</span>
-</span><span class='line'>        <span class="nx">directionsDisplay1</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">directionsDisplay2</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">directionsDisplay3</span><span class="p">.</span><span class="nx">setPanel</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;directions-panel&#39;</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>      <span class="p">}</span> <span class="c1">//end of initialize method</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// calcRoute() method to, used guessed it, calculate the route</span>
-</span><span class='line'>      <span class="kd">function</span> <span class="nx">calcRoute</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// setting the route details for each leg</span>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">route1</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;230 ashland pl, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;130 Court St, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">route2</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;130 Court St, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;11 broadway, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">BICYCLING</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>        <span class="kd">var</span> <span class="nx">route3</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">origin</span><span class="o">:</span> <span class="s1">&#39;11 broadway, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">destination</span><span class="o">:</span> <span class="s1">&#39;central park, ny&#39;</span><span class="p">,</span>
-</span><span class='line'>          <span class="nx">travelMode</span><span class="o">:</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">TravelMode</span><span class="p">.</span><span class="nx">WALKING</span>
-</span><span class='line'>        <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>       <span class="c1">// sending the route to the directions service object one</span>
-</span><span class='line'>       <span class="c1">// at a time and recieving the response back with the callback</span>
-</span><span class='line'>       <span class="c1">// method. </span>
-</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route1</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">directionsDisplay1</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route2</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">directionsDisplay2</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nx">directionsService</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">route3</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">response</span><span class="p">,</span> <span class="nx">status</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="nx">status</span> <span class="o">==</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">DirectionsStatus</span><span class="p">.</span><span class="nx">OK</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nx">directionsDisplay3</span><span class="p">.</span><span class="nx">setDirections</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>        <span class="p">});</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">initialize</span><span class="p">);</span>
-</span><span class='line'>     <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">addDomListener</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span> <span class="s1">&#39;load&#39;</span><span class="p">,</span> <span class="nx">calcRoute</span><span class="p">);</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/script&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<p data-height="434" data-theme-id="7476" data-slug-hash="zskCi" data-default-tab="result" class='codepen'>See the Pen <a href='http://codepen.io/kyled/pen/zskCi/'>My Multiple Waypoints & Modes </a> by kyle Doherty (<a href='http://codepen.io/kyled'>@kyled</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-
-
-<script async src="//codepen.io/assets/embed/ei.js"></script>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting Started with JavaScript and Google Maps API]]></title>
@@ -860,46 +179,16 @@
 
 <h2>Dropping a Pen the Map</h2>
 
-<p>Here is what the initialize function looks like when dropping a marker on the map.  Not much is changing, as you can see.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>Coffeescript Tricks start:51 mark:52,54-55</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'>  <span class="kd">function</span> <span class="nx">initialize</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">myLatlng</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.753597</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.983233</span><span class="p">);</span>
+</pre></td><td class='code'><pre><code class='coffeescript'><span class='line'><span class="c1"># Given an alphabet:</span>
+</span><span class='line'><span class="nv">alphabet = </span><span class="s">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">mapOptions</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">center</span><span class="o">:</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">LatLng</span><span class="p">(</span><span class="mf">40.7903</span><span class="p">,</span> <span class="o">-</span><span class="mf">73.9597</span><span class="p">),</span>
-</span><span class='line'>      <span class="nx">zoom</span><span class="o">:</span> <span class="mi">12</span>
-</span><span class='line'>    <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Map</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;map-canvas&quot;</span><span class="p">),</span>
-</span><span class='line'>        <span class="nx">mapOptions</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="cm">/*var marker gives us a new google maps marker </span>
-</span><span class='line'><span class="cm">    with a position and map we tell it to use*/</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">marker</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">google</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">Marker</span><span class="p">({</span>
-</span><span class='line'>      <span class="nx">position</span><span class="o">:</span> <span class="nx">myLatlng</span><span class="p">,</span>
-</span><span class='line'>      <span class="nx">map</span><span class="o">:</span> <span class="nx">map</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="c1"># Iterate over part of the alphabet:</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">letter</span> <span class="k">for</span> <span class="nx">letter</span> <span class="k">in</span> <span class="nx">alphabet</span><span class="p">[</span><span class="mi">4</span><span class="p">..</span><span class="mi">8</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1056,18 +345,12 @@
     <id>http://kylefdoherty.github.io/blog/2014/06/26/close-reading-code</id>
     <content type="html"><![CDATA[<h2>TL;DR</h2>
 
-<p><strong>If you’re a rookie programmer like me your programming level is here:</strong></p>
-
+<p><strong>If you’re a rookie programmer like me your programming level is here:</strong>
 <br>
-
-
-<p><img class="center" src="http://kylefdoherty.github.io/images/baby.jpg">
-<strong>And you want to be at this level:</strong></p>
-
+<img class="center" src="http://kylefdoherty.github.io/images/baby.jpg">
+<strong>And you want to be at this level:</strong>
 <br>
-
-
-<p><img class="center" src="http://kylefdoherty.github.io/images/ironic.jpg"></p>
+<img class="center" src="http://kylefdoherty.github.io/images/ironic.jpg"></p>
 
 <p><strong>Use <a href="http://writingcenter.fas.harvard.edu/pages/how-do-close-reading" target="_blank">close reading techniques</a> to level up your coding skills.</strong></p>
 
@@ -1350,12 +633,12 @@
 <h2>Resources on Learning &amp; Learning to Program I like</h2>
 
 <ul>
-<li><p><a href="http://rubyrogues.com/131-rr-how-to-learn/" target="_blank">Ruby Rogues 131 &ndash; How to Learn</a></p></li>
-<li><p><a href="http://www.uvm.edu/~pdodds/files/papers/others/2007/ericsson2007a.pdf" target="_blank">HBR &ndash; The Making of an Expert</a></p></li>
+<li><p><a href="http://rubyrogues.com/131-rr-how-to-learn/" target="_blank">Ruby Rogues 131 - How to Learn</a></p></li>
+<li><p><a href="http://www.uvm.edu/~pdodds/files/papers/others/2007/ericsson2007a.pdf" target="_blank">HBR - The Making of an Expert</a></p></li>
 <li><p><a href="http://www.gamedev.net/blog/355/entry-2250592-become-a-good-programmer-in-six-really-hard-steps/" target="_blank">Become a Good Programmer in Six Really Hard Steps</a></p></li>
 <li><p><a href="http://catgrena.de/careers/2013/10/15/standing-out-from-the-crowd.html" target="_blank">Standing Our From the Crowd</a></p></li>
-<li><p><a href="http://rubyrogues.com/159-rr-hacking-education-with-saron-yitbarek/" target="_blank">Ruby Rogues 159 &ndash; Hacking Education with Saron Yitbarek (Flatiron School Alum)</a></p></li>
-<li><p><a href="https://www.youtube.com/watch?v=mW_xKGUKLpk" target="_blank">Reading Code Good &ndash; Saron&rsquo;s RailsConf2014 Talk</a></p></li>
+<li><p><a href="http://rubyrogues.com/159-rr-hacking-education-with-saron-yitbarek/" target="_blank">Ruby Rogues 159 - Hacking Education with Saron Yitbarek (Flatiron School Alum)</a></p></li>
+<li><p><a href="https://www.youtube.com/watch?v=mW_xKGUKLpk" target="_blank">Reading Code Good - Saron&rsquo;s RailsConf2014 Talk</a></p></li>
 </ul>
 
 ]]></content>
@@ -1741,9 +1024,9 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h2>Additional Resources:</h2>
 
 <ul>
-<li><p><a href= "http://blog.jayfields.com/2008/03/ruby-inject.html" target="_blank">Ruby Inject &ndash; Jay Fields’ Thoughts</a></p></li>
-<li><p><a href="http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"" target="_blank">A Guide to Ruby Collections III: Enumerable and Enumerator &ndash; Sitepoint</a></p></li>
-<li><p><a href="http://blog.teamtreehouse.com/ruby-arrays" target="_blank">The Basics of Ruby Arrays &ndash; Team Treehouse Blog</a></p></li>
+<li><p><a href= "http://blog.jayfields.com/2008/03/ruby-inject.html" target="_blank">Ruby Inject - Jay Fields’ Thoughts</a></p></li>
+<li><p><a href="http://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/"" target="_blank">A Guide to Ruby Collections III: Enumerable and Enumerator - Sitepoint</a></p></li>
+<li><p><a href="http://blog.teamtreehouse.com/ruby-arrays" target="_blank">The Basics of Ruby Arrays - Team Treehouse Blog</a></p></li>
 <li><p><a href="http://chrisholtz.com/blog/lets-make-a-ruby-hash-map-method-that-returns-a-hash-instead-of-an-array/"" target="_blank">Let&rsquo;s Make a Ruby Hash Map Method That Returns a Hash Instead of an Array</a></p></li>
 </ul>
 
@@ -2379,11 +1662,11 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 </span><span class='line'>
 </span><span class='line'>      <span class="n">config</span> <span class="o">=</span> <span class="no">YAML</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s1">&#39;config.yml&#39;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">({</span>
-</span><span class='line'>              <span class="n">consumer_key</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_key&#39;</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>              <span class="n">consumer_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_secret&#39;</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>              <span class="n">access_token</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>              <span class="n">access_token_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token_secret&#39;</span><span class="o">]</span>
+</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="no">Twitter</span><span class="o">::</span><span class="no">REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span><span class="p">({</span>
+</span><span class='line'>              <span class="ss">consumer_key</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_key&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="ss">consumer_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;consumer_secret&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="ss">access_token</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>              <span class="ss">access_token_secret</span><span class="p">:</span> <span class="n">config</span><span class="o">[</span><span class="s1">&#39;access_token_secret&#39;</span><span class="o">]</span>
 </span><span class='line'>      <span class="p">})</span>
 </span><span class='line'>      
 </span><span class='line'>  <span class="k">end</span>
@@ -2396,7 +1679,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 </span><span class='line'>  <span class="k">def</span> <span class="nf">feed_sorter</span>
 </span><span class='line'>      <span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">url</span><span class="o">|</span>
 </span><span class='line'>          <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">rss</span><span class="o">|</span>
-</span><span class='line'>              <span class="n">feed</span> <span class="o">=</span> <span class="ss">RSS</span><span class="p">:</span><span class="ss">:Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">feed</span> <span class="o">=</span> <span class="no">RSS</span><span class="o">::</span><span class="no">Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
 </span><span class='line'>          
 </span><span class='line'>              <span class="k">case</span>
 </span><span class='line'>              <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;rss&quot;</span>
@@ -2461,7 +1744,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <span class='line-number'>12</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@feeds</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">url</span><span class="o">|</span>
 </span><span class='line'>  <span class="nb">open</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">rss</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">feed</span> <span class="o">=</span> <span class="ss">RSS</span><span class="p">:</span><span class="ss">:Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">feed</span> <span class="o">=</span> <span class="no">RSS</span><span class="o">::</span><span class="no">Parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
 </span><span class='line'>          
 </span><span class='line'>      <span class="k">case</span>
 </span><span class='line'>      <span class="k">when</span> <span class="n">feed</span><span class="o">.</span><span class="n">feed_type</span> <span class="o">==</span> <span class="s2">&quot;rss&quot;</span>
@@ -2592,10 +1875,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 </table>
 
 
-<br>
-
-
-
+<p><br></p>
 
 <h2>Writing to a File</h2>
 
@@ -2676,7 +1956,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.readlines</h3>
 
 
-<p> &ndash; takes in all the content of the file and stores each line as an element of an array.  From here you can iterate over each line using each.</p>
+<p> - takes in all the content of the file and stores each line as an element of an array.  From here you can iterate over each line using each.</p>
 
 <figure class='code'><figcaption><span>Using Readlines </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2690,7 +1970,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.readline</h3>
 
 
-<p> &ndash; is a bit different in it only reads one line at a time and thus you need to keep advancing it forward in the file, which can be done with a <code>while</code> or <code>until</code> method.</p>
+<p> - is a bit different in it only reads one line at a time and thus you need to keep advancing it forward in the file, which can be done with a <code>while</code> or <code>until</code> method.</p>
 
 <figure class='code'><figcaption><span>Using Readline </span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2712,7 +1992,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.exists?</h3>
 
 
-<p> &ndash; checks for the existence of the file.</p>
+<p> - checks for the existence of the file.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2728,7 +2008,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.absolute_path</h3>
 
 
-<p> &ndash; gets the absolute path for the.</p>
+<p> - gets the absolute path for the.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2742,7 +2022,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.basename</h3>
 
 
-<p> &ndash; gives you just the filename.</p>
+<p> - gives you just the filename.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2756,7 +2036,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.directory?</h3>
 
 
-<p> &ndash; returns true if the string passed to it is a directory.</p>
+<p> - returns true if the string passed to it is a directory.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2782,7 +2062,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.pwd</h3>
 
 
-<p> &ndash; tells you what directory you’re in.</p>
+<p> - tells you what directory you’re in.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2796,7 +2076,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.chdir</h3>
 
 
-<p> &ndash;  allows you to change to a new directory.</p>
+<p> -  allows you to change to a new directory.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2810,7 +2090,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.mkdir</h3>
 
 
-<p> &ndash; makes a new directory named the string it is passed.</p>
+<p> - makes a new directory named the string it is passed.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2824,7 +2104,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.rmdir</h3>
 
 
-<p> &ndash; removes an empty directory but throws an error if it contains files.  To remove a directory with files you must use the FileUtils module.</p>
+<p> - removes an empty directory but throws an error if it contains files.  To remove a directory with files you must use the FileUtils module.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2843,7 +2123,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.entries</h3>
 
 
-<p> &ndash;  returns an array with every single entry inside the diretory including “.” and hidden files.</p>
+<p> -  returns an array with every single entry inside the diretory including “.” and hidden files.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2855,7 +2135,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.glob</h3>
 
 
-<p> &ndash; can be passed a directory name or pattern such as <code>*.txt</code> and returns an array of just the visible files</p>
+<p> - can be passed a directory name or pattern such as <code>*.txt</code> and returns an array of just the visible files</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2888,17 +2168,17 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h3>.mkdir</h3>
 
 
-<p> &ndash; makes a directory</p>
+<p> - makes a directory</p>
 
 <h3>.touch</h3>
 
 
-<p> &ndash; makes a file</p>
+<p> - makes a file</p>
 
 <h3>.rm_rf</h3>
 
 
-<p> &ndash; removes a directory whether it contains other files and directories or not</p>
+<p> - removes a directory whether it contains other files and directories or not</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2941,7 +2221,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 <h2>Getting Off Track</h2>
 
 
-<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE &ndash; 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
+<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE - 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
 
 <h2>Sort Them Feeds</h2>
 
@@ -3084,7 +2364,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 </span><span class='line'>      <span class="vi">@sorted_feeds</span> <span class="o">=</span> <span class="p">{}</span>
 </span><span class='line'>      <span class="vi">@tweet</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 </span><span class='line'>      
-</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="ss">Twitter</span><span class="p">:</span><span class="ss">:REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>      <span class="vi">@client</span> <span class="o">=</span> <span class="no">Twitter</span><span class="o">::</span><span class="no">REST</span><span class="o">::</span><span class="no">Client</span><span class="o">.</span><span class="n">new</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_key</span>        <span class="o">=</span> <span class="s2">&quot;Consumer_Key&quot;</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">consumer_secret</span>     <span class="o">=</span> <span class="s2">&quot;Consumer_Secret&quot;</span>
 </span><span class='line'>        <span class="n">config</span><span class="o">.</span><span class="n">access_token</span>        <span class="o">=</span> <span class="s2">&quot;Access_Token&quot;</span>
@@ -3483,7 +2763,7 @@ Here we have student’s IDs and names given to us as an array of arrays, but we
 
 <p></p>
 
-<p>Further reading on sase statements try &ndash; <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
+<p>Further reading on sase statements try - <a href="http://www.skorks.com/2009/08/how-a-ruby-case-statement-works-and-what-you-can-do-with-it" target="_blank">How A Ruby Case Statement Works and What You Can Do With It</a></p>
 ]]></content>
   </entry>
   

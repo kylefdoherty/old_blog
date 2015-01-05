@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: apis | Learning to Code]]></title>
+  <title><![CDATA[Category: apis | T-Shaped Developer]]></title>
   <link href="http://kylefdoherty.github.io/blog/categories/apis/atom.xml" rel="self"/>
   <link href="http://kylefdoherty.github.io/"/>
-  <updated>2014-07-25T09:33:23-04:00</updated>
+  <updated>2015-01-04T22:41:17-05:00</updated>
   <id>http://kylefdoherty.github.io/</id>
   <author>
     <name><![CDATA[Kyle Doherty]]></name>
@@ -34,74 +34,20 @@
 
 <p>Here is what the Twitter Account looked like after I got this to work.</p>
 
-<p><img class="center" src="/images/Cut_Down_Nets<strong>_SDSUsports</strong>on_Twitter.png" title="&lsquo;SDSUSports Twitter Account&rsquo; &lsquo;An image of the twitter account I created for my twitter bot to post to.&rsquo;" ></p>
+<p><img class="center" src="/images/Cut_Down_Nets<strong>_SDSUsports</strong>on_Twitter.png&#8221; title=&#8221;&lsquo;SDSUSports Twitter Account&rsquo; &lsquo;An image of the twitter account I created for my twitter bot to post to.&rsquo;&#8221; ></p>
 
 <h2>Getting Off Track</h2>
 
 
-<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE &ndash; 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
+<p>It didn’t take long to get the basics of taking in a feed and parsing it to remove just the title and the link but after that I got a bit off track.  I spent a bunch of time on how to remove the date that was included at the end of every GoAztecs.com Youtube video title because I decided I didn’t want this in the tweets.  Here’s an example title so you know what I’m talking about, “SDSU MEN&rsquo;S HOOPS: STEVE FISHER POSTGAME vs. AIR FORCE - 2/15/14.”  This turned out to be good practice with strings and arrays, but in hindsight this was a dumb thing to do since this is for one specific feed and thus can’t be reused.  What I should have been focusing on was sorting feeds as either an RSS feed or Atom feed, because that dictates what methods you use to parse the feed.</p>
 
 <h2>Sort Them Feeds</h2>
 
 
 <p>Once I finished removing the dates from the video titles I went about sorting whether the feeds were RSS or Atom.  I knew that having “feed” and “rss” in the URL was probably not the standard for telling if a feed was RSS or Atom but I just wanted to get this working for these two feeds and improve my code later.</p>
 
-<p>```ruby Sorting Feeds
-def feed_sorter
-feed_num = 0</p>
-
-<pre><code>@feeds.each do |feed|
-    feed_num +=1
-    case 
-    when feed.include?('feed')
-        @sorted_feeds[feed_num] = [feed, 'atom']
-    when feed.include?('rss')
-        @sorted_feeds[feed_num] = [feed, 'rss']
-    else invalid feed
-    end 
-end 
-</code></pre>
-
-<p>end
-```
-You can see that I’m checking if “RSS” or “Atom” is in the URL and then sticking then storing them in an array inside a hash.  Again I knew I’d have to change this down the road, especially if I start using a database for persistence but this gets the job done for my two feeds.</p>
-
-<h2>Putting it All Together</h2>
-
-
-<p>From here all I wanted to clean up my code and put it in a class.  So I created a RssParser class, which probably should be renamed to FeedParser, and created the methods initialize, run, feed_sorter, feed_parser, and send_tweet. Then I added the Twitter Gem and my keys and tokens and boom it worked.</p>
-
-<p>```ruby RssParser
-require &lsquo;simple-rss&rsquo;
-require &lsquo;open-uri&rsquo;
-require &lsquo;twitter&rsquo;</p>
-
-<p>class RssParser</p>
-
-<pre><code>def initialize(*feeds)
-    @feeds = feeds 
-    @sorted_feeds = {}
-    @tweet = ''
-
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = "Consumer_Key"
-      config.consumer_secret     = "Consumer_Secret"
-      config.access_token        = "Access_Token"
-      config.access_token_secret = "Secret_Token"
-    end
-end 
-
-
-def run
-    feed_sorter
-    feed_parser
-end 
-</code></pre>
-
-<h1>method to sort if feeds are atom or rss feed</h1>
-
-<pre><code>def feed_sorter
-    feed_num = 0 
+<pre><code class="ruby Sorting Feeds">def feed_sorter
+feed_num = 0 
 
     @feeds.each do |feed|
         feed_num +=1
@@ -116,55 +62,101 @@ end
 end 
 </code></pre>
 
-<h1>method to parse feed to retrieve the title and link, and to clean up youtube titles for the goaztecscom yoututbe titles</h1>
+<p>You can see that I’m checking if “RSS” or “Atom” is in the URL and then sticking then storing them in an array inside a hash.  Again I knew I’d have to change this down the road, especially if I start using a database for persistence but this gets the job done for my two feeds.</p>
 
-<pre><code>def feed_parser 
+<h2>Putting it All Together</h2>
 
-    @sorted_feeds.each do |k,v|
 
-        case 
-        when v[1] == "rss"
-            rss = SimpleRSS.parse open(v[0])
-            rss.channel.items.each do |story|
-                @tweet = "#{story.title} #{story.link}"
-                send_tweet
-            sleep(30)
-            end 
-        when v[1] == "atom"
-            rss = SimpleRSS.parse open(v[0])
-            rss.entries.each do |vid|
-                title = vid.media_title.split('-')
-                link = vid.link
+<p>From here all I wanted to clean up my code and put it in a class.  So I created a RssParser class, which probably should be renamed to FeedParser, and created the methods initialize, run, feed_sorter, feed_parser, and send_tweet. Then I added the Twitter Gem and my keys and tokens and boom it worked.</p>
 
-                title.delete_at(-1)
-                if title.length == 2
-                    message = "#{title[0].strip} #{title[1].strip}"
-                    @tweet = "#{message} #{link}" 
-                    send_tweet
+<pre><code class="ruby RssParser ">require 'simple-rss'
+require 'open-uri'
+require 'twitter'
 
-                else 
-                    message = "#{title[0].strip}"
-                    @tweet = "#{message} #{link}"
-                    send_tweet
-                end 
-                sleep(20)
-            end 
+class RssParser 
+
+    def initialize(*feeds)
+        @feeds = feeds 
+        @sorted_feeds = {}
+        @tweet = ''
+
+        @client = Twitter::REST::Client.new do |config|
+          config.consumer_key        = "Consumer_Key"
+          config.consumer_secret     = "Consumer_Secret"
+          config.access_token        = "Access_Token"
+          config.access_token_secret = "Secret_Token"
         end
+    end 
+
+
+    def run
+        feed_sorter
+        feed_parser
+    end 
+
+#method to sort if feeds are atom or rss feed
+    def feed_sorter
+        feed_num = 0 
+
+        @feeds.each do |feed|
+            feed_num +=1
+            case 
+            when feed.include?('feed')
+                @sorted_feeds[feed_num] = [feed, 'atom']
+            when feed.include?('rss')
+                @sorted_feeds[feed_num] = [feed, 'rss']
+            else invalid feed
+            end 
+        end 
+    end 
+
+#method to parse feed to retrieve the title and link, and to clean up youtube titles for the goaztecscom yoututbe titles 
+    def feed_parser 
+
+        @sorted_feeds.each do |k,v|
+
+            case 
+            when v[1] == "rss"
+                rss = SimpleRSS.parse open(v[0])
+                rss.channel.items.each do |story|
+                    @tweet = "#{story.title} #{story.link}"
+                    send_tweet
+                sleep(30)
+                end 
+            when v[1] == "atom"
+                rss = SimpleRSS.parse open(v[0])
+                rss.entries.each do |vid|
+                    title = vid.media_title.split('-')
+                    link = vid.link
+
+                    title.delete_at(-1)
+                    if title.length == 2
+                        message = "#{title[0].strip} #{title[1].strip}"
+                        @tweet = "#{message} #{link}" 
+                        send_tweet
+
+                    else 
+                        message = "#{title[0].strip}"
+                        @tweet = "#{message} #{link}"
+                        send_tweet
+                    end 
+                    sleep(20)
+                end 
+            end
+        end 
+
+    end 
+
+    def send_tweet
+        @client.update(@tweet)
+        puts "Sent tweet: #{@tweet}"
     end 
 
 end 
 
-def send_tweet
-    @client.update(@tweet)
-    puts "Sent tweet: #{@tweet}"
-end 
-</code></pre>
-
-<p>end</p>
-
-<p>parser = RssParser.new(&lsquo;<a href="http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads">http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads</a>&rsquo;, &lsquo;<a href="http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/">http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/</a>&rsquo;)
+parser = RssParser.new('http://gdata.youtube.com/feeds/api/users/goaztecscom/uploads', 'http://www.utsandiego.com/rss/headlines/sports/sdsu-aztecs/')
 parser.run
-```</p>
+</code></pre>
 
 <h2>Next Steps</h2>
 
@@ -176,7 +168,7 @@ parser.run
     <li>Store twitter keys in a yaml file and gitignore</li>
     <li>Figure out a better, more standard way of sorting the feeds</li>
     <li>Remove the case statement that changes the GoAztecs youtube titles</li> 
-    <li>Add a check for whether or not the tweets are 140 chars.  If not reduce the title by n - 143 and append '...' to the truncated title and then tweet the title + the link</li>
+    <li>Add a check for whether or not the tweets are 140 chars.  If not reduce the title by n - 143 and append &#8216;&#8230;&#8217; to the truncated title and then tweet the title + the link</li>
     <li>Add a database with CRUD operations so I can store more feeds</li>
 </ol>
 
